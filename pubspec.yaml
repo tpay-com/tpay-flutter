@@ -1,0 +1,31 @@
+name: flutter_tpay
+description: Tpay Flutter plugin
+version: 0.0.1
+
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+  flutter: ">=2.5.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.6
+
+flutter:
+  assets:
+    - packages/flutter_tpay/assets/images/tpay_payments.png
+  plugin:
+    platforms:
+      android:
+        package: com.tpay
+        pluginClass: TpayPlugin
+      ios:
+        pluginClass: TpayPlugin

@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - Tpay (0.3.1)
+  - tpaysdk (0.0.1):
+    - Flutter
+    - Tpay
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - tpaysdk (from `.symlinks/plugins/tpaysdk/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Tpay
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  tpaysdk:
+    :path: ".symlinks/plugins/tpaysdk/ios"
+
+SPEC CHECKSUMS:
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Tpay: e3f89a13e6ce9679f73e467b2e5a053852ebda7e
+  tpaysdk: 19c6385915f34e3d13adb6a4622bda0d04783189
+
+PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
+
+COCOAPODS: 1.13.0

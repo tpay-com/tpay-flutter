@@ -1,0 +1,5 @@
+
+enum DigitalWallet {
+  googlePay,
+  applePay
+}
