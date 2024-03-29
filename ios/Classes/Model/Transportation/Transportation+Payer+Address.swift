@@ -6,7 +6,7 @@ extension Transportation.Payer {
 
         let address: String?
         let city: String?
-        let country: String?
+        let countryCode: String?
         let postalCode: String?
     }
 }

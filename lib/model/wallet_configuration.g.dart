@@ -8,15 +8,19 @@ part of 'wallet_configuration.dart';
 
 WalletConfiguration _$WalletConfigurationFromJson(Map<String, dynamic> json) =>
     WalletConfiguration(
-      googlePay: GooglePayConfiguration.fromJson(
-          json['googlePay'] as Map<String, dynamic>),
-      applePay: ApplePayConfiguration.fromJson(
-          json['applePay'] as Map<String, dynamic>),
+      googlePay: json['googlePay'] == null
+          ? null
+          : GooglePayConfiguration.fromJson(
+              json['googlePay'] as Map<String, dynamic>),
+      applePay: json['applePay'] == null
+          ? null
+          : ApplePayConfiguration.fromJson(
+              json['applePay'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$WalletConfigurationToJson(
         WalletConfiguration instance) =>
     <String, dynamic>{
-      'googlePay': instance.googlePay.toJson(),
-      'applePay': instance.applePay.toJson(),
+      'googlePay': instance.googlePay?.toJson(),
+      'applePay': instance.applePay?.toJson(),
     };

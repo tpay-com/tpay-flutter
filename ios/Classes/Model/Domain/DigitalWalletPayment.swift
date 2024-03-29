@@ -1,10 +1,13 @@
 import Tpay
 
-struct DigitalWalletPayment {
+struct DigitalWalletPayment: Transaction {
 
     // MARK: - Properties
 
-    let walletData: PaymentData.DigitalWallet
     let amount: Double
-    let payer: Payer
+    let description: String
+    let payerContext: PayerContext?
+    let paymentChannel: Headless.Models.PaymentChannel
+    let token: String
+    let callbacks: CallbacksConfiguration
 }

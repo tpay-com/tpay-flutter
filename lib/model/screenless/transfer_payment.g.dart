@@ -14,7 +14,7 @@ TransferPayment _$TransferPaymentFromJson(Map<String, dynamic> json) =>
       callbacks: json['callbacks'] == null
           ? null
           : Callbacks.fromJson(json['callbacks'] as Map<String, dynamic>),
-      groupId: json['groupId'] as int,
+      channelId: json['channelId'] as int,
       bankName: json['bankName'] as String,
     );
 
@@ -23,6 +23,6 @@ Map<String, dynamic> _$TransferPaymentToJson(TransferPayment instance) =>
       'paymentDetails': instance.paymentDetails,
       'payer': instance.payer,
       'callbacks': instance.callbacks,
-      'groupId': instance.groupId,
+      'channelId': instance.channelId,
       'bankName': instance.bankName,
     };

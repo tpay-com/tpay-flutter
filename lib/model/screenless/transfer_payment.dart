@@ -7,18 +7,18 @@ import 'callbacks.dart';
 part 'transfer_payment.g.dart';
 
 /// Class responsible for storing information about transfer payment
-/// - [groupId] - id of bank in tpay system
+/// - [channelId] - id of bank in tpay system
 /// - [bankName] - name of a selected bank
 @JsonSerializable()
 class TransferPayment extends ScreenlessPayment {
-  final int groupId;
+  final int channelId;
   final String bankName;
 
   TransferPayment({
     required super.paymentDetails,
     required super.payer,
     required super.callbacks,
-    required this.groupId,
+    required this.channelId,
     required this.bankName
   });
 

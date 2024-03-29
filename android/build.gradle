@@ -46,6 +46,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.tpay:sdk:0.5.1'
+    implementation 'com.tpay:sdk:1.1.0'
     implementation 'com.android.support:support-v4:28.0.0'
 }

@@ -4,8 +4,9 @@ extension Transportation {
 
         // MARK: - Properties
 
-        let cardToken: CardToken
-        let paymentDetails: PaymentDetails
+        let cardToken: String
+        let amount: Double
+        let description: String
         let payer: Payer?
     }
 }

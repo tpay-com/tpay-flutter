@@ -5,7 +5,8 @@ extension Transportation {
         // MARK: - Properties
 
         let applePayToken: String
-        let amount: String
+        let paymentDetails: PaymentDetails
         let payer: T.Payer
+        let callbacks: Callbacks
     }
 }

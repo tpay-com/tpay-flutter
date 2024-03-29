@@ -15,15 +15,6 @@ struct ConfigurationResult: Encodable {
         static let tokenPaymentError = "tokenPaymentError"
         static let tokenizationCompleted = "tokenizationCompleted"
         static let tokenizationCancelled = "tokenizationCancelled"
-        static let cardPaymentCompleted = "cardPaymentCompleted"
-        static let cardPaymentFailure = "cardPaymentFailure"
-        static let blikPaymentCompleted = "blikPaymentCompleted"
-        static let blikPaymentFailure = "blikPaymentFailure"
-        static let bankPaymentCompleted = "bankPaymentCompleted"
-        static let bankPaymentFailure = "bankPaymentFailure"
-        static let digitalWalletPaymentCompleted = "digitalWalletPaymentCompleted"
-        static let digitalWalletPaymentFailure = "digitalWalletPaymentFailure"
-        static let paymentMethodsError = "paymentMethodsError"
         static let unknownHandleMethod = "unknownHandleMethod"
     }
 
@@ -76,42 +67,6 @@ struct ConfigurationResult: Encodable {
 
     static func tokenizationCancelled() -> ConfigurationResult {
         return .init(type: Constant.tokenizationCancelled, message: nil)
-    }
-
-    static func paymentMethodsError(error: Error) -> ConfigurationResult {
-        return .errorResult(type: Constant.paymentMethodsError, error: error)
-    }
-
-    static func cardPaymentCompleted(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.cardPaymentCompleted, message: transactionId)
-    }
-
-    static func cardPaymentFailure(error: Error) -> ConfigurationResult {
-        return .errorResult(type: Constant.cardPaymentFailure, error: error)
-    }
-
-    static func blikPaymentCompleted(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.blikPaymentCompleted, message: transactionId)
-    }
-
-    static func blikPaymentFailure(error: Error) -> ConfigurationResult {
-        return .errorResult(type: Constant.blikPaymentFailure, error: error)
-    }
-
-    static func bankPaymentCompleted(transactionURL: URL) -> ConfigurationResult {
-        return .init(type: Constant.bankPaymentCompleted, message: transactionURL.absoluteString)
-    }
-
-    static func bankPaymentFailure(error: Error) -> ConfigurationResult {
-        return .errorResult(type: Constant.bankPaymentFailure, error: error)
-    }
-
-    static func digitalWalletPaymentCompleted(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.digitalWalletPaymentCompleted, message: transactionId)
-    }
-
-    static func digitalWalletPaymentFailure(error: Error) -> ConfigurationResult {
-        return .errorResult(type: Constant.digitalWalletPaymentFailure, error: error)
     }
 
     static func unknownHandleMethod() -> ConfigurationResult {

@@ -2,58 +2,40 @@ import Tpay
 
 final class PaymentMethodsConfiguration {
 
+    // MARK: - Constants
+
+    enum Constants {
+        static let amount = "amount"
+        static let min = "min"
+        static let max = "max"
+    }
+
     // MARK: - API
 
-    static func configuration(for paymentMethods: PaymentMethods) -> String {
-        let paymentMethodsInfo = makePaymentMethodsInfo(fro: paymentMethods)
-        return toJson(form: paymentMethodsInfo)
+    static func configuration(for paymentChannels: [Headless.Models.PaymentChannel]) -> [T.PaymentChannel] {
+        makePaymentChannelsInfo(from: paymentChannels)
     }
 
     // MARK: - Private
 
-    private static func makePaymentMethodsInfo(fro paymentMethods: PaymentMethods) -> T.PaymentMethodsInfo {
-        let isBLIKPaymentAvailable = paymentMethods.availablePaymentMethods.contains(where: { $0 == .blik })
-        let isCreditCardPaymentAvailable = paymentMethods.availablePaymentMethods.contains(where: { $0 == .card })
-
-        let availableTransferMethods = makeTransportationTransferMethods(from: paymentMethods.availableTransferMethods)
-        let availableDigitalWallets = makeTransportationDigitalWallets(form: paymentMethods.availableDigitalWallets)
-
-        let paymentMethodsInfo = T.PaymentMethodsInfo(isBLIKPaymentAvailable: isBLIKPaymentAvailable,
-                                                      isCreditCardPaymentAvailable: isCreditCardPaymentAvailable,
-                                                      availableTransferMethods: availableTransferMethods,
-                                                      availableDigitalWallets: availableDigitalWallets)
-        return paymentMethodsInfo
+    private static func makePaymentChannelsInfo(from paymentChannels: [Headless.Models.PaymentChannel]) -> [T.PaymentChannel] {
+        paymentChannels.map { makeTransportationPaymentChanel(from: $0) }
     }
 
-    private static func makeTransportationDigitalWallets(form digitalWallets: [DigitalWallet]) -> [String] {
-        var availableDigitalWallets: [String] = []
-
-        if digitalWallets.contains(where: { $0 == .applePay }) {
-            availableDigitalWallets.append(T.PaymentMethod.applePay.rawValue)
-        }
-
-        if digitalWallets.contains(where: { $0 == .googlePay }) {
-            availableDigitalWallets.append(T.PaymentMethod.googlePay.rawValue)
-        }
-
-        return availableDigitalWallets
+    private static func makeTransportationPaymentChanel(from paymentChanel: Headless.Models.PaymentChannel) -> T.PaymentChannel {
+        T.PaymentChannel(id: paymentChanel.id,
+                         name: paymentChanel.fullName,
+                         imageUrl: paymentChanel.imageUrl?.absoluteString,
+                         constraints: makeDomainConstains(from: paymentChanel.constraints ?? []))
     }
 
-    private static func makeTransportationTransferMethods(from _: [PaymentData.Bank]) -> [T.BankPayment.Bank] {
-        #warning("TODO: - Update Tpay ios repo")
-//        return tranferMethods.map { T.BankPayment.Bank(id: $0.id, name: $0.name, imageUrl: $0.imageUrl) }
-        return []
-    }
-
-    private static func toJson(form info: T.PaymentMethodsInfo) -> String {
-        do {
-            let jsonData = try JSONEncoder().encode(info)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                return jsonString
-            }
-        } catch {
-            debugPrint("Error converting ConfigurationResult to JSON: \(error)")
+    private static func makeDomainConstains(from constains: [Headless.Models.PaymentChannel.Constraint]) -> [T.PaymentChannel.Constraint] {
+        let amountConstraints = constains.filter { $0.field == Constants.amount }
+        let min = amountConstraints.filter { $0.type == Constants.min }.map { Double($0.value) }.first ?? nil
+        let max = amountConstraints.filter { $0.type == Constants.max }.map { Double($0.value) }.first ?? nil
+        if min == nil, max == nil {
+            return []
         }
-        return ""
+        return [.init(type: Constants.amount.uppercased(), minimum: min, maximum: max)]
     }
 }

@@ -29,8 +29,22 @@ class MainActivity: FlutterFragmentActivity() {
 }
 ```
 #### IOS
-TODO: camera permission
-...
+
+When integrating the Tpay payment module into your app, it’s important to ensure that the necessary permissions are correctly set up to ensure a smooth user experience.
+
+##### Privacy - Camera Usage Description
+
+The module allows the user to automatically fill the credit card form for secure payment processing. This feature requires you to setup the “Privacy - Camera Usage Description” in your app’s Info.plist file.
+
+Integration Steps
+1. Open your project’s Info.plist file.
+2. Add the key-value pair for the “Privacy - Camera Usage Description” permission, explaining the purpose of camera access. Clearly state that the camera is used to facilitate the automatic filling of the credit card form for secure payment processing.
+
+Example:
+```
+<key>NSCameraUsageDescription</key>
+<string>We need access to your camera to automatically fill the credit card form for secure payment processing.</string>
+```
 ### Configure Tpay module
 This configuration allows your app to use Tpay UI module and screenless payments.
 ```dart
@@ -75,7 +89,8 @@ final configuration = TpayConfiguration(
     wallets: [
       DigitalWallet.applePay, 
       DigitalWallet.googlePay
-    ]  
+    ],
+    installmentPayments: [InstallmentPayment.ratyPekao]
   ),
 );  
 
@@ -224,10 +239,10 @@ final payment = AmbiguousBLIKPayment(
 tpay.screenlessAmbiguousBLIKPayment(payment);
 ```
 ### Screenless transfer payment
-This payment requires groupId of a bank that user selected to make payment with.
+Transfer payment requires a channelId of bank in Tpay system.
 ```dart
 final payment = TransferPayment(  
-  groupId: 102,  
+  channelId: 4,  
   paymentDetails: PaymentDetails(  
     amount: 19.99,  
     description: "transaction description",  
@@ -254,6 +269,38 @@ final payment = TransferPayment(
   
 tpay.screenlessTransferPayment(payment);
 ```
+### Screenless Raty Pekao payment
+Raty Pekao payment requires a channelId of Raty Pekao variant.
+```dart
+final payment = RatyPekaoPayment(
+  channelId: 81,
+  paymentDetails: PaymentDetails(
+    amount: 119.99,
+    description: "transaction description",
+    hiddenDescription: "hidden description",
+    language: Language.pl
+  ),
+  payer: Payer(
+    name: "John Doe",
+    email: "example@example.com",
+    phone: null,
+    address: null
+  ),
+  callbacks: Callbacks(
+    redirects: Redirects(
+      successUrl: "https://yourstore.com/success",
+      errorUrl: "https://yourstore.com/error",
+    ),
+    notifications: Notifications(
+      url: "https://yourstore.com",
+      email: "payments@yourstore.com"
+    )
+  ),
+);
+
+tpay.screenlessRatyPekaoPayment(payment);
+```
+
 ### Screenless credit card payment
 User can pay with credit card or credit card token (returning users only). When paying with card number, expiration date and cvv user should have a option to save card. If selected, after a successful payment the card token will be sent to notification url if defined.
 ```dart
@@ -448,19 +495,34 @@ if (googlePayResult is GooglePayOpenNotConfigured) {
   // Google Pay utils not configured
 }
 ```
-## Screenless payment method fetching
-Fetch available payment methods to display them in your UI. This method takes a common part of payment methods from server and
-payment methods configured with configure method.
+## Fetch payment channels
+Fetch available payment channels for your merchant account. Filter channels based on payment constraints.
 ```dart
-final result = await tpay.getAvailablePaymentMethods();
-if (result is PaymentMethodsSuccess) {
-  // request was successful
-  // access needed data via result
-}
+final result = await tpay.getAvailablePaymentChannels();
 
-if (result is PaymentMethodsError) {
-  // request failed
-  // read error message via result.devErrorMessage
+if (result is PaymentChannelsSuccess) {
+  // payment channels received
+  for (var channel in result.channels) {
+    // channel can have payment constraints
+    // that need to be satisfied, otherwise the payment creation will fail
+    for (var constraint in channel.constraints) {
+      if (constraint is AmountPaymentConstraint) {
+        // check if your payment amount is between
+        // - constraint.minimum
+        // - constraint.maximum
+        // this constraint can have:
+        // - only minimum value
+        // - only maximum value
+        // - minimum and maximum values
+      }
+    }
+    
+    // display payment channel if all payment constraints are satisfied
+  }
+}
+if (result is PaymentChannelsError) {
+  // error occurred
+  // read error message via result.message
 }
 ```
 

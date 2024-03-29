@@ -11,16 +11,18 @@ import 'package:flutter_tpay/model/merchant/merchant_authorization.dart';
 import 'package:flutter_tpay/model/merchant/merchant_details.dart';
 import 'package:flutter_tpay/model/payer/payer.dart';
 import 'package:flutter_tpay/model/payer/payer_context.dart';
+import 'package:flutter_tpay/model/paymentChannel/payment_constraint.dart';
 import 'package:flutter_tpay/model/paymentMethod/automatic_payment_methods.dart';
 import 'package:flutter_tpay/model/paymentMethod/blik_alias.dart';
 import 'package:flutter_tpay/model/paymentMethod/credit_card_brand.dart';
 import 'package:flutter_tpay/model/paymentMethod/digital_wallet.dart';
+import 'package:flutter_tpay/model/paymentMethod/installment_payment.dart';
 import 'package:flutter_tpay/model/paymentMethod/payment_method.dart';
 import 'package:flutter_tpay/model/paymentMethod/payment_methods.dart';
 import 'package:flutter_tpay/model/paymentMethod/tokenized_card.dart';
 import 'package:flutter_tpay/model/result/google_pay_configure_result.dart';
 import 'package:flutter_tpay/model/result/google_pay_open_result.dart';
-import 'package:flutter_tpay/model/result/payment_methods_result.dart';
+import 'package:flutter_tpay/model/result/payment_channels_result.dart';
 import 'package:flutter_tpay/model/result/result.dart';
 import 'package:flutter_tpay/model/result/screenless_result.dart';
 import 'package:flutter_tpay/model/screenless/ambiguous_alias.dart';
@@ -34,6 +36,7 @@ import 'package:flutter_tpay/model/screenless/expiration_date.dart';
 import 'package:flutter_tpay/model/screenless/google_pay_environment.dart';
 import 'package:flutter_tpay/model/screenless/google_pay_payment.dart';
 import 'package:flutter_tpay/model/screenless/google_pay_utils_configuration.dart';
+import 'package:flutter_tpay/model/screenless/raty_pekao_payment.dart';
 import 'package:flutter_tpay/model/screenless/transfer_payment.dart';
 import 'package:flutter_tpay/model/screenless/callbacks.dart';
 import 'package:flutter_tpay/model/screenless/notifications.dart';
@@ -60,8 +63,10 @@ class TpayExample extends StatelessWidget {
     "Standard payment": openMainPaymentModule,
     "Tokenization": openTokenization,
     "Token payment": openTokenPayment,
+    "Get payment channels": getPaymentChannels,
     "BLIK screenless": screenlessBLIKPayment,
     "Transfer screenless": screenlessTransferPayment,
+    "Raty Pekao screenless": screenlessRatyPekaoPayment,
     "Credit card screenless": screenlessCreditCardPayment,
     "Google Pay screenless": screenlessGooglePayPayment,
     "Configure Google Pay": configureGooglePayUtils,
@@ -74,12 +79,12 @@ class TpayExample extends StatelessWidget {
   );
 
   late final CertificatePinningConfiguration pinningConfiguration =
-  CertificatePinningConfiguration(publicKeyHash: "PUBLIC_KEY_HASH");
+      CertificatePinningConfiguration(publicKeyHash: "PUBLIC_KEY_HASH");
 
   late final Payer payer = Payer(name: "John Doe", email: "example@example.com", phone: null, address: null);
 
   late final PaymentDetails paymentDetails = PaymentDetails(
-      amount: 0.1,
+      amount: 39.99,
       description: "transaction description",
       hiddenDescription: "hidden description",
       language: Language.pl);
@@ -93,8 +98,8 @@ class TpayExample extends StatelessWidget {
   );
 
   late final WalletConfiguration walletConfiguration = WalletConfiguration(
-    googlePay: GooglePayConfiguration(merchantId: ""),
-    applePay: ApplePayConfiguration(merchantIdentifier: "", countryCode: "")
+    googlePay: GooglePayConfiguration(merchantId: "YOUR_MERCHANT_ID"),
+    applePay: ApplePayConfiguration(merchantIdentifier: "YOUR_MERCHANT_IDENTIFIER", countryCode: "PL")
   );
 
   late final Merchant merchant = Merchant(
@@ -102,8 +107,7 @@ class TpayExample extends StatelessWidget {
       environment: TpayEnvironment.sandbox,
       certificatePinningConfiguration: pinningConfiguration,
       blikAliasToRegister: "",
-      walletConfiguration: walletConfiguration
-  );
+      walletConfiguration: walletConfiguration);
 
   Future<Result> configure() {
     final configuration = TpayConfiguration(
@@ -125,7 +129,8 @@ class TpayExample extends StatelessWidget {
       languages: Languages(preferredLanguage: Language.pl, supportedLanguages: [Language.pl, Language.en]),
       paymentMethods: PaymentMethods(
           methods: [PaymentMethod.card, PaymentMethod.blik, PaymentMethod.transfer],
-          wallets: [DigitalWallet.applePay, DigitalWallet.googlePay]),
+          wallets: [DigitalWallet.applePay, DigitalWallet.googlePay],
+          installmentPayments: [InstallmentPayment.ratyPekao]),
     );
 
     return tpayPlatform.configure(configuration);
@@ -135,24 +140,22 @@ class TpayExample extends StatelessWidget {
     handleResult(await configure());
 
     final transaction = SingleTransaction(
-      amount: 0.1,
-      description: "transaction description",
-      payerContext: PayerContext(
-          payer: payer,
-          automaticPaymentMethods: AutomaticPaymentMethods(tokenizedCards: [
-            TokenizedCard(token: "card token", cardTail: "1234", brand: CreditCardBrand.mastercard),
-            TokenizedCard(token: "card token", cardTail: "4321", brand: CreditCardBrand.visa)
-          ],
-          blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "label"))
-      )
-    );
+        amount: 100.0,
+        description: "transaction description",
+        payerContext: PayerContext(
+            payer: payer,
+            automaticPaymentMethods: AutomaticPaymentMethods(tokenizedCards: [
+              TokenizedCard(token: "card token", cardTail: "1234", brand: CreditCardBrand.mastercard),
+              TokenizedCard(token: "card token", cardTail: "4321", brand: CreditCardBrand.visa)
+            ], blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "label"))));
 
     handleResult(await tpayPlatform.startPayment(transaction));
   }
 
   void openTokenization() async {
     handleResult(await configure());
-    handleResult(await tpayPlatform.tokenizeCard(Tokenization(payer: payer, notificationUrl: "https://yourstore.com/notifications")));
+    handleResult(await tpayPlatform
+        .tokenizeCard(Tokenization(payer: payer, notificationUrl: "https://yourstore.com/notifications")));
   }
 
   void openTokenPayment() async {
@@ -172,12 +175,11 @@ class TpayExample extends StatelessWidget {
     handleResult(await configure());
 
     final payment = BLIKPayment(
-      code: "123456",
-      alias: BlikAlias(isRegistered: true, value: "alias value", label: "label"),
-      paymentDetails: paymentDetails,
-      payer: payer,
-      callbacks: callbacks
-    );
+        code: "123456",
+        alias: BlikAlias(isRegistered: true, value: "alias value", label: "label"),
+        paymentDetails: paymentDetails,
+        payer: payer,
+        callbacks: callbacks);
 
     handleScreenlessResult(await tpayPlatform.screenlessBLIKPayment(payment));
   }
@@ -187,16 +189,8 @@ class TpayExample extends StatelessWidget {
 
     final payment = AmbiguousBLIKPayment(
         transactionId: "transaction id",
-        blikAlias: BlikAlias(
-          isRegistered: true,
-          value: "alias value",
-          label: "alias label"
-        ),
-        ambiguousAlias: AmbiguousAlias(
-          name: "bank name",
-          code: "alias code"
-        )
-    );
+        blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "alias label"),
+        ambiguousAlias: AmbiguousAlias(name: "bank name", code: "alias code"));
 
     handleScreenlessResult(await tpayPlatform.screenlessAmbiguousBLIKPayment(payment));
   }
@@ -204,19 +198,20 @@ class TpayExample extends StatelessWidget {
   void screenlessTransferPayment() async {
     handleResult(await configure());
     final payment = TransferPayment(
-        groupId: 102,
-        bankName: "bank name",
-        paymentDetails: paymentDetails,
-        payer: payer,
-        callbacks: callbacks
-    );
+        channelId: 4, bankName: "bank name", paymentDetails: paymentDetails, payer: payer, callbacks: callbacks);
 
     handleScreenlessResult(await tpayPlatform.screenlessTransferPayment(payment));
   }
 
-  void getAvailablePaymentMethods() async {
+  void screenlessRatyPekaoPayment() async {
     handleResult(await configure());
-    handlePaymentMethodsResult(await tpayPlatform.getAvailablePaymentMethods());
+    final payment = RatyPekaoPayment(paymentDetails: paymentDetails, payer: payer, callbacks: callbacks, channelId: 81);
+    handleScreenlessResult(await tpayPlatform.screenlessRatyPekaoPayment(payment));
+  }
+
+  void getPaymentChannels() async {
+    handleResult(await configure());
+    handlePaymentChannelsResult(await tpayPlatform.getAvailablePaymentChannels());
   }
 
   void screenlessCreditCardPayment() async {
@@ -225,10 +220,7 @@ class TpayExample extends StatelessWidget {
     final payment = CreditCardPayment(
         creditCard: CreditCard(
             cardNumber: "111111111111",
-            expiryDate: ExpirationDate(
-              month: "12",
-              year: "24"
-            ),
+            expiryDate: ExpirationDate(month: "12", year: "24"),
             cvv: "123",
             config: CreditCardConfig(shouldSave: false, domain: "yourstore.com")),
         creditCardToken: "card token",
@@ -236,42 +228,29 @@ class TpayExample extends StatelessWidget {
         payer: payer,
         callbacks: callbacks);
 
-    handleScreenlessResult(
-        await tpayPlatform.screenlessCreditCardPayment(payment));
+    handleScreenlessResult(await tpayPlatform.screenlessCreditCardPayment(payment));
   }
 
   void screenlessGooglePayPayment() async {
     handleResult(await configure());
-    final payment = GooglePayPayment(
-        token: "google pay token",
-        paymentDetails: paymentDetails,
-        payer: payer,
-        callbacks: callbacks
-    );
+    final payment =
+        GooglePayPayment(token: "google pay token", paymentDetails: paymentDetails, payer: payer, callbacks: callbacks);
 
-    handleScreenlessResult(
-    await tpayPlatform.screenlessGooglePayPayment(payment));
+    handleScreenlessResult(await tpayPlatform.screenlessGooglePayPayment(payment));
   }
 
   void screenlessApplePayPayment() async {
-    final payment = ApplePayPayment(
-        paymentDetails: paymentDetails,
-        payer: payer,
-        applePayToken: "apple pay token"
-    );
+    final payment = ApplePayPayment(paymentDetails: paymentDetails, payer: payer, applePayToken: "apple pay token");
 
     await tpayPlatform.screenlessApplePayPayment(payment);
   }
 
   void configureGooglePayUtils() async {
-    final result = await tpayPlatform.configureGooglePayUtils(
-      GooglePayUtilsConfiguration(
+    final result = await tpayPlatform.configureGooglePayUtils(GooglePayUtilsConfiguration(
         price: 9.99,
         merchantName: "YOUR_STORE_NAME",
         merchantId: "MERCHANT_ID",
-        environment: GooglePayEnvironment.production
-      )
-    );
+        environment: GooglePayEnvironment.production));
 
     handleGooglePayUtilsConfigurationResult(result);
   }
@@ -310,23 +289,21 @@ class TpayExample extends StatelessWidget {
     }
   }
 
-  void handlePaymentMethodsResult(PaymentMethodsResult result) {
-    if (result is PaymentMethodsSuccess) {
-      debugPrint("Payment method success");
-      debugPrint(
-          "isCreditCardPaymentAvailable: ${result.isCreditCardPaymentAvailable}");
-      debugPrint("isBLIKPaymentAvailable: ${result.isBLIKPaymentAvailable}");
-      debugPrint("Available transfer methods:");
-      for (var transferMethod in result.availableTransferMethods) {
-        debugPrint(
-            "${transferMethod.id}, ${transferMethod.name}, ${transferMethod.imageUrl}");
+  void handlePaymentChannelsResult(PaymentChannelsResult result) {
+    if (result is PaymentChannelsSuccess) {
+      debugPrint("Payment channels success");
+      debugPrint("Available payment channels:");
+      for (var channel in result.channels) {
+        debugPrint("id: ${channel.id}, name: ${channel.name}, imageUrl: ${channel.imageUrl}");
+        for (var constraint in channel.constraints) {
+          if (constraint is AmountPaymentConstraint) {
+            debugPrint("Amount constraint minimum: ${constraint.minimum}, maximum: ${constraint.maximum}");
+          }
+        }
       }
-      debugPrint(
-          "Available digital wallets: ${result.availableDigitalWallets}");
     }
-
-    if (result is PaymentMethodsError) {
-      debugPrint("Payment method error: ${result.devErrorMessage}");
+    if (result is PaymentChannelsError) {
+      debugPrint("Payment channels error: ${result.message}");
     }
   }
 
@@ -335,19 +312,16 @@ class TpayExample extends StatelessWidget {
       debugPrint("Screenless paid: ${result.transactionId}");
     }
     if (result is ScreenlessPaymentCreated) {
-      debugPrint(
-          "Screenless payment created: ${result.transactionId}, ${result.paymentUrl}");
+      debugPrint("Screenless payment created: ${result.transactionId}, ${result.paymentUrl}");
     }
     if (result is ScreenlessPaymentError) {
       debugPrint("Screenless payment error: ${result.error}");
     }
     if (result is ScreenlessConfiguredPaymentFailed) {
-      debugPrint(
-          "Screenless configured payment failed: ${result.transactionId}, ${result.error}");
+      debugPrint("Screenless configured payment failed: ${result.transactionId}, ${result.error}");
     }
     if (result is ScreenlessBlikAmbiguousAlias) {
-      debugPrint(
-          "Screenless BLIK ambiguous alias: ${result.transactionId}, ${result.aliases}");
+      debugPrint("Screenless BLIK ambiguous alias: ${result.transactionId}, ${result.aliases}");
     }
     if (result is ScreenlessValidationError) {
       debugPrint("Screenless validation error: ${result.message}");

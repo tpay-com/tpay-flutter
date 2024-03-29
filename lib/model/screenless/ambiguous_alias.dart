@@ -2,6 +2,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'ambiguous_alias.g.dart';
 
+/// Class responsible for storing ambiguous alias information
+/// - [name] - alias display name
+/// - [code] - alias identifier
 @JsonSerializable()
 class AmbiguousAlias {
   final String name;

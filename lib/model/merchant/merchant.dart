@@ -18,7 +18,7 @@ class Merchant {
   final TpayEnvironment environment;
   final CertificatePinningConfiguration certificatePinningConfiguration;
   final String blikAliasToRegister;
-  final WalletConfiguration walletConfiguration;
+  final WalletConfiguration? walletConfiguration;
 
   Merchant({
     required this.authorization,

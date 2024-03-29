@@ -7,8 +7,8 @@ part 'wallet_configuration.g.dart';
 /// Class responsible for storing wallet configuration.
 @JsonSerializable(explicitToJson: true)
 class WalletConfiguration {
-  final GooglePayConfiguration googlePay;
-  final ApplePayConfiguration applePay;
+  final GooglePayConfiguration? googlePay;
+  final ApplePayConfiguration? applePay;
 
   WalletConfiguration({required this.googlePay, required this.applePay});
 

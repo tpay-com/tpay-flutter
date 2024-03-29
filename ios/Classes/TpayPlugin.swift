@@ -44,6 +44,8 @@ public class TpayPlugin: NSObject, FlutterPlugin {
             tpay.paymentWithBank(json) { result in resolve(result) }
         case .paymentWithApplePay:
             tpay.paymentWithDigitalWallet(json) { result in resolve(result) }
+        case .continuePayment:
+            tpay.continuePayment(json) { result in resolve(result) }
         case .getPaymentMethods:
             tpay.getPaymentMethods { result in resolve(result) }
         }

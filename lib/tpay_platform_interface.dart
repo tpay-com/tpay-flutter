@@ -1,10 +1,11 @@
+import 'package:flutter_tpay/model/result/payment_channels_result.dart';
+import 'package:flutter_tpay/model/screenless/raty_pekao_payment.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:flutter_tpay/model/screenless/ambiguous_blik_payment.dart';
 import 'package:flutter_tpay/model/screenless/apple_pay_payment.dart';
 import '/model/tpay_configuration.dart';
 import 'model/result/google_pay_configure_result.dart';
 import 'model/result/google_pay_open_result.dart';
-import 'model/result/payment_methods_result.dart';
 import 'model/result/result.dart';
 import 'model/result/screenless_result.dart';
 import 'model/screenless/blik_payment.dart';
@@ -38,10 +39,8 @@ abstract class TpayPlatform extends PlatformInterface {
   /// Method used to tokenize credit card with Tpay UI Module
   Future<Result> tokenizeCard(Tokenization tokenization);
 
-  /// Method used to fetch available payment methods.
-  /// It takes a common part of payment methods from server and
-  /// payment methods configured with [configure] method.
-  Future<PaymentMethodsResult> getAvailablePaymentMethods();
+  /// Method used to fetch payment channels from Tpay
+  Future<PaymentChannelsResult> getAvailablePaymentChannels();
 
   /// Method used to start credit card token payment with Tpay UI Module
   Future<Result> startCardTokenPayment(TokenPayment tokenPayment);
@@ -54,6 +53,9 @@ abstract class TpayPlatform extends PlatformInterface {
 
   /// Method used to start screenless transfer payment
   Future<ScreenlessResult> screenlessTransferPayment(TransferPayment transferPayment);
+
+  /// Method used to start screenless Raty Pekao payment
+  Future<ScreenlessResult> screenlessRatyPekaoPayment(RatyPekaoPayment ratyPekaoPayment);
 
   /// Method used to start screenless credit card payment
   Future<ScreenlessResult> screenlessCreditCardPayment(CreditCardPayment creditCardPayment);

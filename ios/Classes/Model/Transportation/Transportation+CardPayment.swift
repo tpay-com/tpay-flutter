@@ -4,9 +4,10 @@ extension Transportation {
 
         // MARK: - Properties
 
-        let cardData: CardDetails?
-        let creditCardToken: CardToken?
         let paymentDetails: PaymentDetails
         let payer: Payer
+        let callbacks: Callbacks
+        let creditCard: CardDetails?
+        let creditCardToken: String?
     }
 }

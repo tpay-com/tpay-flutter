@@ -1,4 +1,4 @@
-
+/// Indicates a result of Google Pay open
 abstract class GooglePayOpenResult { }
 
 /// Indicates that payer has chosen credit card and

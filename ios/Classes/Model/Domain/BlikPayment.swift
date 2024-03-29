@@ -1,10 +1,14 @@
 import Tpay
 
-struct BlikPayment {
+struct BlikPayment: Transaction {
 
     // MARK: - Properties
 
-    let blikData: PaymentData.Blik
     let amount: Double
-    let payer: Payer
+    let description: String
+    let payerContext: PayerContext?
+    let token: String?
+    let alias: String?
+    let paymentChannel: Headless.Models.PaymentChannel
+    let callbacks: CallbacksConfiguration
 }

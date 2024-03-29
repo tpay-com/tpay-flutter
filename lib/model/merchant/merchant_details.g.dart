@@ -26,5 +26,4 @@ Map<String, dynamic> _$MerchantDetailsToJson(MerchantDetails instance) =>
       'merchantHeadquarters':
           instance.merchantHeadquarters.map((e) => e.toJson()).toList(),
       'regulations': instance.regulations.map((e) => e.toJson()).toList(),
-      'merchantCities': instance.regulations.map((e) => e.toJson()).toList(),
     };

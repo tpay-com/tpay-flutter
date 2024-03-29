@@ -14,6 +14,9 @@ PaymentMethods _$PaymentMethodsFromJson(Map<String, dynamic> json) =>
       wallets: (json['wallets'] as List<dynamic>?)
           ?.map((e) => $enumDecode(_$DigitalWalletEnumMap, e))
           .toList(),
+      installmentPayments: (json['installmentPayments'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$InstallmentPaymentEnumMap, e))
+          .toList(),
     );
 
 Map<String, dynamic> _$PaymentMethodsToJson(PaymentMethods instance) =>
@@ -22,6 +25,9 @@ Map<String, dynamic> _$PaymentMethodsToJson(PaymentMethods instance) =>
           instance.methods.map((e) => _$PaymentMethodEnumMap[e]!).toList(),
       'wallets':
           instance.wallets?.map((e) => _$DigitalWalletEnumMap[e]!).toList(),
+      'installmentPayments': instance.installmentPayments
+          ?.map((e) => _$InstallmentPaymentEnumMap[e]!)
+          .toList(),
     };
 
 const _$PaymentMethodEnumMap = {
@@ -33,4 +39,8 @@ const _$PaymentMethodEnumMap = {
 const _$DigitalWalletEnumMap = {
   DigitalWallet.googlePay: 'googlePay',
   DigitalWallet.applePay: 'applePay',
+};
+
+const _$InstallmentPaymentEnumMap = {
+  InstallmentPayment.ratyPekao: 'ratyPekao',
 };

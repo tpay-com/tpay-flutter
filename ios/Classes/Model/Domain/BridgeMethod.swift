@@ -1,5 +1,5 @@
 enum BridgeMethod: String {
-    
+
     case configureMerchant = "configure"
     case singleTransactionPayment = "startPayment"
     case cardTokenTransaction = "startCardTokenPayment"
@@ -7,6 +7,7 @@ enum BridgeMethod: String {
     case paymentWithCard = "screenlessCreditCardPayment"
     case paymentWithBlik = "screenlessBLIKPayment"
     case paymentWithBank = "screenlessTransferPayment"
-    case paymentWithApplePay = "paymentWithApplePay"
+    case paymentWithApplePay
+    case continuePayment = "screenlessAmbiguousBLIKPayment"
     case getPaymentMethods = "availablePaymentMethods"
 }

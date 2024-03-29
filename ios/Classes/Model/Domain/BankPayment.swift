@@ -1,10 +1,12 @@
 import Tpay
 
-struct BankPayment {
+struct BankPayment: Transaction {
 
     // MARK: - Properties
 
-    let bankData: PaymentData.Bank
     let amount: Double
-    let payer: Payer
+    let description: String
+    let payerContext: PayerContext?
+    let paymentChannel: Headless.Models.PaymentChannel
+    let callbacks: CallbacksConfiguration
 }

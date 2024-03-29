@@ -24,7 +24,6 @@ final class MerchantConfiguration {
         let cardApi = makeCardApi(from: merchant.certificatePinningConfiguration)
         let blikConfiguration = makeBlikConfiguration(from: merchant.blikAliasToRegister)
         let walletConfiguration = makeWalletConfiguration(from: merchant.walletConfiguration?.applePay)
-
         return .init(authorization: .init(clientId: merchant.authorization.clientId, clientSecret: merchant.authorization.clientSecret),
                      cardsConfiguration: cardApi,
                      environment: environment,
@@ -35,9 +34,11 @@ final class MerchantConfiguration {
     func paymentMethods() -> [PaymentMethod]? {
         guard let configurationPaymentMethods = configuration.paymentMethods else { return nil }
 
-        let methods = configurationPaymentMethods.methods.compactMap { T.PaymentMethod(rawValue: $0)?.tpayPaymentMethod }
-        let wallets = (configurationPaymentMethods.wallets ?? []).compactMap { T.PaymentMethod(rawValue: $0)?.tpayPaymentMethod }
-        let paymentMethods = methods + wallets
+        let methods = configurationPaymentMethods.methods.compactMap { T.PaymentMethod(rawValue: $0) }.sorted { $0.paymentOrder < $1.paymentOrder }.map { $0.tpayPaymentMethod }
+        let installmentPayments = (configurationPaymentMethods.installmentPayments ?? []).compactMap { T.PaymentMethod(rawValue: $0) }.sorted { $0.paymentOrder < $1.paymentOrder }.map { $0.tpayPaymentMethod }
+        let wallets = (configurationPaymentMethods.wallets ?? []).compactMap { T.PaymentMethod(rawValue: $0) }.sorted { $0.paymentOrder < $1.paymentOrder }.map { $0.tpayPaymentMethod }
+
+        let paymentMethods = (methods + installmentPayments + wallets)
 
         return paymentMethods.isEmpty ? nil : paymentMethods
     }

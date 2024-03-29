@@ -11,7 +11,7 @@ data class ConfigurationMerchant(
     val authorization: MerchantAuthorization,
     val environment: Environment,
     val certificateConfiguration: CertificateConfiguration,
-    val walletConfiguration: WalletConfiguration
+    val walletConfiguration: WalletConfiguration?
 ) {
     companion object {
         private const val AUTHORIZATION = "authorization"
@@ -26,7 +26,7 @@ data class ConfigurationMerchant(
                 certificateConfiguration = CertificateConfiguration.fromJson(
                     getJSONObject(CERTIFICATE_PINNING_CONFIGURATION)
                 ),
-                walletConfiguration = WalletConfiguration.fromJson(getJSONObject(WALLET_CONFIGURATION))
+                walletConfiguration = optJSONObject(WALLET_CONFIGURATION)?.run(WalletConfiguration::fromJson)
             )
         }
     }

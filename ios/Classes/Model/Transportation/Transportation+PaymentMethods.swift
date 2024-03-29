@@ -5,6 +5,7 @@ extension Transportation {
         // MARK: - Properties
 
         let methods: [String]
+        let installmentPayments: [String]?
         let wallets: [String]?
     }
 }

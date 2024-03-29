@@ -13,8 +13,10 @@ Merchant _$MerchantFromJson(Map<String, dynamic> json) => Merchant(
       certificatePinningConfiguration: CertificatePinningConfiguration.fromJson(
           json['certificatePinningConfiguration'] as Map<String, dynamic>),
       blikAliasToRegister: json['blikAliasToRegister'] as String,
-      walletConfiguration: WalletConfiguration.fromJson(
-          json['walletConfiguration'] as Map<String, dynamic>),
+      walletConfiguration: json['walletConfiguration'] == null
+          ? null
+          : WalletConfiguration.fromJson(
+              json['walletConfiguration'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MerchantToJson(Merchant instance) => <String, dynamic>{
@@ -23,7 +25,7 @@ Map<String, dynamic> _$MerchantToJson(Merchant instance) => <String, dynamic>{
       'certificatePinningConfiguration':
           instance.certificatePinningConfiguration.toJson(),
       'blikAliasToRegister': instance.blikAliasToRegister,
-      'walletConfiguration': instance.walletConfiguration.toJson(),
+      'walletConfiguration': instance.walletConfiguration?.toJson(),
     };
 
 const _$TpayEnvironmentEnumMap = {

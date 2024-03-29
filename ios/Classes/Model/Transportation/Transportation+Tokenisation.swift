@@ -5,5 +5,8 @@ extension Transportation {
         // MARK: - Properties
 
         let payer: Payer?
+        let notificationUrl: String
+        let errorRedirectUrl: String?
+        let successRedirectUrl: String?
     }
 }

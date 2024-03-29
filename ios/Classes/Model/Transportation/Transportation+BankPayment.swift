@@ -4,9 +4,10 @@ extension Transportation {
 
         // MARK: - Properties
 
-        let groupId: String
+        let channelId: String
         let bankName: String
         let paymentDetails: PaymentDetails
         let payer: Payer
+        let callbacks: Callbacks
     }
 }

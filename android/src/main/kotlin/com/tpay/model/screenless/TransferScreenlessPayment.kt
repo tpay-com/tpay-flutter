@@ -1,9 +1,9 @@
 package com.tpay.model.screenless
 
 class TransferScreenlessPayment(json: String) : ScreenlessPayment(json) {
-    val groupId: Int = getInt(GROUP_ID)
+    val channelId: Int = getInt(CHANNEL_ID)
 
     companion object {
-        private const val GROUP_ID = "groupId"
+        private const val CHANNEL_ID = "channelId"
     }
 }

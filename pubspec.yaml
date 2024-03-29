@@ -1,9 +1,11 @@
 name: flutter_tpay
 description: Tpay Flutter plugin
-version: 0.0.1
+version: 1.0.0
+homepage: https://tpay.com/
+repository: https://github.com/tpay-com/tpay-flutter
 
 environment:
-  sdk: '>=2.18.5 <3.0.0'
+  sdk: '>=2.18.5 <4.0.0'
   flutter: ">=2.5.0"
 
 dependencies:

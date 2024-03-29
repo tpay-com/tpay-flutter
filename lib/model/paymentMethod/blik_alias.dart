@@ -4,6 +4,7 @@ part 'blik_alias.g.dart';
 
 /// Class responsible for storing BLIK alias [value] and [label] that is
 /// displayed to the payer.
+/// - [isRegistered] - whether this alias was registered with a 6-digit code BLIK payment
 @JsonSerializable()
 class BlikAlias {
   final bool isRegistered;

@@ -19,6 +19,10 @@ object TpayUtil {
 
     private fun configureStandard(configuration: TpayConfiguration) {
         configuration.run {
+            merchant.walletConfiguration?.googlePay?.merchantId?.run {
+                TpayModule.configure(GooglePayConfiguration(this))
+            }
+
             TpayModule
                 .configure(object : SSLCertificatesProvider {
                     override var apiConfiguration: CertificatePinningConfiguration = CertificatePinningConfiguration(
@@ -28,6 +32,7 @@ object TpayUtil {
                 .configure(merchant.environment)
                 .configure(paymentMethods.methods)
                 .configure(languages.preferredLanguage, languages.supportedLanguages)
+                .configure(Compatibility.Flutter)
                 .configure(object : MerchantDetailsProvider {
                     override fun merchantDisplayName(language: Language): String {
                         return merchantDetails.displayNames
@@ -49,7 +54,6 @@ object TpayUtil {
                 })
                 .configure(
                     Merchant(
-                        merchantId = merchant.walletConfiguration.googlePay.merchantId.ifBlank { EMPTY_MERCHANT_ID },
                         authorization = Merchant.Authorization(
                             merchant.authorization.clientId,
                             merchant.authorization.clientSecret

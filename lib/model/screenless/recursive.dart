@@ -22,6 +22,7 @@ class Recursive {
   Map<String, dynamic> toJson() => _$RecursiveToJson(this);
 }
 
+/// Enum describing frequency options
 enum Frequency {
   @JsonValue(1)
   daily,

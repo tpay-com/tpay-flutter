@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_tpay/model/screenless/apple_pay_payment.dart';
 import 'package:flutter_tpay/util/google_pay_util.dart';
-import 'package:flutter_tpay/util/payment_method_result_util.dart';
+import 'package:flutter_tpay/util/payment_channels_util.dart';
 import 'package:flutter_tpay/util/result_util.dart';
 import 'package:flutter_tpay/util/screenless_result_util.dart';
 import 'model/result/google_pay_configure_result.dart';
 import 'model/result/google_pay_open_result.dart';
-import 'model/result/payment_methods_result.dart';
+import 'model/result/payment_channels_result.dart';
 import 'model/result/result.dart';
 import 'model/result/screenless_result.dart';
 import 'model/screenless/ambiguous_blik_payment.dart';
@@ -15,6 +15,7 @@ import 'model/screenless/blik_payment.dart';
 import 'model/screenless/credit_card_payment.dart';
 import 'model/screenless/google_pay_payment.dart';
 import 'model/screenless/google_pay_utils_configuration.dart';
+import 'model/screenless/raty_pekao_payment.dart';
 import 'model/screenless/transfer_payment.dart';
 import 'model/tokenization/tokenization.dart';
 import 'model/tpay_configuration.dart';
@@ -29,9 +30,10 @@ const tokenizeCardMethod = "tokenizeCard";
 const startCardTokenPaymentMethod = "startCardTokenPayment";
 const screenlessBLIKPaymentMethod = "screenlessBLIKPayment";
 const screenlessTransferPaymentMethod = "screenlessTransferPayment";
+const screenlessRatyPekaoPaymentMethod = "screenlessRatyPekaoPayment";
 const screenlessCreditCardPaymentMethod = "screenlessCreditCardPayment";
 const screenlessGooglePayPaymentMethod = "screenlessGooglePayPayment";
-const getAvailablePaymentMethodsMethod = "availablePaymentMethods";
+const getPaymentChannelsMethod = "getPaymentChannels";
 const configureGooglePayUtilsMethod = "configureGooglePayUtils";
 const openGooglePayMethod = "openGooglePay";
 const isGooglePayAvailableMethod = "isGooglePayAvailable";
@@ -68,10 +70,10 @@ class MethodChannelTpay extends TpayPlatform {
   }
 
   @override
-  Future<PaymentMethodsResult> getAvailablePaymentMethods() async {
-    final result = await methodChannel.invokeMethod(getAvailablePaymentMethodsMethod);
+  Future<PaymentChannelsResult> getAvailablePaymentChannels() async {
+    final result = await methodChannel.invokeMethod(getPaymentChannelsMethod);
 
-    return mapPaymentMethodsResult(result);
+    return mapPaymentChannelsResult(result);
   }
 
   @override
@@ -83,10 +85,8 @@ class MethodChannelTpay extends TpayPlatform {
 
   @override
   Future<ScreenlessResult> screenlessAmbiguousBLIKPayment(AmbiguousBLIKPayment ambiguousBLIKPayment) async {
-    final result = await methodChannel.invokeMethod(
-        screenlessAmbiguousBLIKPaymentMethod,
-        jsonEncode(ambiguousBLIKPayment)
-    );
+    final result =
+        await methodChannel.invokeMethod(screenlessAmbiguousBLIKPaymentMethod, jsonEncode(ambiguousBLIKPayment));
 
     return mapScreenlessResult(result);
   }
@@ -94,6 +94,13 @@ class MethodChannelTpay extends TpayPlatform {
   @override
   Future<ScreenlessResult> screenlessTransferPayment(TransferPayment transferPayment) async {
     final result = await methodChannel.invokeMethod(screenlessTransferPaymentMethod, jsonEncode(transferPayment));
+
+    return mapScreenlessResult(result);
+  }
+
+  @override
+  Future<ScreenlessResult> screenlessRatyPekaoPayment(RatyPekaoPayment ratyPekaoPayment) async {
+    final result = await methodChannel.invokeMethod(screenlessRatyPekaoPaymentMethod, jsonEncode(ratyPekaoPayment));
 
     return mapScreenlessResult(result);
   }

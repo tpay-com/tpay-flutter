@@ -23,11 +23,11 @@ import com.tpay.sdk.api.addCard.*
 import com.tpay.delegate.*
 import com.tpay.model.screenless.*
 import com.tpay.model.Configuration
-import com.tpay.sdk.api.screenless.paymentMethods.GetPaymentMethodsResult
 import com.tpay.sdk.api.models.*
 import com.tpay.sdk.api.screenless.googlePay.*
 import com.tpay.model.googlePay.*
 import com.tpay.sdk.api.screenless.blik.*
+import com.tpay.sdk.api.screenless.channelMethods.*
 
 class TpayMethodCallHandler(
     private val binaryMessenger: BinaryMessenger
@@ -41,18 +41,6 @@ class TpayMethodCallHandler(
     init {
         MethodChannel(binaryMessenger, METHOD_CHANNEL_NAME).apply {
             setMethodCallHandler { call, result ->
-                val safeActivity = activity ?: kotlin.run {
-                    if (call.method in SCREENLESS_METHODS) {
-                        handleScreenlessResult(
-                            TpayScreenlessResult.MethodCallError(ACTIVITY_NULL_MESSAGE),
-                            result
-                        )
-                    } else {
-                        handleResult(TpayResult.MethodCallError(ACTIVITY_NULL_MESSAGE), result)
-                    }
-
-                    return@setMethodCallHandler
-                }
                 when (call.method) {
                     CONFIGURE_METHOD -> {
                         call.stringArgument?.let { json ->
@@ -65,6 +53,13 @@ class TpayMethodCallHandler(
                         } ?: handleResult(TpayResult.MethodCallError(CONFIGURATION_NULL_MESSAGE), result)
                     }
                     START_PAYMENT_METHOD -> {
+                        val safeActivity = activity ?: kotlin.run {
+                            handleResult(
+                                TpayResult.MethodCallError(ACTIVITY_NULL_MESSAGE),
+                                result
+                            )
+                            return@setMethodCallHandler
+                        }
                         call.stringArgument?.let { json ->
                             try {
                                 val singleTransaction = JsonUtil.getSingleTransaction(json)
@@ -89,6 +84,13 @@ class TpayMethodCallHandler(
                         } ?: handleResult(TpayResult.MethodCallError(TRANSACTION_NULL_MESSAGE), result)
                     }
                     TOKENIZE_CARD -> {
+                        val safeActivity = activity ?: kotlin.run {
+                            handleResult(
+                                TpayResult.MethodCallError(ACTIVITY_NULL_MESSAGE),
+                                result
+                            )
+                            return@setMethodCallHandler
+                        }
                         call.stringArgument?.let { json ->
                             try {
                                 val tokenization = JsonUtil.getTokenization(json)
@@ -112,6 +114,13 @@ class TpayMethodCallHandler(
                         } ?: handleResult(TpayResult.MethodCallError(PAYER_NULL_MESSAGE), result)
                     }
                     START_CARD_TOKEN_TRANSACTION_METHOD -> {
+                        val safeActivity = activity ?: kotlin.run {
+                            handleResult(
+                                TpayResult.MethodCallError(ACTIVITY_NULL_MESSAGE),
+                                result
+                            )
+                            return@setMethodCallHandler
+                        }
                         call.stringArgument?.let { json ->
                             try {
                                 val cardTokenTransaction = JsonUtil.getCardTokenTransaction(json)
@@ -135,16 +144,9 @@ class TpayMethodCallHandler(
                             }
                         } ?: handleResult(TpayResult.MethodCallError(TOKEN_PAYMENT_NULL_MESSAGE), result)
                     }
-                    AVAILABLE_PAYMENT_METHODS_METHOD -> {
-                        try {
-                            TpayPaymentMethodsHandler { methodsResult ->
-                                handlePaymentMethodsResult(methodsResult, result)
-                            }
-                        } catch (exception: Exception) {
-                            handlePaymentMethodsResult(
-                                GetPaymentMethodsResult.Error(exception.message ?: UNKNOWN_ERROR),
-                                result
-                            )
+                    GET_PAYMENT_CHANNELS_METHOD -> {
+                        GetPaymentChannels().execute { channelsResult ->
+                            handlePaymentChannelsResult(channelsResult, result)
                         }
                     }
                     SCREENLESS_BLIK_PAYMENT_METHOD -> {
@@ -178,6 +180,14 @@ class TpayMethodCallHandler(
                             result
                         )
                     }
+                    SCREENLESS_RATY_PEKAO_PAYMENT_METHOD -> {
+                        call.stringArgument?.let { json ->
+                            handleScreenlessPayment<RatyPekaoScreenlessPayment>(json, result)
+                        } ?: handleScreenlessResult(
+                            TpayScreenlessResult.MethodCallError(SCREENLESS_RATY_PEKAO_NULL_MESSAGE),
+                            result
+                        )
+                    }
                     SCREENLESS_CREDIT_CARD_PAYMENT_METHOD -> {
                         call.stringArgument?.let { json ->
                             handleScreenlessPayment<CreditCardScreenlessPayment>(json, result)
@@ -195,6 +205,13 @@ class TpayMethodCallHandler(
                         )
                     }
                     CONFIGURE_GOOGLE_PAY_UTILS_METHOD -> {
+                        val safeActivity = activity ?: kotlin.run {
+                            handleGooglePayConfigurationResult(
+                                GooglePayConfigureResult.Error(ACTIVITY_NULL_MESSAGE),
+                                result
+                            )
+                            return@setMethodCallHandler
+                        }
                         call.stringArgument?.let { json ->
                             try {
                                 val googlePayConfiguration = GooglePayUtilsConfiguration.fromJson(json)
@@ -251,6 +268,7 @@ class TpayMethodCallHandler(
         googlePayUtil?.handleActivityResult(requestCode, resultCode, intent) { result ->
             googlePayOpenResult?.run {
                 handleGooglePayOpenResult(result, this)
+                googlePayOpenResult = null
             }
         }
 
@@ -274,6 +292,21 @@ class TpayMethodCallHandler(
         JSONObject().apply {
             put(TYPE, type)
             put(VALUE, value)
+        }.toString().let(result::success)
+    }
+
+    private fun handlePaymentChannelsResult(channelsResult: GetPaymentChannelsResult, result: Result) {
+        JSONObject().apply {
+            when (channelsResult) {
+                is GetPaymentChannelsResult.Success -> {
+                    put(TYPE, SUCCESS)
+                    put(CHANNELS, channelsResult.channels.filter { channel -> channel.isAvailable }.toJsonArray())
+                }
+                is GetPaymentChannelsResult.Error -> {
+                    put(TYPE, ERROR)
+                    put(MESSAGE, channelsResult.devErrorMessage)
+                }
+            }
         }.toString().let(result::success)
     }
 
@@ -363,6 +396,7 @@ class TpayMethodCallHandler(
             val payment = when (T::class) {
                 BLIKScreenlessPayment::class -> BLIKScreenlessPayment(json)
                 TransferScreenlessPayment::class -> TransferScreenlessPayment(json)
+                RatyPekaoScreenlessPayment::class -> RatyPekaoScreenlessPayment(json)
                 CreditCardScreenlessPayment::class -> CreditCardScreenlessPayment(json)
                 GooglePayScreenlessPayment::class -> GooglePayScreenlessPayment(json)
                 else -> throw IllegalArgumentException(NOT_IMPLEMENTED_SCREENLESS_PAYMENT_MESSAGE)
@@ -444,22 +478,6 @@ class TpayMethodCallHandler(
         }.toString().let(result::success)
     }
 
-    private fun handlePaymentMethodsResult(
-        methodsResult: GetPaymentMethodsResult,
-        result: Result
-    ) {
-        val (type, paymentMethods, error) = when (methodsResult) {
-            is GetPaymentMethodsResult.Success -> Triple(SUCCESS, methodsResult.toJson(), null)
-            is GetPaymentMethodsResult.Error -> Triple(ERROR, null, methodsResult.devErrorMessage)
-        }
-
-        JSONObject().apply {
-            put(TYPE, type)
-            put(PAYMENT_METHODS, paymentMethods)
-            put(DEV_ERROR_MESSAGE, error)
-        }.toString().let(result::success)
-    }
-
     private fun handleException(exception: Exception, result: Result) {
         handleResult(
             if (exception is ValidationException) {
@@ -497,9 +515,10 @@ class TpayMethodCallHandler(
         private const val SCREENLESS_BLIK_PAYMENT_METHOD = "screenlessBLIKPayment"
         private const val SCREENLESS_AMBIGUOUS_BLIK_PAYMENT_METHOD = "screenlessAmbiguousBLIKPayment"
         private const val SCREENLESS_TRANSFER_PAYMENT_METHOD = "screenlessTransferPayment"
+        private const val SCREENLESS_RATY_PEKAO_PAYMENT_METHOD = "screenlessRatyPekaoPayment"
         private const val SCREENLESS_CREDIT_CARD_PAYMENT_METHOD = "screenlessCreditCardPayment"
         private const val SCREENLESS_GOOGLE_PAY_PAYMENT_METHOD = "screenlessGooglePayPayment"
-        private const val AVAILABLE_PAYMENT_METHODS_METHOD = "availablePaymentMethods"
+        private const val GET_PAYMENT_CHANNELS_METHOD = "getPaymentChannels"
         private const val CONFIGURE_GOOGLE_PAY_UTILS_METHOD = "configureGooglePayUtils"
         private const val OPEN_GOOGLE_PAY_METHOD = "openGooglePay"
         private const val IS_GOOGLE_PAY_AVAILABLE_METHOD = "isGooglePayAvailable"
@@ -516,6 +535,7 @@ class TpayMethodCallHandler(
         private const val UNKNOWN_ERROR = "Unknown error"
         private const val SCREENLESS_BLIK_NULL_MESSAGE = "Screenless BLIK cannot be null"
         private const val SCREENLESS_TRANSFER_NULL_MESSAGE = "Screenless transfer cannot be null"
+        private const val SCREENLESS_RATY_PEKAO_NULL_MESSAGE = "Screenless Raty Pekao cannot be null"
         const val NOT_IMPLEMENTED_SCREENLESS_PAYMENT_MESSAGE = "Not implemented screenless payment type"
         const val NOT_IMPLEMENTED_CONFIGURATION_TYPE_MESSAGE = "Not implemented configuration type"
         private const val GOOGLE_PAY_CONFIGURATION_NULL_MESSAGE = "Google Pay configuration cannot be null"
@@ -540,6 +560,8 @@ class TpayMethodCallHandler(
         private const val AMBIGUOUS_ALIAS = "ambiguousAlias"
         private const val ALIASES = "aliases"
 
+        private const val CHANNELS = "channels"
+
         private const val TYPE = "type"
         private const val VALUE = "value"
         private const val TRANSACTION_ID = "transactionId"
@@ -558,11 +580,5 @@ class TpayMethodCallHandler(
         private const val GOOGLE_PAY_DESCRIPTION = "description"
         private const val GOOGLE_PAY_CARD_NETWORK = "cardNetwork"
         private const val GOOGLE_PAY_CARD_TAIL = "cardTail"
-
-        private val SCREENLESS_METHODS = listOf(
-            SCREENLESS_CREDIT_CARD_PAYMENT_METHOD,
-            SCREENLESS_BLIK_PAYMENT_METHOD,
-            SCREENLESS_TRANSFER_PAYMENT_METHOD
-        )
     }
 }
