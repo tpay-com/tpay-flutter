@@ -12,7 +12,7 @@ Payer _$PayerFromJson(Map<String, dynamic> json) => Payer(
       phone: json['phone'] as String?,
       address: json['address'] == null
           ? null
-          : Address.fromJson(json['address'] as Map<String, dynamic>),
+          : PayerAddress.fromJson(json['address'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PayerToJson(Payer instance) => <String, dynamic>{

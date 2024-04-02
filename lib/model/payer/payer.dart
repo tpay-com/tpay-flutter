@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'address.dart';
+import 'payer_address.dart';
 
 part 'payer.g.dart';
 
@@ -9,7 +9,7 @@ class Payer {
   final String name;
   final String email;
   final String? phone;
-  final Address? address;
+  final PayerAddress? address;
 
   Payer({
     required this.name,
