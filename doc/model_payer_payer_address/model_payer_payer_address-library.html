@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="result_util library API docs, for the Dart programming language.">
-  <title>result_util library - Dart API</title>
+  <meta name="description" content="payer_address library API docs, for the Dart programming language.">
+  <title>payer_address library - Dart API</title>
 
 
   
@@ -29,9 +29,9 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">flutter_tpay</a></li>
-    <li class="self-crumb">util/result_util.dart</li>
+    <li class="self-crumb">model/payer/payer_address.dart</li>
   </ol>
-  <div class="self-name">result_util</div>
+  <div class="self-name">payer_address</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,13 +53,13 @@
       id="dartdoc-main-content"
       class="main-content"
       data-above-sidebar=""
-      data-below-sidebar="util_result_util&#47;util_result_util-library-sidebar.html">
+      data-below-sidebar="model_payer_payer_address&#47;model_payer_payer_address-library-sidebar.html">
       
       <div>
         
 
         <h1>
-          <span class="kind-library">util/result_util</span>
+          <span class="kind-library">model/payer/payer_address</span>
           library 
  
 
@@ -69,169 +69,26 @@
     
 
 
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
 
-
-
-
-    <section class="summary offset-anchor" id="constants">
-      <h2>Constants</h2>
-
-      <dl class="properties">
-        <dt id="configurationSuccess" class="constant">
-    <span class="name "><a href="../util_result_util/configurationSuccess-constant.html">configurationSuccess</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
+      <dl>
+        <dt id="PayerAddress">
+  <span class="name "><a href="../model_payer_payer_address/PayerAddress-class.html">PayerAddress</a></span> 
 
 </dt>
 <dd>
-  
-  
-
-</dd>
-
-        <dt id="methodCallError" class="constant">
-    <span class="name "><a href="../util_result_util/methodCallError-constant.html">methodCallError</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="moduleClosed" class="constant">
-    <span class="name "><a href="../util_result_util/moduleClosed-constant.html">moduleClosed</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="paymentCancelled" class="constant">
-    <span class="name "><a href="../util_result_util/paymentCancelled-constant.html">paymentCancelled</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="paymentCompleted" class="constant">
-    <span class="name "><a href="../util_result_util/paymentCompleted-constant.html">paymentCompleted</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="tokenizationCompleted" class="constant">
-    <span class="name "><a href="../util_result_util/tokenizationCompleted-constant.html">tokenizationCompleted</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="tokenizationFailure" class="constant">
-    <span class="name "><a href="../util_result_util/tokenizationFailure-constant.html">tokenizationFailure</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="type" class="constant">
-    <span class="name "><a href="../util_result_util/type-constant.html">type</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="unknownResult" class="constant">
-    <span class="name "><a href="../util_result_util/unknownResult-constant.html">unknownResult</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="validationError" class="constant">
-    <span class="name "><a href="../util_result_util/validationError-constant.html">validationError</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="value" class="constant">
-    <span class="name "><a href="../util_result_util/value-constant.html">value</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
+  Class responsible for storing payer address.
 </dd>
 
       </dl>
     </section>
 
 
-    <section class="summary offset-anchor" id="functions">
-      <h2>Functions</h2>
 
-      <dl class="callables">
-        <dt id="mapResult" class="callable">
-  <span class="name"><a href="../util_result_util/mapResult.html">mapResult</a></span><span class="signature">(<wbr><span class="parameter" id="mapResult-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">json</span></span>)
-    <span class="returntype parameter">&#8594; <a href="../model_result_result/Result-class.html">Result</a></span>
-  </span>
-  
 
-</dt>
-<dd>
-  
-  
 
-</dd>
 
-      </dl>
-    </section>
 
 
 
@@ -248,7 +105,7 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">flutter_tpay</a></li>
-    <li class="self-crumb">util/result_util.dart</li>
+    <li class="self-crumb">model/payer/payer_address.dart</li>
 </ol>
 
 
@@ -327,7 +184,7 @@
   </div>
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-    <h5>result_util library</h5>
+    <h5>payer_address library</h5>
   </div><!--/sidebar-offcanvas-right-->
 
 </main>
