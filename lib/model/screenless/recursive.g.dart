@@ -8,7 +8,7 @@ part of 'recursive.dart';
 
 Recursive _$RecursiveFromJson(Map<String, dynamic> json) => Recursive(
       frequency: $enumDecode(_$FrequencyEnumMap, json['frequency']),
-      quantity: json['quantity'] as int?,
+      quantity: (json['quantity'] as num?)?.toInt(),
       endDate: json['endDate'] as String,
     );
 

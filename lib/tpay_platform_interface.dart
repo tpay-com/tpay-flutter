@@ -1,4 +1,5 @@
 import 'package:flutter_tpay/model/result/payment_channels_result.dart';
+import 'package:flutter_tpay/model/screenless/pay_po_payment.dart';
 import 'package:flutter_tpay/model/screenless/raty_pekao_payment.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:flutter_tpay/model/screenless/ambiguous_blik_payment.dart';
@@ -56,6 +57,9 @@ abstract class TpayPlatform extends PlatformInterface {
 
   /// Method used to start screenless Raty Pekao payment
   Future<ScreenlessResult> screenlessRatyPekaoPayment(RatyPekaoPayment ratyPekaoPayment);
+
+  /// Method used to start screenless PayPo payment
+  Future<ScreenlessResult> screenlessPayPoPayment(PayPoPayment payPoPayment);
 
   /// Method used to start screenless credit card payment
   Future<ScreenlessResult> screenlessCreditCardPayment(CreditCardPayment creditCardPayment);

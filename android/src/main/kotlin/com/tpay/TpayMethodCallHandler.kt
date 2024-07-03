@@ -188,6 +188,14 @@ class TpayMethodCallHandler(
                             result
                         )
                     }
+                    SCREENLESS_PAY_PO_PAYMENT_METHOD -> {
+                        call.stringArgument?.let { json ->
+                            handleScreenlessPayment<PayPoScreenlessPayment>(json, result)
+                        } ?: handleScreenlessResult(
+                            TpayScreenlessResult.MethodCallError(SCREENLESS_PAY_PO_NULL_MESSAGE),
+                            result
+                        )
+                    }
                     SCREENLESS_CREDIT_CARD_PAYMENT_METHOD -> {
                         call.stringArgument?.let { json ->
                             handleScreenlessPayment<CreditCardScreenlessPayment>(json, result)
@@ -397,6 +405,7 @@ class TpayMethodCallHandler(
                 BLIKScreenlessPayment::class -> BLIKScreenlessPayment(json)
                 TransferScreenlessPayment::class -> TransferScreenlessPayment(json)
                 RatyPekaoScreenlessPayment::class -> RatyPekaoScreenlessPayment(json)
+                PayPoScreenlessPayment::class -> PayPoScreenlessPayment(json)
                 CreditCardScreenlessPayment::class -> CreditCardScreenlessPayment(json)
                 GooglePayScreenlessPayment::class -> GooglePayScreenlessPayment(json)
                 else -> throw IllegalArgumentException(NOT_IMPLEMENTED_SCREENLESS_PAYMENT_MESSAGE)
@@ -516,6 +525,7 @@ class TpayMethodCallHandler(
         private const val SCREENLESS_AMBIGUOUS_BLIK_PAYMENT_METHOD = "screenlessAmbiguousBLIKPayment"
         private const val SCREENLESS_TRANSFER_PAYMENT_METHOD = "screenlessTransferPayment"
         private const val SCREENLESS_RATY_PEKAO_PAYMENT_METHOD = "screenlessRatyPekaoPayment"
+        private const val SCREENLESS_PAY_PO_PAYMENT_METHOD = "screenlessPayPoPayment"
         private const val SCREENLESS_CREDIT_CARD_PAYMENT_METHOD = "screenlessCreditCardPayment"
         private const val SCREENLESS_GOOGLE_PAY_PAYMENT_METHOD = "screenlessGooglePayPayment"
         private const val GET_PAYMENT_CHANNELS_METHOD = "getPaymentChannels"
@@ -536,6 +546,7 @@ class TpayMethodCallHandler(
         private const val SCREENLESS_BLIK_NULL_MESSAGE = "Screenless BLIK cannot be null"
         private const val SCREENLESS_TRANSFER_NULL_MESSAGE = "Screenless transfer cannot be null"
         private const val SCREENLESS_RATY_PEKAO_NULL_MESSAGE = "Screenless Raty Pekao cannot be null"
+        private const val SCREENLESS_PAY_PO_NULL_MESSAGE = "Screenless PayPo cannot be null"
         const val NOT_IMPLEMENTED_SCREENLESS_PAYMENT_MESSAGE = "Not implemented screenless payment type"
         const val NOT_IMPLEMENTED_CONFIGURATION_TYPE_MESSAGE = "Not implemented configuration type"
         private const val GOOGLE_PAY_CONFIGURATION_NULL_MESSAGE = "Google Pay configuration cannot be null"

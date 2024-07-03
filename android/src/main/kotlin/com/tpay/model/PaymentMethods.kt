@@ -23,6 +23,7 @@ class PaymentMethods(val methods: List<PaymentMethod>) {
         private const val WALLETS_ARRAY = "wallets"
         private const val INSTALLMENT_PAYMENTS_ARRAY = "installmentPayments"
         private const val RATY_PEKAO = "ratyPekao"
+        private const val PAY_PO = "payPo"
 
         fun fromJson(json: JSONObject): PaymentMethods {
             val paymentMethodsArray = json.getJSONArray(METHODS_ARRAY)
@@ -47,6 +48,7 @@ class PaymentMethods(val methods: List<PaymentMethod>) {
                     .map { value ->
                         when (value) {
                             RATY_PEKAO -> InstallmentPayment.RATY_PEKAO
+                            PAY_PO -> InstallmentPayment.PAY_PO
                             else -> throw ValidationException(UNKNOWN_INSTALLMENT_PAYMENT_MESSAGE)
                         }
                     }

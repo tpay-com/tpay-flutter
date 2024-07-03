@@ -14,7 +14,7 @@ TransferPayment _$TransferPaymentFromJson(Map<String, dynamic> json) =>
       callbacks: json['callbacks'] == null
           ? null
           : Callbacks.fromJson(json['callbacks'] as Map<String, dynamic>),
-      channelId: json['channelId'] as int,
+      channelId: (json['channelId'] as num).toInt(),
       bankName: json['bankName'] as String,
     );
 

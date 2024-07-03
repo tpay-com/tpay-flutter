@@ -11,6 +11,7 @@ extension Transportation {
         case transfer
         case applePay
         case ratyPekao
+        case payPo
 
         // MARK: - Properties
 
@@ -26,6 +27,8 @@ extension Transportation {
                 return 3
             case .applePay:
                 return 4
+            case .payPo:
+                return 5
             }
         }
 
@@ -41,6 +44,8 @@ extension Transportation {
                 return .pbl
             case .applePay:
                 return .digitalWallet(.applePay)
+            case .payPo:
+                return .payPo
             }
         }
     }

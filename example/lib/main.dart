@@ -36,6 +36,7 @@ import 'package:flutter_tpay/model/screenless/expiration_date.dart';
 import 'package:flutter_tpay/model/screenless/google_pay_environment.dart';
 import 'package:flutter_tpay/model/screenless/google_pay_payment.dart';
 import 'package:flutter_tpay/model/screenless/google_pay_utils_configuration.dart';
+import 'package:flutter_tpay/model/screenless/pay_po_payment.dart';
 import 'package:flutter_tpay/model/screenless/raty_pekao_payment.dart';
 import 'package:flutter_tpay/model/screenless/transfer_payment.dart';
 import 'package:flutter_tpay/model/screenless/callbacks.dart';
@@ -67,6 +68,7 @@ class TpayExample extends StatelessWidget {
     "BLIK screenless": screenlessBLIKPayment,
     "Transfer screenless": screenlessTransferPayment,
     "Raty Pekao screenless": screenlessRatyPekaoPayment,
+    "PayPo screenless": screenlessPayPoPayment,
     "Credit card screenless": screenlessCreditCardPayment,
     "Google Pay screenless": screenlessGooglePayPayment,
     "Configure Google Pay": configureGooglePayUtils,
@@ -130,7 +132,7 @@ class TpayExample extends StatelessWidget {
       paymentMethods: PaymentMethods(
           methods: [PaymentMethod.card, PaymentMethod.blik, PaymentMethod.transfer],
           wallets: [DigitalWallet.applePay, DigitalWallet.googlePay],
-          installmentPayments: [InstallmentPayment.ratyPekao]),
+          installmentPayments: [InstallmentPayment.ratyPekao, InstallmentPayment.payPo]),
     );
 
     return tpayPlatform.configure(configuration);
@@ -208,6 +210,12 @@ class TpayExample extends StatelessWidget {
     final payment = RatyPekaoPayment(paymentDetails: paymentDetails, payer: payer, callbacks: callbacks, channelId: 81);
     handleScreenlessResult(await tpayPlatform.screenlessRatyPekaoPayment(payment));
   }
+
+void screenlessPayPoPayment() async {
+  handleResult(await configure());
+  final payment = PayPoPayment(paymentDetails: paymentDetails, payer: payer, callbacks: callbacks);
+  handleScreenlessResult(await tpayPlatform.screenlessPayPoPayment(payment));
+}
 
   void getPaymentChannels() async {
     handleResult(await configure());

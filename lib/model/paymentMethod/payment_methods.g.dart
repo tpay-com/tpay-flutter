@@ -43,4 +43,5 @@ const _$DigitalWalletEnumMap = {
 
 const _$InstallmentPaymentEnumMap = {
   InstallmentPayment.ratyPekao: 'ratyPekao',
+  InstallmentPayment.payPo: 'payPo',
 };

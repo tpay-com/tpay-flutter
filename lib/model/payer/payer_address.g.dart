@@ -13,7 +13,8 @@ PayerAddress _$PayerAddressFromJson(Map<String, dynamic> json) => PayerAddress(
       postalCode: json['postalCode'] as String?,
     );
 
-Map<String, dynamic> _$PayerAddressToJson(PayerAddress instance) => <String, dynamic>{
+Map<String, dynamic> _$PayerAddressToJson(PayerAddress instance) =>
+    <String, dynamic>{
       'address': instance.address,
       'city': instance.city,
       'countryCode': instance.countryCode,

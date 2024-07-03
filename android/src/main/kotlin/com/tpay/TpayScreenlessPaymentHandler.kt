@@ -6,6 +6,7 @@ import com.tpay.sdk.api.screenless.transfer.*
 import com.tpay.sdk.api.screenless.card.*
 import com.tpay.sdk.api.screenless.googlePay.*
 import com.tpay.sdk.api.screenless.pekaoInstallment.*
+import com.tpay.sdk.api.screenless.payPo.*
 import com.tpay.sdk.api.screenless.PaymentDetails
 import com.tpay.sdk.api.screenless.LongPollingConfig
 import com.tpay.sdk.api.screenless.TransactionState
@@ -60,6 +61,18 @@ class TpayScreenlessPaymentHandler(
                         .build()
                         .execute { createResult ->
                             onResult(TpayScreenlessResultHandler.handleRatyPekaoCreateResult(createResult))
+                        }
+                }
+                is PayPoScreenlessPayment -> {
+                    PayPoPayment.Builder()
+                        .apply {
+                            setPayer(payer)
+                            setPaymentDetails(paymentDetails)
+                            setCallbacks(redirects, notifications)
+                        }
+                        .build()
+                        .execute { createResult ->
+                            onResult(TpayScreenlessResultHandler.handlePayPoCreateResult(createResult))
                         }
                 }
                 is CreditCardScreenlessPayment -> {

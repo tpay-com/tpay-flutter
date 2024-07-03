@@ -90,7 +90,7 @@ final configuration = TpayConfiguration(
       DigitalWallet.applePay, 
       DigitalWallet.googlePay
     ],
-    installmentPayments: [InstallmentPayment.ratyPekao]
+    installmentPayments: [InstallmentPayment.ratyPekao, InstallmentPayment.payPo]
   ),
 );  
 
@@ -299,6 +299,36 @@ final payment = RatyPekaoPayment(
 );
 
 tpay.screenlessRatyPekaoPayment(payment);
+```
+
+### Screenless PayPo payment
+```dart
+final payment = PayPoPayment(
+  paymentDetails: PaymentDetails(
+    amount: 119.99,
+    description: "transaction description",
+    hiddenDescription: "hidden description",
+    language: Language.pl
+  ),
+  payer: Payer(
+    name: "John Doe",
+    email: "example@example.com",
+    phone: null,
+    address: null
+  ),
+  callbacks: Callbacks(
+    redirects: Redirects(
+      successUrl: "https://yourstore.com/success",
+      errorUrl: "https://yourstore.com/error",
+    ),
+    notifications: Notifications(
+      url: "https://yourstore.com",
+      email: "payments@yourstore.com"
+    )
+  ),
+);
+
+tpay.screenlessPayPoPayment(payment);
 ```
 
 ### Screenless credit card payment

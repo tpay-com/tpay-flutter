@@ -14,7 +14,7 @@ GooglePayUtilsConfiguration _$GooglePayUtilsConfigurationFromJson(
       merchantId: json['merchantId'] as String,
       environment:
           $enumDecode(_$GooglePayEnvironmentEnumMap, json['environment']),
-      customRequestCode: json['customRequestCode'] as int?,
+      customRequestCode: (json['customRequestCode'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GooglePayUtilsConfigurationToJson(

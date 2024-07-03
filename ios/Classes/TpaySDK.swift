@@ -127,6 +127,17 @@ final class TpaySDK {
             }
         }
     }
+    
+    func paymentWithPayPo(_ json: String, resolve: @escaping (String) -> Void) {
+        Headless.getAvailablePaymentChannels { [weak self] result in
+            switch result {
+            case let .success(paymentChannels):
+                self?.invokePayPoPayment(json, resolve: resolve, paymentChannels: paymentChannels)
+            case let .failure(error):
+                resolve(ScreenlessResult.paymentFailure(error: error).toJson())
+            }
+        }
+    }
 
     func continuePayment(_ json: String, resolve: @escaping (String) -> Void) {
         guard let continuePayment = TransactionConfiguration.continuePayment(continuePaymentConfiguration: json),
@@ -292,6 +303,27 @@ final class TpaySDK {
             try Headless.invokePayment(for: digitalWalletPayment,
                                        using: digitalWalletPayment.paymentChannel,
                                        with: .init(token: digitalWalletPayment.token)) { result in
+                switch result {
+                case let .success(transaction):
+                    resolve(ScreenlessResult.paymentCreated(continueUrl: transaction.continueUrl, transactionId: transaction.ongoingTransaction.id).toJson())
+                case let .failure(error):
+                    resolve(ScreenlessResult.paymentFailure(error: error).toJson())
+                }
+            }
+        } catch {
+            resolve(ScreenlessResult.paymentFailure(error: error).toJson())
+        }
+    }
+    
+    private func invokePayPoPayment(_ json: String, resolve: @escaping (String) -> Void, paymentChannels: [Headless.Models.PaymentChannel]) {
+        guard let payPoPayment = TransactionConfiguration.payPoPayment(payPoPaymentConfiguration: json, paymentChannels: paymentChannels) else {
+            resolve(ScreenlessResult.methodCallError().toJson())
+            return
+        }
+
+        do {
+            try TpayModule.configure(callbacks: payPoPayment.callbacks)
+            try Headless.invokePayment(for: payPoPayment, using: payPoPayment.paymentChannel) { result in
                 switch result {
                 case let .success(transaction):
                     resolve(ScreenlessResult.paymentCreated(continueUrl: transaction.continueUrl, transactionId: transaction.ongoingTransaction.id).toJson())

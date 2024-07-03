@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_tpay/model/screenless/apple_pay_payment.dart';
+import 'package:flutter_tpay/model/screenless/pay_po_payment.dart';
 import 'package:flutter_tpay/util/google_pay_util.dart';
 import 'package:flutter_tpay/util/payment_channels_util.dart';
 import 'package:flutter_tpay/util/result_util.dart';
@@ -31,6 +32,7 @@ const startCardTokenPaymentMethod = "startCardTokenPayment";
 const screenlessBLIKPaymentMethod = "screenlessBLIKPayment";
 const screenlessTransferPaymentMethod = "screenlessTransferPayment";
 const screenlessRatyPekaoPaymentMethod = "screenlessRatyPekaoPayment";
+const screenlessPayPoPaymentMethod = "screenlessPayPoPayment";
 const screenlessCreditCardPaymentMethod = "screenlessCreditCardPayment";
 const screenlessGooglePayPaymentMethod = "screenlessGooglePayPayment";
 const getPaymentChannelsMethod = "getPaymentChannels";
@@ -101,6 +103,13 @@ class MethodChannelTpay extends TpayPlatform {
   @override
   Future<ScreenlessResult> screenlessRatyPekaoPayment(RatyPekaoPayment ratyPekaoPayment) async {
     final result = await methodChannel.invokeMethod(screenlessRatyPekaoPaymentMethod, jsonEncode(ratyPekaoPayment));
+
+    return mapScreenlessResult(result);
+  }
+
+  @override
+  Future<ScreenlessResult> screenlessPayPoPayment(PayPoPayment payPoPayment) async {
+    final result = await methodChannel.invokeMethod(screenlessPayPoPaymentMethod, jsonEncode(payPoPayment));
 
     return mapScreenlessResult(result);
   }
