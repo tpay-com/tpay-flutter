@@ -21,16 +21,16 @@ struct ConfigurationResult: Encodable {
     // MARK: - Properties
 
     let type: String
-    let message: String?
+    let value: String?
 
     // MARK: - Results
 
     static func configurationValid() -> ConfigurationResult {
-        return .init(type: Constant.configurationSuccess, message: nil)
+        return .init(type: Constant.configurationSuccess, value: nil)
     }
 
     static func configurationFailure() -> ConfigurationResult {
-        return .init(type: Constant.configurationFailure, message: nil)
+        return .init(type: Constant.configurationFailure, value: nil)
     }
 
     static func configurationFailure(error: Error) -> ConfigurationResult {
@@ -38,11 +38,11 @@ struct ConfigurationResult: Encodable {
     }
 
     static func paymentCompleted(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.configurationFailure, message: transactionId)
+        return .init(type: Constant.paymentCompleted, value: transactionId)
     }
 
     static func paymentCancelled(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.configurationFailure, message: transactionId)
+        return .init(type: Constant.paymentCancelled, value: transactionId)
     }
 
     static func payment(error: Error) -> ConfigurationResult {
@@ -50,11 +50,11 @@ struct ConfigurationResult: Encodable {
     }
 
     static func tokenPaymentCompleted(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.tokenPaymentCompleted, message: transactionId)
+        return .init(type: Constant.tokenPaymentCompleted, value: transactionId)
     }
 
     static func tokenPaymentCancelled(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.tokenPaymentCancelled, message: transactionId)
+        return .init(type: Constant.tokenPaymentCancelled, value: transactionId)
     }
 
     static func tokenPayment(error: Error) -> ConfigurationResult {
@@ -62,21 +62,21 @@ struct ConfigurationResult: Encodable {
     }
 
     static func tokenizationCompleted() -> ConfigurationResult {
-        return .init(type: Constant.tokenizationCompleted, message: nil)
+        return .init(type: Constant.tokenizationCompleted, value: nil)
     }
 
     static func tokenizationCancelled() -> ConfigurationResult {
-        return .init(type: Constant.tokenizationCancelled, message: nil)
+        return .init(type: Constant.tokenizationCancelled, value: nil)
     }
 
     static func unknownHandleMethod() -> ConfigurationResult {
-        return .init(type: Constant.unknownHandleMethod, message: nil)
+        return .init(type: Constant.unknownHandleMethod, value: nil)
     }
 
     // MARK: - Private
 
     private static func errorResult(type: String, error: Error) -> ConfigurationResult {
-        .init(type: type, message: "\(error)")
+        .init(type: type, value: "\(error)")
     }
 }
 
