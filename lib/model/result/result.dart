@@ -25,6 +25,13 @@ class ValidationError extends Result {
   ValidationError(this.message);
 }
 
+/// Indicates that payment was successfully created
+class PaymentCreated extends Result {
+  final String transactionId;
+
+  PaymentCreated(this.transactionId);
+}
+
 /// Indicates that payment was successful
 /// and module was closed
 class PaymentCompleted extends Result {

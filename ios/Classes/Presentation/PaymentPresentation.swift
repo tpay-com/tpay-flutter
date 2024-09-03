@@ -25,6 +25,10 @@ final class PaymentPresentation: PaymentDelegate {
 
     // MARK: - PaymentDelegate
 
+    func onPaymentCreated(transactionId: String) {
+        paymentResult?(ConfigurationResult.paymentCreated(transactionId: transactionId).toJson())
+    }
+
     func onPaymentCompleted(transactionId: String) {
         paymentResult?(ConfigurationResult.paymentCompleted(transactionId: transactionId).toJson())
         complete()

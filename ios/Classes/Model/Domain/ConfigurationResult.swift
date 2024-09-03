@@ -7,6 +7,7 @@ struct ConfigurationResult: Encodable {
     private enum Constant {
         static let configurationSuccess = "configurationSuccess"
         static let configurationFailure = "configurationFailure"
+        static let paymentCreated = "paymentCreated"
         static let paymentCompleted = "paymentCompleted"
         static let paymentCancelled = "paymentCancelled"
         static let paymentError = "paymentError"
@@ -35,6 +36,10 @@ struct ConfigurationResult: Encodable {
 
     static func configurationFailure(error: Error) -> ConfigurationResult {
         return .errorResult(type: Constant.configurationFailure, error: error)
+    }
+
+    static func paymentCreated(transactionId: String) -> ConfigurationResult {
+        return .init(type: Constant.paymentCreated, value: transactionId)
     }
 
     static func paymentCompleted(transactionId: String) -> ConfigurationResult {

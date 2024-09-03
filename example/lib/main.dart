@@ -340,6 +340,9 @@ void screenlessPayPoPayment() async {
   }
 
   void handleResult(Result result) {
+    if(result is PaymentCreated) {
+      debugPrint("Payment created: ${result.transactionId}");
+    }
     if (result is PaymentCompleted) {
       debugPrint("Payment completed: ${result.transactionId}");
     }

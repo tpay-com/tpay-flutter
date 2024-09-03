@@ -10,7 +10,9 @@ class PaymentDelegateImpl(
     private val sheet: ObservablePayment,
     private val onResult: (TpayResult) -> Unit
 ) : PaymentDelegate {
-    override fun onPaymentCreated(transactionId: String?) { }
+    override fun onPaymentCreated(transactionId: String?) {
+        onResult(TpayResult.PaymentCreated(transactionId))
+    }
 
     override fun onPaymentCompleted(transactionId: String?) {
         onResult(TpayResult.PaymentCompleted(transactionId))

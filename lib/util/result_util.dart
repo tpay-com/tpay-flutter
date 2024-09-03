@@ -6,6 +6,7 @@ const value = "value";
 const configurationSuccess = "configurationSuccess";
 const validationError = "validationError";
 const paymentCompleted = "paymentCompleted";
+const paymentCreated = "paymentCreated";
 const paymentCancelled = "paymentCancelled";
 const tokenizationCompleted = "tokenizationCompleted";
 const tokenizationFailure = "tokenizationFailure";
@@ -20,6 +21,8 @@ Result mapResult(String json) {
       return ConfigurationSuccess();
     case validationError:
       return ValidationError(map[value]);
+    case paymentCreated:
+      return PaymentCreated(map[value]);
     case paymentCompleted:
       return PaymentCompleted(map[value]);
     case paymentCancelled:
