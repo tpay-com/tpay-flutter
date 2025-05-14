@@ -15,10 +15,3 @@ ScreenlessPayment _$ScreenlessPaymentFromJson(Map<String, dynamic> json) =>
           ? null
           : Callbacks.fromJson(json['callbacks'] as Map<String, dynamic>),
     );
-
-Map<String, dynamic> _$ScreenlessPaymentToJson(ScreenlessPayment instance) =>
-    <String, dynamic>{
-      'paymentDetails': instance.paymentDetails.toJson(),
-      'payer': instance.payer.toJson(),
-      'callbacks': instance.callbacks?.toJson(),
-    };

@@ -7,7 +7,7 @@ part 'screenless_payment.g.dart';
 
 /// Class responsible for storing information about
 /// [paymentDetails], [payer] and [callbacks].
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(createToJson: false)
 class ScreenlessPayment {
   final PaymentDetails paymentDetails;
   final Payer payer;

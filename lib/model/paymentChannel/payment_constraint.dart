@@ -10,7 +10,7 @@ const _errorMessage = "Unknown payment constraint type";
 
 /// Class indicating that there is a payment constraint on a payment channel
 /// - [type] - type of a payment constraint
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 class PaymentConstraint {
   final PaymentConstraintType type;
 

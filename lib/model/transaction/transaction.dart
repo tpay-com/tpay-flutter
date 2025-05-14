@@ -5,7 +5,7 @@ part 'transaction.g.dart';
 
 /// Class responsible for storing information about transaction [amount] and
 /// [description].
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class Transaction {
   final double amount;
   final String description;

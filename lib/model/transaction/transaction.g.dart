@@ -14,10 +14,3 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
           : Notifications.fromJson(
               json['notifications'] as Map<String, dynamic>),
     );
-
-Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
-    <String, dynamic>{
-      'amount': instance.amount,
-      'description': instance.description,
-      'notifications': instance.notifications,
-    };
