@@ -16,20 +16,16 @@
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
   <link rel="icon" href="../../static-assets/favicon.png?v1">
-
   
 </head>
 
-
 <body data-base-href="../../" data-using-base-href="false" class="light-theme">
-
 <div id="overlay-under-drawer"></div>
-
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">flutter_tpay</a></li>
-    <li><a href="../../tpay_method_channel/tpay_method_channel-library.html">tpay_method_channel.dart</a></li>
+    <li><a href="../../tpay_method_channel">tpay_method_channel.dart</a></li>
     <li><a href="../../tpay_method_channel/MethodChannelTpay-class.html">MethodChannelTpay</a></li>
     <li class="self-crumb">startPayment method</li>
   </ol>
@@ -50,7 +46,6 @@
   </div>
 </header>
 <main>
-
 <div
     id="dartdoc-main-content"
     class="main-content"
@@ -67,10 +62,11 @@
         <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
     </ol>
   </div>
-
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../model_result_result/Result-class.html">Result</a></span>&gt;</span></span>
-<span class="name ">startPayment</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="startPayment-param-transaction"><span class="type-annotation"><a href="../../model_transaction_single_transaction/SingleTransaction-class.html">SingleTransaction</a></span> <span class="parameter-name">transaction</span></span></li>
-</ol>)
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../model_result_result/Result-class.html">Result</a></span>&gt;</span></span>
+<span class="name ">startPayment</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="startPayment-param-transaction"><span class="type-annotation"><a href="../../model_transaction_single_transaction/SingleTransaction-class.html">SingleTransaction</a></span> <span class="parameter-name">transaction</span>, {</span></li>
+<li><span class="parameter" id="startPayment-param-onPaymentCreated"><span class="type-annotation">void</span> <span class="parameter-name">onPaymentCreated</span>(<ol class="parameter-list single-line"> <li><span class="parameter" id="param-transactionId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">transactionId</span></span></li>
+</ol>)?, </span></li>
+</ol>})
 
       <div class="features"><span class="feature">override</span></div>
 
@@ -78,6 +74,9 @@
     
 <section class="desc markdown">
   <p>Method used to start standard payment with Tpay UI Module</p>
+<p><code>transaction</code> - The transaction details required to initiate the payment.
+<code>onPaymentCreated</code> - Optional callback that is invoked when a payment is successfully created.
+It receives the transaction ID as a parameter.</p>
 </section>
 
 
@@ -85,8 +84,21 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-Future&lt;Result&gt; startPayment(SingleTransaction transaction) async {
-  final result = await methodChannel.invokeMethod(startPaymentMethod, jsonEncode(transaction));
+Future&lt;Result&gt; startPayment(
+  SingleTransaction transaction, {
+  void Function(String? transactionId)? onPaymentCreated,
+}) async {
+  final intermediateResultStreamListener = eventChannel.receiveBroadcastStream().listen(
+    (result) {
+      final mappedResult = mapResult(result);
+      if (mappedResult is PaymentCreated) {
+        onPaymentCreated?.call(mappedResult.transactionId);
+      }
+    },
+  );
+  final result = await methodChannel
+      .invokeMethod(startPaymentMethod, jsonEncode(transaction))
+      .whenComplete(() =&gt; intermediateResultStreamListener.cancel());
 
   return mapResult(result);
 }</code></pre>
@@ -94,7 +106,6 @@ Future&lt;Result&gt; startPayment(SingleTransaction transaction) async {
 
 
   </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
@@ -102,41 +113,31 @@ Future&lt;Result&gt; startPayment(SingleTransaction transaction) async {
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
-
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">flutter_tpay</a></li>
-    <li><a href="../../tpay_method_channel/tpay_method_channel-library.html">tpay_method_channel</a></li>
+    <li><a href="../../tpay_method_channel">tpay_method_channel</a></li>
     <li><a href="../../tpay_method_channel/MethodChannelTpay-class.html">MethodChannelTpay</a></li>
     <li class="self-crumb">startPayment method</li>
 </ol>
 
-
     <h5>MethodChannelTpay class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
-
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
-
 </main>
-
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.2.0
+      1.2.1
   </span>
-
   
 </footer>
-
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
 <script src="../../static-assets/docs.dart.js"></script>
 
-
-
 </body>
-
 </html>
 
