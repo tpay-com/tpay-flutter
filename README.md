@@ -127,7 +127,14 @@ final transaction = SingleTransaction(
   )  
 );  
 
-tpay.startPayment(transaction);
+tpay.startPayment(
+  transaction,
+  onPaymentCreated: (transactionId) {
+    // The onPaymentCreated optional parameter is a callback function
+    // that is triggered when a payment is successfully created.
+    // It could receives the transactionId as an argument, allowing you to handle the event.
+  },
+);
 ```
 
 ### Credit card tokenization

@@ -77,7 +77,7 @@ class TpayExample extends StatelessWidget {
 
   late final MerchantAuthorization authorization = MerchantAuthorization(
     clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET"
+    clientSecret: "YOUR_CLIENT_SECRET",
   );
 
   late final CertificatePinningConfiguration pinningConfiguration =
@@ -92,16 +92,16 @@ class TpayExample extends StatelessWidget {
       language: Language.pl);
 
   late final Callbacks callbacks = Callbacks(
-      redirects: Redirects(
-        successUrl: "https://yourstore.com/success",
-        errorUrl: "https://yourstore.com/error",
-      ),
-      notifications: Notifications(url: "https://yourstore.com/notifications", email: "payments@yourstore.com")
+    redirects: Redirects(
+      successUrl: "https://yourstore.com/success",
+      errorUrl: "https://yourstore.com/error",
+    ),
+    notifications: Notifications(url: "https://yourstore.com/notifications", email: "payments@yourstore.com"),
   );
 
   late final WalletConfiguration walletConfiguration = WalletConfiguration(
     googlePay: GooglePayConfiguration(merchantId: "YOUR_MERCHANT_ID"),
-    applePay: ApplePayConfiguration(merchantIdentifier: "YOUR_MERCHANT_IDENTIFIER", countryCode: "PL")
+    applePay: ApplePayConfiguration(merchantIdentifier: "YOUR_MERCHANT_IDENTIFIER", countryCode: "PL"),
   );
 
   late final Merchant merchant = Merchant(
@@ -130,9 +130,10 @@ class TpayExample extends StatelessWidget {
       ),
       languages: Languages(preferredLanguage: Language.pl, supportedLanguages: [Language.pl, Language.en]),
       paymentMethods: PaymentMethods(
-          methods: [PaymentMethod.card, PaymentMethod.blik, PaymentMethod.transfer],
-          wallets: [DigitalWallet.applePay, DigitalWallet.googlePay],
-          installmentPayments: [InstallmentPayment.ratyPekao, InstallmentPayment.payPo]),
+        methods: [PaymentMethod.card, PaymentMethod.blik, PaymentMethod.transfer],
+        wallets: [DigitalWallet.applePay, DigitalWallet.googlePay],
+        installmentPayments: [InstallmentPayment.ratyPekao, InstallmentPayment.payPo],
+      ),
     );
 
     return tpayPlatform.configure(configuration);
@@ -142,22 +143,33 @@ class TpayExample extends StatelessWidget {
     handleResult(await configure());
 
     final transaction = SingleTransaction(
-        amount: 100.0,
-        description: "transaction description",
-        payerContext: PayerContext(
-            payer: payer,
-            automaticPaymentMethods: AutomaticPaymentMethods(tokenizedCards: [
-              TokenizedCard(token: "card token", cardTail: "1234", brand: CreditCardBrand.mastercard),
-              TokenizedCard(token: "card token", cardTail: "4321", brand: CreditCardBrand.visa)
-            ], blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "label"))));
+      amount: 100.0,
+      description: "transaction description",
+      payerContext: PayerContext(
+        payer: payer,
+        automaticPaymentMethods: AutomaticPaymentMethods(
+          tokenizedCards: [
+            TokenizedCard(token: "card token", cardTail: "1234", brand: CreditCardBrand.mastercard),
+            TokenizedCard(token: "card token", cardTail: "4321", brand: CreditCardBrand.visa)
+          ],
+          blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "label"),
+        ),
+      ),
+    );
 
-    handleResult(await tpayPlatform.startPayment(transaction));
+    handleResult(await tpayPlatform.startPayment(transaction, onPaymentCreated: handleOnPaymentCreated));
   }
 
   void openTokenization() async {
     handleResult(await configure());
-    handleResult(await tpayPlatform
-        .tokenizeCard(Tokenization(payer: payer, notificationUrl: "https://yourstore.com/notifications")));
+    handleResult(
+      await tpayPlatform.tokenizeCard(
+        Tokenization(
+          payer: payer,
+          notificationUrl: "https://yourstore.com/notifications",
+        ),
+      ),
+    );
   }
 
   void openTokenPayment() async {
@@ -177,11 +189,12 @@ class TpayExample extends StatelessWidget {
     handleResult(await configure());
 
     final payment = BLIKPayment(
-        code: "123456",
-        alias: BlikAlias(isRegistered: true, value: "alias value", label: "label"),
-        paymentDetails: paymentDetails,
-        payer: payer,
-        callbacks: callbacks);
+      code: "123456",
+      alias: BlikAlias(isRegistered: true, value: "alias value", label: "label"),
+      paymentDetails: paymentDetails,
+      payer: payer,
+      callbacks: callbacks,
+    );
 
     handleScreenlessResult(await tpayPlatform.screenlessBLIKPayment(payment));
   }
@@ -190,9 +203,10 @@ class TpayExample extends StatelessWidget {
     handleResult(await configure());
 
     final payment = AmbiguousBLIKPayment(
-        transactionId: "transaction id",
-        blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "alias label"),
-        ambiguousAlias: AmbiguousAlias(name: "bank name", code: "alias code"));
+      transactionId: "transaction id",
+      blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "alias label"),
+      ambiguousAlias: AmbiguousAlias(name: "bank name", code: "alias code"),
+    );
 
     handleScreenlessResult(await tpayPlatform.screenlessAmbiguousBLIKPayment(payment));
   }
@@ -200,7 +214,12 @@ class TpayExample extends StatelessWidget {
   void screenlessTransferPayment() async {
     handleResult(await configure());
     final payment = TransferPayment(
-        channelId: 4, bankName: "bank name", paymentDetails: paymentDetails, payer: payer, callbacks: callbacks);
+      channelId: 4,
+      bankName: "bank name",
+      paymentDetails: paymentDetails,
+      payer: payer,
+      callbacks: callbacks,
+    );
 
     handleScreenlessResult(await tpayPlatform.screenlessTransferPayment(payment));
   }
@@ -211,11 +230,11 @@ class TpayExample extends StatelessWidget {
     handleScreenlessResult(await tpayPlatform.screenlessRatyPekaoPayment(payment));
   }
 
-void screenlessPayPoPayment() async {
-  handleResult(await configure());
-  final payment = PayPoPayment(paymentDetails: paymentDetails, payer: payer, callbacks: callbacks);
-  handleScreenlessResult(await tpayPlatform.screenlessPayPoPayment(payment));
-}
+  void screenlessPayPoPayment() async {
+    handleResult(await configure());
+    final payment = PayPoPayment(paymentDetails: paymentDetails, payer: payer, callbacks: callbacks);
+    handleScreenlessResult(await tpayPlatform.screenlessPayPoPayment(payment));
+  }
 
   void getPaymentChannels() async {
     handleResult(await configure());
@@ -226,23 +245,28 @@ void screenlessPayPoPayment() async {
     handleResult(await configure());
 
     final payment = CreditCardPayment(
-        creditCard: CreditCard(
-            cardNumber: "111111111111",
-            expiryDate: ExpirationDate(month: "12", year: "24"),
-            cvv: "123",
-            config: CreditCardConfig(shouldSave: false, domain: "yourstore.com")),
-        creditCardToken: "card token",
-        paymentDetails: paymentDetails,
-        payer: payer,
-        callbacks: callbacks);
+      creditCard: CreditCard(
+          cardNumber: "111111111111",
+          expiryDate: ExpirationDate(month: "12", year: "24"),
+          cvv: "123",
+          config: CreditCardConfig(shouldSave: false, domain: "yourstore.com")),
+      creditCardToken: "card token",
+      paymentDetails: paymentDetails,
+      payer: payer,
+      callbacks: callbacks,
+    );
 
     handleScreenlessResult(await tpayPlatform.screenlessCreditCardPayment(payment));
   }
 
   void screenlessGooglePayPayment() async {
     handleResult(await configure());
-    final payment =
-        GooglePayPayment(token: "google pay token", paymentDetails: paymentDetails, payer: payer, callbacks: callbacks);
+    final payment = GooglePayPayment(
+      token: "google pay token",
+      paymentDetails: paymentDetails,
+      payer: payer,
+      callbacks: callbacks,
+    );
 
     handleScreenlessResult(await tpayPlatform.screenlessGooglePayPayment(payment));
   }
@@ -340,9 +364,6 @@ void screenlessPayPoPayment() async {
   }
 
   void handleResult(Result result) {
-    if(result is PaymentCreated) {
-      debugPrint("Payment created: ${result.transactionId}");
-    }
     if (result is PaymentCompleted) {
       debugPrint("Payment completed: ${result.transactionId}");
     }
@@ -367,6 +388,10 @@ void screenlessPayPoPayment() async {
     if (result is MethodCallError) {
       debugPrint("Method call error: ${result.message}");
     }
+  }
+
+  void handleOnPaymentCreated(String? transactionId) {
+    debugPrint("Payment created: $transactionId");
   }
 
   @override

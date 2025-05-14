@@ -1,11 +1,12 @@
 import Flutter
 import UIKit
 
-public class TpayPlugin: NSObject, FlutterPlugin {
+public class TpayPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
 
     // MARK: - Properties
 
     private let tpay = TpaySDK()
+    private var eventSink: FlutterEventSink?
 
     // MARK: - API
 
@@ -13,10 +14,23 @@ public class TpayPlugin: NSObject, FlutterPlugin {
         let channel = FlutterMethodChannel(name: "tpay", binaryMessenger: registrar.messenger())
         let instance = TpayPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        
+        let eventChannel = FlutterEventChannel(name: "tpay.event", binaryMessenger: registrar.messenger())
+        eventChannel.setStreamHandler(instance)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         handle(method: call.method, jsonValue: call.arguments) { jsonResponse in result(jsonResponse) }
+    }
+    
+    public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        self.eventSink = events
+        return nil
+    }
+    
+    public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        self.eventSink = nil
+        return nil
     }
 
     // MARK: - Private
@@ -31,7 +45,9 @@ public class TpayPlugin: NSObject, FlutterPlugin {
         case .configureMerchant:
             resolve(tpay.configure(json))
         case .singleTransactionPayment:
-            tpay.singleTransactionPayment(json) { result in resolve(result) }
+            tpay.singleTransactionPayment(json, resolve: { result in resolve(result) }, resolveIntermediate: { intermediateResult in
+                self.eventSink?(intermediateResult)
+            })
         case .cardTokenTransaction:
             tpay.cardTokenTransaction(json) { result in resolve(result) }
         case .addCard:

@@ -6,6 +6,7 @@ final class PaymentPresentation: PaymentDelegate {
     // MARK: - Properties
 
     var paymentResult: ((String) -> Void)?
+    var paymentIntermediateResult: ((String) -> Void)?
 
     private var paymentSheet: Payment.Sheet?
     private var currnetViewController: FlutterViewController?
@@ -26,7 +27,7 @@ final class PaymentPresentation: PaymentDelegate {
     // MARK: - PaymentDelegate
 
     func onPaymentCreated(transactionId: String) {
-        paymentResult?(ConfigurationResult.paymentCreated(transactionId: transactionId).toJson())
+        paymentIntermediateResult?(ConfigurationResult.paymentCreated(transactionId: transactionId).toJson())
     }
 
     func onPaymentCompleted(transactionId: String) {

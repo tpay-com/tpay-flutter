@@ -25,6 +25,7 @@ import 'model/transaction/token_payment.dart';
 import 'tpay_platform_interface.dart';
 
 const methodChannel = MethodChannel("tpay");
+const eventChannel = EventChannel("tpay.event");
 const configureMethod = "configure";
 const startPaymentMethod = "startPayment";
 const tokenizeCardMethod = "tokenizeCard";
@@ -51,8 +52,21 @@ class MethodChannelTpay extends TpayPlatform {
   }
 
   @override
-  Future<Result> startPayment(SingleTransaction transaction) async {
-    final result = await methodChannel.invokeMethod(startPaymentMethod, jsonEncode(transaction));
+  Future<Result> startPayment(
+    SingleTransaction transaction, {
+    void Function(String? transactionId)? onPaymentCreated,
+  }) async {
+    final intermediateResultStreamListener = eventChannel.receiveBroadcastStream().listen(
+      (result) {
+        final mappedResult = mapResult(result);
+        if (mappedResult is PaymentCreated) {
+          onPaymentCreated?.call(mappedResult.transactionId);
+        }
+      },
+    );
+    final result = await methodChannel
+        .invokeMethod(startPaymentMethod, jsonEncode(transaction))
+        .whenComplete(() => intermediateResultStreamListener.cancel());
 
     return mapResult(result);
   }

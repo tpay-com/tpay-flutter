@@ -27,7 +27,7 @@ class ValidationError extends Result {
 
 /// Indicates that payment was successfully created
 class PaymentCreated extends Result {
-  final String transactionId;
+  final String? transactionId;
 
   PaymentCreated(this.transactionId);
 }
@@ -35,7 +35,7 @@ class PaymentCreated extends Result {
 /// Indicates that payment was successful
 /// and module was closed
 class PaymentCompleted extends Result {
-  final String transactionId;
+  final String? transactionId;
 
   PaymentCompleted(this.transactionId);
 }

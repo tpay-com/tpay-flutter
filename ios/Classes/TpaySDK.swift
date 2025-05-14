@@ -37,13 +37,14 @@ final class TpaySDK {
         }
     }
 
-    func singleTransactionPayment(_ json: String, resolve: @escaping (String) -> Void) {
+    func singleTransactionPayment(_ json: String, resolve: @escaping (String) -> Void, resolveIntermediate: @escaping (String) -> Void) {
         guard let singleTransaction = TransactionConfiguration.single(transactionConfiguration: json) else {
             resolve(ConfigurationResult.configurationFailure().toJson())
             return
         }
 
         paymentPresentation.paymentResult = { result in resolve(result) }
+        paymentPresentation.paymentIntermediateResult = { result in resolveIntermediate(result) }
 
         do {
             try paymentPresentation.presentPayment(for: singleTransaction)

@@ -8,10 +8,11 @@ import com.tpay.util.TpayBackpressUtil
 
 class PaymentDelegateImpl(
     private val sheet: ObservablePayment,
-    private val onResult: (TpayResult) -> Unit
+    private val onResult: (TpayResult) -> Unit,
+    private val onIntermediateResult: (TpayResult) -> Unit
 ) : PaymentDelegate {
     override fun onPaymentCreated(transactionId: String?) {
-        onResult(TpayResult.PaymentCreated(transactionId))
+        onIntermediateResult(TpayResult.PaymentCreated(transactionId))
     }
 
     override fun onPaymentCompleted(transactionId: String?) {

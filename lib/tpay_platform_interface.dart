@@ -35,7 +35,11 @@ abstract class TpayPlatform extends PlatformInterface {
   Future<Result> configure(TpayConfiguration configuration);
 
   /// Method used to start standard payment with Tpay UI Module
-  Future<Result> startPayment(SingleTransaction transaction);
+  /// 
+  /// [transaction] - The transaction details required to initiate the payment.
+  /// [onPaymentCreated] - Optional callback that is invoked when a payment is successfully created.
+  /// It receives the transaction ID as a parameter.
+  Future<Result> startPayment(SingleTransaction transaction, {void Function(String? transactionId)? onPaymentCreated});
 
   /// Method used to tokenize credit card with Tpay UI Module
   Future<Result> tokenizeCard(Tokenization tokenization);
