@@ -34,6 +34,11 @@ final class PaymentPresentation: PaymentDelegate {
         paymentResult?(ConfigurationResult.paymentCompleted(transactionId: transactionId).toJson())
         complete()
     }
+    
+    func onPaymentClosed() {
+        paymentResult?(ConfigurationResult.paymentClosed().toJson())
+        complete()
+    }
 
     func onPaymentCancelled(transactionId: String) {
         paymentResult?(ConfigurationResult.paymentCancelled(transactionId: transactionId).toJson())

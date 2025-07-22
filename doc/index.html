@@ -30,14 +30,17 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
-    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
-      dark_mode
-    </span>
-    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
-      light_mode
-    </span>
-  </button>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
@@ -585,448 +588,448 @@ flutter run
           <h2>Libraries</h2>
         <dl>
           <dt id="apple_pay_configuration">
-  <span class="name"><a href="model_apple_pay_configuration/">model/apple_pay_configuration</a></span> 
+  <span class="name"><a href="model_apple_pay_configuration">model/apple_pay_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="certificate_pinning_configuration">
-  <span class="name"><a href="model_certificate_pinning_configuration/">model/certificate_pinning_configuration</a></span> 
+  <span class="name"><a href="model_certificate_pinning_configuration">model/certificate_pinning_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_configuration">
-  <span class="name"><a href="model_google_pay_configuration/">model/google_pay_configuration</a></span> 
+  <span class="name"><a href="model_google_pay_configuration">model/google_pay_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="language">
-  <span class="name"><a href="model_language_language/">model/language/language</a></span> 
+  <span class="name"><a href="model_language_language">model/language/language</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="languages">
-  <span class="name"><a href="model_language_languages/">model/language/languages</a></span> 
+  <span class="name"><a href="model_language_languages">model/language/languages</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="localized_string">
-  <span class="name"><a href="model_language_localized_string/">model/language/localized_string</a></span> 
+  <span class="name"><a href="model_language_localized_string">model/language/localized_string</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="merchant">
-  <span class="name"><a href="model_merchant_merchant/">model/merchant/merchant</a></span> 
+  <span class="name"><a href="model_merchant_merchant">model/merchant/merchant</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="merchant_authorization">
-  <span class="name"><a href="model_merchant_merchant_authorization/">model/merchant/merchant_authorization</a></span> 
+  <span class="name"><a href="model_merchant_merchant_authorization">model/merchant/merchant_authorization</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="merchant_details">
-  <span class="name"><a href="model_merchant_merchant_details/">model/merchant/merchant_details</a></span> 
+  <span class="name"><a href="model_merchant_merchant_details">model/merchant/merchant_details</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payer">
-  <span class="name"><a href="model_payer_payer/">model/payer/payer</a></span> 
+  <span class="name"><a href="model_payer_payer">model/payer/payer</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payer_address">
-  <span class="name"><a href="model_payer_payer_address/">model/payer/payer_address</a></span> 
+  <span class="name"><a href="model_payer_payer_address">model/payer/payer_address</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payer_context">
-  <span class="name"><a href="model_payer_payer_context/">model/payer/payer_context</a></span> 
+  <span class="name"><a href="model_payer_payer_context">model/payer/payer_context</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_channel">
-  <span class="name"><a href="model_paymentChannel_payment_channel/">model/paymentChannel/payment_channel</a></span> 
+  <span class="name"><a href="model_paymentChannel_payment_channel">model/paymentChannel/payment_channel</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_constraint">
-  <span class="name"><a href="model_paymentChannel_payment_constraint/">model/paymentChannel/payment_constraint</a></span> 
+  <span class="name"><a href="model_paymentChannel_payment_constraint">model/paymentChannel/payment_constraint</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_group">
-  <span class="name"><a href="model_paymentChannel_payment_group/">model/paymentChannel/payment_group</a></span> 
+  <span class="name"><a href="model_paymentChannel_payment_group">model/paymentChannel/payment_group</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="automatic_payment_methods">
-  <span class="name"><a href="model_paymentMethod_automatic_payment_methods/">model/paymentMethod/automatic_payment_methods</a></span> 
+  <span class="name"><a href="model_paymentMethod_automatic_payment_methods">model/paymentMethod/automatic_payment_methods</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="blik_alias">
-  <span class="name"><a href="model_paymentMethod_blik_alias/">model/paymentMethod/blik_alias</a></span> 
+  <span class="name"><a href="model_paymentMethod_blik_alias">model/paymentMethod/blik_alias</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card_brand">
-  <span class="name"><a href="model_paymentMethod_credit_card_brand/">model/paymentMethod/credit_card_brand</a></span> 
+  <span class="name"><a href="model_paymentMethod_credit_card_brand">model/paymentMethod/credit_card_brand</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="digital_wallet">
-  <span class="name"><a href="model_paymentMethod_digital_wallet/">model/paymentMethod/digital_wallet</a></span> 
+  <span class="name"><a href="model_paymentMethod_digital_wallet">model/paymentMethod/digital_wallet</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="installment_payment">
-  <span class="name"><a href="model_paymentMethod_installment_payment/">model/paymentMethod/installment_payment</a></span> 
+  <span class="name"><a href="model_paymentMethod_installment_payment">model/paymentMethod/installment_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_method">
-  <span class="name"><a href="model_paymentMethod_payment_method/">model/paymentMethod/payment_method</a></span> 
+  <span class="name"><a href="model_paymentMethod_payment_method">model/paymentMethod/payment_method</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_methods">
-  <span class="name"><a href="model_paymentMethod_payment_methods/">model/paymentMethod/payment_methods</a></span> 
+  <span class="name"><a href="model_paymentMethod_payment_methods">model/paymentMethod/payment_methods</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tokenized_card">
-  <span class="name"><a href="model_paymentMethod_tokenized_card/">model/paymentMethod/tokenized_card</a></span> 
+  <span class="name"><a href="model_paymentMethod_tokenized_card">model/paymentMethod/tokenized_card</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_configure_result">
-  <span class="name"><a href="model_result_google_pay_configure_result/">model/result/google_pay_configure_result</a></span> 
+  <span class="name"><a href="model_result_google_pay_configure_result">model/result/google_pay_configure_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_open_result">
-  <span class="name"><a href="model_result_google_pay_open_result/">model/result/google_pay_open_result</a></span> 
+  <span class="name"><a href="model_result_google_pay_open_result">model/result/google_pay_open_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_channels_result">
-  <span class="name"><a href="model_result_payment_channels_result/">model/result/payment_channels_result</a></span> 
+  <span class="name"><a href="model_result_payment_channels_result">model/result/payment_channels_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="result">
-  <span class="name"><a href="model_result_result/">model/result/result</a></span> 
+  <span class="name"><a href="model_result_result">model/result/result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="screenless_result">
-  <span class="name"><a href="model_result_screenless_result/">model/result/screenless_result</a></span> 
+  <span class="name"><a href="model_result_screenless_result">model/result/screenless_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="ambiguous_alias">
-  <span class="name"><a href="model_screenless_ambiguous_alias/">model/screenless/ambiguous_alias</a></span> 
+  <span class="name"><a href="model_screenless_ambiguous_alias">model/screenless/ambiguous_alias</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="ambiguous_blik_payment">
-  <span class="name"><a href="model_screenless_ambiguous_blik_payment/">model/screenless/ambiguous_blik_payment</a></span> 
+  <span class="name"><a href="model_screenless_ambiguous_blik_payment">model/screenless/ambiguous_blik_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="apple_pay_payment">
-  <span class="name"><a href="model_screenless_apple_pay_payment/">model/screenless/apple_pay_payment</a></span> 
+  <span class="name"><a href="model_screenless_apple_pay_payment">model/screenless/apple_pay_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="blik_payment">
-  <span class="name"><a href="model_screenless_blik_payment/">model/screenless/blik_payment</a></span> 
+  <span class="name"><a href="model_screenless_blik_payment">model/screenless/blik_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="callbacks">
-  <span class="name"><a href="model_screenless_callbacks/">model/screenless/callbacks</a></span> 
+  <span class="name"><a href="model_screenless_callbacks">model/screenless/callbacks</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card">
-  <span class="name"><a href="model_screenless_credit_card/">model/screenless/credit_card</a></span> 
+  <span class="name"><a href="model_screenless_credit_card">model/screenless/credit_card</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card_config">
-  <span class="name"><a href="model_screenless_credit_card_config/">model/screenless/credit_card_config</a></span> 
+  <span class="name"><a href="model_screenless_credit_card_config">model/screenless/credit_card_config</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card_payment">
-  <span class="name"><a href="model_screenless_credit_card_payment/">model/screenless/credit_card_payment</a></span> 
+  <span class="name"><a href="model_screenless_credit_card_payment">model/screenless/credit_card_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="expiration_date">
-  <span class="name"><a href="model_screenless_expiration_date/">model/screenless/expiration_date</a></span> 
+  <span class="name"><a href="model_screenless_expiration_date">model/screenless/expiration_date</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_environment">
-  <span class="name"><a href="model_screenless_google_pay_environment/">model/screenless/google_pay_environment</a></span> 
+  <span class="name"><a href="model_screenless_google_pay_environment">model/screenless/google_pay_environment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_payment">
-  <span class="name"><a href="model_screenless_google_pay_payment/">model/screenless/google_pay_payment</a></span> 
+  <span class="name"><a href="model_screenless_google_pay_payment">model/screenless/google_pay_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_utils_configuration">
-  <span class="name"><a href="model_screenless_google_pay_utils_configuration/">model/screenless/google_pay_utils_configuration</a></span> 
+  <span class="name"><a href="model_screenless_google_pay_utils_configuration">model/screenless/google_pay_utils_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="notifications">
-  <span class="name"><a href="model_screenless_notifications/">model/screenless/notifications</a></span> 
+  <span class="name"><a href="model_screenless_notifications">model/screenless/notifications</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="pay_po_payment">
-  <span class="name"><a href="model_screenless_pay_po_payment/">model/screenless/pay_po_payment</a></span> 
+  <span class="name"><a href="model_screenless_pay_po_payment">model/screenless/pay_po_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_details">
-  <span class="name"><a href="model_screenless_payment_details/">model/screenless/payment_details</a></span> 
+  <span class="name"><a href="model_screenless_payment_details">model/screenless/payment_details</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="raty_pekao_payment">
-  <span class="name"><a href="model_screenless_raty_pekao_payment/">model/screenless/raty_pekao_payment</a></span> 
+  <span class="name"><a href="model_screenless_raty_pekao_payment">model/screenless/raty_pekao_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="recursive">
-  <span class="name"><a href="model_screenless_recursive/">model/screenless/recursive</a></span> 
+  <span class="name"><a href="model_screenless_recursive">model/screenless/recursive</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="redirects">
-  <span class="name"><a href="model_screenless_redirects/">model/screenless/redirects</a></span> 
+  <span class="name"><a href="model_screenless_redirects">model/screenless/redirects</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="screenless_payment">
-  <span class="name"><a href="model_screenless_screenless_payment/">model/screenless/screenless_payment</a></span> 
+  <span class="name"><a href="model_screenless_screenless_payment">model/screenless/screenless_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="transfer_method">
-  <span class="name"><a href="model_screenless_transfer_method/">model/screenless/transfer_method</a></span> 
+  <span class="name"><a href="model_screenless_transfer_method">model/screenless/transfer_method</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="transfer_payment">
-  <span class="name"><a href="model_screenless_transfer_payment/">model/screenless/transfer_payment</a></span> 
+  <span class="name"><a href="model_screenless_transfer_payment">model/screenless/transfer_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tokenization">
-  <span class="name"><a href="model_tokenization_tokenization/">model/tokenization/tokenization</a></span> 
+  <span class="name"><a href="model_tokenization_tokenization">model/tokenization/tokenization</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_configuration">
-  <span class="name"><a href="model_tpay_configuration/">model/tpay_configuration</a></span> 
+  <span class="name"><a href="model_tpay_configuration">model/tpay_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_environment">
-  <span class="name"><a href="model_tpay_environment/">model/tpay_environment</a></span> 
+  <span class="name"><a href="model_tpay_environment">model/tpay_environment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="single_transaction">
-  <span class="name"><a href="model_transaction_single_transaction/">model/transaction/single_transaction</a></span> 
+  <span class="name"><a href="model_transaction_single_transaction">model/transaction/single_transaction</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="token_payment">
-  <span class="name"><a href="model_transaction_token_payment/">model/transaction/token_payment</a></span> 
+  <span class="name"><a href="model_transaction_token_payment">model/transaction/token_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="transaction">
-  <span class="name"><a href="model_transaction_transaction/">model/transaction/transaction</a></span> 
+  <span class="name"><a href="model_transaction_transaction">model/transaction/transaction</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="wallet_configuration">
-  <span class="name"><a href="model_wallet_configuration/">model/wallet_configuration</a></span> 
+  <span class="name"><a href="model_wallet_configuration">model/wallet_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_button">
-  <span class="name"><a href="tpay_button/">tpay_button</a></span> 
+  <span class="name"><a href="tpay_button">tpay_button</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_method_channel">
-  <span class="name"><a href="tpay_method_channel/">tpay_method_channel</a></span> 
+  <span class="name"><a href="tpay_method_channel">tpay_method_channel</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_platform_interface">
-  <span class="name"><a href="tpay_platform_interface/">tpay_platform_interface</a></span> 
+  <span class="name"><a href="tpay_platform_interface">tpay_platform_interface</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_configuration_util">
-  <span class="name"><a href="util_google_pay_configuration_util/">util/google_pay_configuration_util</a></span> 
+  <span class="name"><a href="util_google_pay_configuration_util">util/google_pay_configuration_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_util">
-  <span class="name"><a href="util_google_pay_util/">util/google_pay_util</a></span> 
+  <span class="name"><a href="util_google_pay_util">util/google_pay_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_channels_util">
-  <span class="name"><a href="util_payment_channels_util/">util/payment_channels_util</a></span> 
+  <span class="name"><a href="util_payment_channels_util">util/payment_channels_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="result_util">
-  <span class="name"><a href="util_result_util/">util/result_util</a></span> 
+  <span class="name"><a href="util_result_util">util/result_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="screenless_result_util">
-  <span class="name"><a href="util_screenless_result_util/">util/screenless_result_util</a></span> 
+  <span class="name"><a href="util_screenless_result_util">util/screenless_result_util</a></span> 
 
 </dt>
 <dd>
@@ -1049,70 +1052,70 @@ flutter run
     <h5 class="hidden-xs"><span class="package-name">flutter_tpay</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="model_apple_pay_configuration/">model/apple_pay_configuration</a></li>
-      <li><a href="model_certificate_pinning_configuration/">model/certificate_pinning_configuration</a></li>
-      <li><a href="model_google_pay_configuration/">model/google_pay_configuration</a></li>
-      <li><a href="model_language_language/">model/language/language</a></li>
-      <li><a href="model_language_languages/">model/language/languages</a></li>
-      <li><a href="model_language_localized_string/">model/language/localized_string</a></li>
-      <li><a href="model_merchant_merchant/">model/merchant/merchant</a></li>
-      <li><a href="model_merchant_merchant_authorization/">model/merchant/merchant_authorization</a></li>
-      <li><a href="model_merchant_merchant_details/">model/merchant/merchant_details</a></li>
-      <li><a href="model_payer_payer/">model/payer/payer</a></li>
-      <li><a href="model_payer_payer_address/">model/payer/payer_address</a></li>
-      <li><a href="model_payer_payer_context/">model/payer/payer_context</a></li>
-      <li><a href="model_paymentChannel_payment_channel/">model/paymentChannel/payment_channel</a></li>
-      <li><a href="model_paymentChannel_payment_constraint/">model/paymentChannel/payment_constraint</a></li>
-      <li><a href="model_paymentChannel_payment_group/">model/paymentChannel/payment_group</a></li>
-      <li><a href="model_paymentMethod_automatic_payment_methods/">model/paymentMethod/automatic_payment_methods</a></li>
-      <li><a href="model_paymentMethod_blik_alias/">model/paymentMethod/blik_alias</a></li>
-      <li><a href="model_paymentMethod_credit_card_brand/">model/paymentMethod/credit_card_brand</a></li>
-      <li><a href="model_paymentMethod_digital_wallet/">model/paymentMethod/digital_wallet</a></li>
-      <li><a href="model_paymentMethod_installment_payment/">model/paymentMethod/installment_payment</a></li>
-      <li><a href="model_paymentMethod_payment_method/">model/paymentMethod/payment_method</a></li>
-      <li><a href="model_paymentMethod_payment_methods/">model/paymentMethod/payment_methods</a></li>
-      <li><a href="model_paymentMethod_tokenized_card/">model/paymentMethod/tokenized_card</a></li>
-      <li><a href="model_result_google_pay_configure_result/">model/result/google_pay_configure_result</a></li>
-      <li><a href="model_result_google_pay_open_result/">model/result/google_pay_open_result</a></li>
-      <li><a href="model_result_payment_channels_result/">model/result/payment_channels_result</a></li>
-      <li><a href="model_result_result/">model/result/result</a></li>
-      <li><a href="model_result_screenless_result/">model/result/screenless_result</a></li>
-      <li><a href="model_screenless_ambiguous_alias/">model/screenless/ambiguous_alias</a></li>
-      <li><a href="model_screenless_ambiguous_blik_payment/">model/screenless/ambiguous_blik_payment</a></li>
-      <li><a href="model_screenless_apple_pay_payment/">model/screenless/apple_pay_payment</a></li>
-      <li><a href="model_screenless_blik_payment/">model/screenless/blik_payment</a></li>
-      <li><a href="model_screenless_callbacks/">model/screenless/callbacks</a></li>
-      <li><a href="model_screenless_credit_card/">model/screenless/credit_card</a></li>
-      <li><a href="model_screenless_credit_card_config/">model/screenless/credit_card_config</a></li>
-      <li><a href="model_screenless_credit_card_payment/">model/screenless/credit_card_payment</a></li>
-      <li><a href="model_screenless_expiration_date/">model/screenless/expiration_date</a></li>
-      <li><a href="model_screenless_google_pay_environment/">model/screenless/google_pay_environment</a></li>
-      <li><a href="model_screenless_google_pay_payment/">model/screenless/google_pay_payment</a></li>
-      <li><a href="model_screenless_google_pay_utils_configuration/">model/screenless/google_pay_utils_configuration</a></li>
-      <li><a href="model_screenless_notifications/">model/screenless/notifications</a></li>
-      <li><a href="model_screenless_pay_po_payment/">model/screenless/pay_po_payment</a></li>
-      <li><a href="model_screenless_payment_details/">model/screenless/payment_details</a></li>
-      <li><a href="model_screenless_raty_pekao_payment/">model/screenless/raty_pekao_payment</a></li>
-      <li><a href="model_screenless_recursive/">model/screenless/recursive</a></li>
-      <li><a href="model_screenless_redirects/">model/screenless/redirects</a></li>
-      <li><a href="model_screenless_screenless_payment/">model/screenless/screenless_payment</a></li>
-      <li><a href="model_screenless_transfer_method/">model/screenless/transfer_method</a></li>
-      <li><a href="model_screenless_transfer_payment/">model/screenless/transfer_payment</a></li>
-      <li><a href="model_tokenization_tokenization/">model/tokenization/tokenization</a></li>
-      <li><a href="model_tpay_configuration/">model/tpay_configuration</a></li>
-      <li><a href="model_tpay_environment/">model/tpay_environment</a></li>
-      <li><a href="model_transaction_single_transaction/">model/transaction/single_transaction</a></li>
-      <li><a href="model_transaction_token_payment/">model/transaction/token_payment</a></li>
-      <li><a href="model_transaction_transaction/">model/transaction/transaction</a></li>
-      <li><a href="model_wallet_configuration/">model/wallet_configuration</a></li>
-      <li><a href="tpay_button/">tpay_button</a></li>
-      <li><a href="tpay_method_channel/">tpay_method_channel</a></li>
-      <li><a href="tpay_platform_interface/">tpay_platform_interface</a></li>
-      <li><a href="util_google_pay_configuration_util/">util/google_pay_configuration_util</a></li>
-      <li><a href="util_google_pay_util/">util/google_pay_util</a></li>
-      <li><a href="util_payment_channels_util/">util/payment_channels_util</a></li>
-      <li><a href="util_result_util/">util/result_util</a></li>
-      <li><a href="util_screenless_result_util/">util/screenless_result_util</a></li>
+      <li><a href="model_apple_pay_configuration">model/apple_pay_configuration</a></li>
+      <li><a href="model_certificate_pinning_configuration">model/certificate_pinning_configuration</a></li>
+      <li><a href="model_google_pay_configuration">model/google_pay_configuration</a></li>
+      <li><a href="model_language_language">model/language/language</a></li>
+      <li><a href="model_language_languages">model/language/languages</a></li>
+      <li><a href="model_language_localized_string">model/language/localized_string</a></li>
+      <li><a href="model_merchant_merchant">model/merchant/merchant</a></li>
+      <li><a href="model_merchant_merchant_authorization">model/merchant/merchant_authorization</a></li>
+      <li><a href="model_merchant_merchant_details">model/merchant/merchant_details</a></li>
+      <li><a href="model_payer_payer">model/payer/payer</a></li>
+      <li><a href="model_payer_payer_address">model/payer/payer_address</a></li>
+      <li><a href="model_payer_payer_context">model/payer/payer_context</a></li>
+      <li><a href="model_paymentChannel_payment_channel">model/paymentChannel/payment_channel</a></li>
+      <li><a href="model_paymentChannel_payment_constraint">model/paymentChannel/payment_constraint</a></li>
+      <li><a href="model_paymentChannel_payment_group">model/paymentChannel/payment_group</a></li>
+      <li><a href="model_paymentMethod_automatic_payment_methods">model/paymentMethod/automatic_payment_methods</a></li>
+      <li><a href="model_paymentMethod_blik_alias">model/paymentMethod/blik_alias</a></li>
+      <li><a href="model_paymentMethod_credit_card_brand">model/paymentMethod/credit_card_brand</a></li>
+      <li><a href="model_paymentMethod_digital_wallet">model/paymentMethod/digital_wallet</a></li>
+      <li><a href="model_paymentMethod_installment_payment">model/paymentMethod/installment_payment</a></li>
+      <li><a href="model_paymentMethod_payment_method">model/paymentMethod/payment_method</a></li>
+      <li><a href="model_paymentMethod_payment_methods">model/paymentMethod/payment_methods</a></li>
+      <li><a href="model_paymentMethod_tokenized_card">model/paymentMethod/tokenized_card</a></li>
+      <li><a href="model_result_google_pay_configure_result">model/result/google_pay_configure_result</a></li>
+      <li><a href="model_result_google_pay_open_result">model/result/google_pay_open_result</a></li>
+      <li><a href="model_result_payment_channels_result">model/result/payment_channels_result</a></li>
+      <li><a href="model_result_result">model/result/result</a></li>
+      <li><a href="model_result_screenless_result">model/result/screenless_result</a></li>
+      <li><a href="model_screenless_ambiguous_alias">model/screenless/ambiguous_alias</a></li>
+      <li><a href="model_screenless_ambiguous_blik_payment">model/screenless/ambiguous_blik_payment</a></li>
+      <li><a href="model_screenless_apple_pay_payment">model/screenless/apple_pay_payment</a></li>
+      <li><a href="model_screenless_blik_payment">model/screenless/blik_payment</a></li>
+      <li><a href="model_screenless_callbacks">model/screenless/callbacks</a></li>
+      <li><a href="model_screenless_credit_card">model/screenless/credit_card</a></li>
+      <li><a href="model_screenless_credit_card_config">model/screenless/credit_card_config</a></li>
+      <li><a href="model_screenless_credit_card_payment">model/screenless/credit_card_payment</a></li>
+      <li><a href="model_screenless_expiration_date">model/screenless/expiration_date</a></li>
+      <li><a href="model_screenless_google_pay_environment">model/screenless/google_pay_environment</a></li>
+      <li><a href="model_screenless_google_pay_payment">model/screenless/google_pay_payment</a></li>
+      <li><a href="model_screenless_google_pay_utils_configuration">model/screenless/google_pay_utils_configuration</a></li>
+      <li><a href="model_screenless_notifications">model/screenless/notifications</a></li>
+      <li><a href="model_screenless_pay_po_payment">model/screenless/pay_po_payment</a></li>
+      <li><a href="model_screenless_payment_details">model/screenless/payment_details</a></li>
+      <li><a href="model_screenless_raty_pekao_payment">model/screenless/raty_pekao_payment</a></li>
+      <li><a href="model_screenless_recursive">model/screenless/recursive</a></li>
+      <li><a href="model_screenless_redirects">model/screenless/redirects</a></li>
+      <li><a href="model_screenless_screenless_payment">model/screenless/screenless_payment</a></li>
+      <li><a href="model_screenless_transfer_method">model/screenless/transfer_method</a></li>
+      <li><a href="model_screenless_transfer_payment">model/screenless/transfer_payment</a></li>
+      <li><a href="model_tokenization_tokenization">model/tokenization/tokenization</a></li>
+      <li><a href="model_tpay_configuration">model/tpay_configuration</a></li>
+      <li><a href="model_tpay_environment">model/tpay_environment</a></li>
+      <li><a href="model_transaction_single_transaction">model/transaction/single_transaction</a></li>
+      <li><a href="model_transaction_token_payment">model/transaction/token_payment</a></li>
+      <li><a href="model_transaction_transaction">model/transaction/transaction</a></li>
+      <li><a href="model_wallet_configuration">model/wallet_configuration</a></li>
+      <li><a href="tpay_button">tpay_button</a></li>
+      <li><a href="tpay_method_channel">tpay_method_channel</a></li>
+      <li><a href="tpay_platform_interface">tpay_platform_interface</a></li>
+      <li><a href="util_google_pay_configuration_util">util/google_pay_configuration_util</a></li>
+      <li><a href="util_google_pay_util">util/google_pay_util</a></li>
+      <li><a href="util_payment_channels_util">util/payment_channels_util</a></li>
+      <li><a href="util_result_util">util/result_util</a></li>
+      <li><a href="util_screenless_result_util">util/screenless_result_util</a></li>
 </ol>
 
   </div>
@@ -1122,7 +1125,7 @@ flutter run
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.2.2
+      1.2.1
   </span>
   
 </footer>

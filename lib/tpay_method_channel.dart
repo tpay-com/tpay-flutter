@@ -51,11 +51,17 @@ class MethodChannelTpay extends TpayPlatform {
     return mapResult(result);
   }
 
+  bool isPaymentOngoing = false;
+
   @override
   Future<Result> startPayment(
     SingleTransaction transaction, {
     void Function(String? transactionId)? onPaymentCreated,
   }) async {
+    if (isPaymentOngoing) {
+      throw Exception('Payment is already in progress');
+    }
+    isPaymentOngoing = true;
     final intermediateResultStreamListener = eventChannel.receiveBroadcastStream().listen(
       (result) {
         final mappedResult = mapResult(result);
@@ -64,10 +70,10 @@ class MethodChannelTpay extends TpayPlatform {
         }
       },
     );
-    final result = await methodChannel
-        .invokeMethod(startPaymentMethod, jsonEncode(transaction))
-        .whenComplete(() => intermediateResultStreamListener.cancel());
-
+    final result = await methodChannel.invokeMethod(startPaymentMethod, jsonEncode(transaction)).whenComplete(() {
+      isPaymentOngoing = false;
+      intermediateResultStreamListener.cancel();
+    });
     return mapResult(result);
   }
 

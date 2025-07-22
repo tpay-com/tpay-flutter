@@ -65,7 +65,8 @@ final class TransactionConfiguration {
                      paymentChannel: paymentChannel,
                      card: card,
                      cardToken: cardToken,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     hiddenDescription: nil)
     }
 
     static func blikPayment(blikPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> BlikPayment? {
@@ -84,7 +85,8 @@ final class TransactionConfiguration {
                      token: blikPayment.code,
                      alias: blikPayment.alias?.value,
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     hiddenDescription: nil)
     }
 
     static func bankPayment(bankPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> BankPayment? {
@@ -101,7 +103,8 @@ final class TransactionConfiguration {
                      description: bankPayment.paymentDetails.description,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     hiddenDescription: nil)
     }
 
     static func digitalWalletPayment(digitalWalletPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> DigitalWalletPayment? {
@@ -119,7 +122,8 @@ final class TransactionConfiguration {
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
                      token: digitalWalletPayment.applePayToken,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     hiddenDescription: nil)
     }
     
     static func payPoPayment(payPoPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> PayPoPayment? {
@@ -136,7 +140,8 @@ final class TransactionConfiguration {
                      description: payPoPayment.paymentDetails.description,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     hiddenDescription: nil)
     }
 
     static func continuePayment(continuePaymentConfiguration: String) -> ContinuePayment? {

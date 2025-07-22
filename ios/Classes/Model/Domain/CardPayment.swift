@@ -11,4 +11,5 @@ struct CardPayment: Transaction {
     let card: Headless.Models.Card?
     let cardToken: Headless.Models.CardToken?
     let callbacks: CallbacksConfiguration
+    let hiddenDescription: String?
 }

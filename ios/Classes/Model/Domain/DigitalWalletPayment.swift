@@ -10,4 +10,5 @@ struct DigitalWalletPayment: Transaction {
     let paymentChannel: Headless.Models.PaymentChannel
     let token: String
     let callbacks: CallbacksConfiguration
+    let hiddenDescription: String?
 }

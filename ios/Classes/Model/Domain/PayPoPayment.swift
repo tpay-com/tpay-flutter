@@ -9,4 +9,5 @@ struct PayPoPayment: Transaction {
     let payerContext: PayerContext?
     let paymentChannel: Headless.Models.PaymentChannel
     let callbacks: CallbacksConfiguration
+    let hiddenDescription: String?
 }
