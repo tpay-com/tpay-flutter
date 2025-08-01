@@ -23,6 +23,7 @@ object JsonUtil {
     private const val POSTAL_CODE = "postalCode"
     private const val AMOUNT = "amount"
     private const val DESCRIPTION = "description"
+    private const val HIDDEN_DESCRIPTION = "hiddenDescription"
     private const val PAYER = "payer"
     private const val CARD_TOKEN = "cardToken"
     private const val PAYER_CONTEXT = "payerContext"
@@ -90,6 +91,7 @@ object JsonUtil {
 
         val amount = rootJson.getDouble(AMOUNT)
         val description = rootJson.getString(DESCRIPTION)
+        val hiddenDescription = rootJson.getString(HIDDEN_DESCRIPTION)
         val payerJson = rootJson.optJSONObject(PAYER)
         payerJson ?: throw ValidationException(ValidationMessages.PAYER_REQUIRED_TOKEN_PAYMENT)
         val payer = getPayer(payerJson.toString())
@@ -105,6 +107,7 @@ object JsonUtil {
         return CardTokenTransaction(
             amount = amount,
             description = description,
+            hiddenDescription = hiddenDescription,
             payer = payer,
             cardToken = cardToken,
             notifications = notifications
@@ -116,6 +119,7 @@ object JsonUtil {
 
         val amount = rootJson.getDouble(AMOUNT)
         val description = rootJson.getString(DESCRIPTION)
+        val hiddenDescription = rootJson.getString(HIDDEN_DESCRIPTION)
 
         val notifications = rootJson.optJSONObject(NOTIFICATIONS)?.let { json ->
             Notifications(
@@ -175,6 +179,7 @@ object JsonUtil {
         return SingleTransaction(
             amount = amount,
             description = description,
+            hiddenDescription = hiddenDescription,
             payerContext = payerContext,
             notifications = notifications
         )

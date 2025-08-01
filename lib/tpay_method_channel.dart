@@ -31,6 +31,7 @@ const startPaymentMethod = "startPayment";
 const tokenizeCardMethod = "tokenizeCard";
 const startCardTokenPaymentMethod = "startCardTokenPayment";
 const screenlessBLIKPaymentMethod = "screenlessBLIKPayment";
+const screenlessAmbiguousBLIKPaymentMethod = "screenlessAmbiguousBLIKPayment";
 const screenlessTransferPaymentMethod = "screenlessTransferPayment";
 const screenlessRatyPekaoPaymentMethod = "screenlessRatyPekaoPayment";
 const screenlessPayPoPaymentMethod = "screenlessPayPoPayment";
@@ -41,7 +42,6 @@ const configureGooglePayUtilsMethod = "configureGooglePayUtils";
 const openGooglePayMethod = "openGooglePay";
 const isGooglePayAvailableMethod = "isGooglePayAvailable";
 const screenlessApplePayMethod = "paymentWithApplePay";
-const screenlessAmbiguousBLIKPaymentMethod = "screenlessAmbiguousBLIKPayment";
 
 class MethodChannelTpay extends TpayPlatform {
   @override
@@ -93,7 +93,8 @@ class MethodChannelTpay extends TpayPlatform {
 
   @override
   Future<PaymentChannelsResult> getAvailablePaymentChannels() async {
-    final result = await methodChannel.invokeMethod(getPaymentChannelsMethod);
+    // Passing an empty json is a workaround for iOS part that does not handle null
+    final result = await methodChannel.invokeMethod(getPaymentChannelsMethod, '{}');
 
     return mapPaymentChannelsResult(result);
   }

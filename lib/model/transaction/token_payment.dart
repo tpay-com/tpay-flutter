@@ -18,6 +18,7 @@ class TokenPayment extends Transaction {
   TokenPayment({
     required super.amount,
     required super.description,
+    super.hiddenDescription,
     required this.payer,
     required this.cardToken,
     super.notifications

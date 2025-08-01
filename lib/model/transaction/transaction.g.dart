@@ -9,6 +9,7 @@ part of 'transaction.dart';
 Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       amount: (json['amount'] as num).toDouble(),
       description: json['description'] as String,
+      hiddenDescription: json['hiddenDescription'] as String?,
       notifications: json['notifications'] == null
           ? null
           : Notifications.fromJson(

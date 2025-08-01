@@ -13,13 +13,13 @@ final class TransactionConfiguration {
 
     static func single(transactionConfiguration: String) -> Transaction? {
         guard let trancationData = transactionConfiguration.data(using: .utf8),
-              let signleTransaction = try? JSONDecoder().decode(T.SingleTransaction.self, from: trancationData) else {
+              let singleTransaction = try? JSONDecoder().decode(T.SingleTransaction.self, from: trancationData) else {
             return nil
         }
 
-        let payerContext = makeTransactionPayerContext(from: signleTransaction)
+        let payerContext = makeTransactionPayerContext(from: singleTransaction)
 
-        return SingleTransaction(amount: signleTransaction.amount, description: signleTransaction.description, payerContext: payerContext)
+        return SingleTransaction(amount: singleTransaction.amount, description: singleTransaction.description, hiddenDescription: singleTransaction.hiddenDescription, payerContext: payerContext)
     }
 
     static func cardTokenTransaction(transactionConfiguration: String) -> Transaction? {
@@ -28,7 +28,7 @@ final class TransactionConfiguration {
             return nil
         }
         let payerContext = makeTokenPayerContext(from: tokenPayment)
-        return SingleTransaction(amount: tokenPayment.amount, description: tokenPayment.description, payerContext: payerContext)
+        return SingleTransaction(amount: tokenPayment.amount, description: tokenPayment.description, hiddenDescription: tokenPayment.hiddenDescription, payerContext: payerContext)
     }
     
     static func addCard(tokenisationConfiguration: String) -> TokenizationData? {
@@ -61,12 +61,12 @@ final class TransactionConfiguration {
 
         return .init(amount: cardPayment.paymentDetails.amount,
                      description: cardPayment.paymentDetails.description,
+                     hiddenDescription: cardPayment.paymentDetails.hiddenDescription,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
                      card: card,
                      cardToken: cardToken,
-                     callbacks: callbacks,
-                     hiddenDescription: nil)
+                     callbacks: callbacks)
     }
 
     static func blikPayment(blikPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> BlikPayment? {
@@ -81,12 +81,12 @@ final class TransactionConfiguration {
 
         return .init(amount: blikPayment.paymentDetails.amount,
                      description: blikPayment.paymentDetails.description,
+                     hiddenDescription: blikPayment.paymentDetails.hiddenDescription,
                      payerContext: .init(payer: payer),
                      token: blikPayment.code,
                      alias: blikPayment.alias?.value,
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks,
-                     hiddenDescription: nil)
+                     callbacks: callbacks)
     }
 
     static func bankPayment(bankPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> BankPayment? {
@@ -101,10 +101,10 @@ final class TransactionConfiguration {
 
         return .init(amount: bankPayment.paymentDetails.amount,
                      description: bankPayment.paymentDetails.description,
+                     hiddenDescription: bankPayment.paymentDetails.hiddenDescription,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks,
-                     hiddenDescription: nil)
+                     callbacks: callbacks)
     }
 
     static func digitalWalletPayment(digitalWalletPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> DigitalWalletPayment? {
@@ -119,11 +119,11 @@ final class TransactionConfiguration {
 
         return .init(amount: digitalWalletPayment.paymentDetails.amount,
                      description: digitalWalletPayment.paymentDetails.description,
+                     hiddenDescription: digitalWalletPayment.paymentDetails.hiddenDescription,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
                      token: digitalWalletPayment.applePayToken,
-                     callbacks: callbacks,
-                     hiddenDescription: nil)
+                     callbacks: callbacks)
     }
     
     static func payPoPayment(payPoPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> PayPoPayment? {
@@ -138,10 +138,10 @@ final class TransactionConfiguration {
 
         return .init(amount: payPoPayment.paymentDetails.amount,
                      description: payPoPayment.paymentDetails.description,
+                     hiddenDescription: payPoPayment.paymentDetails.hiddenDescription,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks,
-                     hiddenDescription: nil)
+                     callbacks: callbacks)
     }
 
     static func continuePayment(continuePaymentConfiguration: String) -> ContinuePayment? {
@@ -159,8 +159,8 @@ final class TransactionConfiguration {
 
     // MARK: - Private
 
-    private static func makeTransactionPayerContext(from signleTransaction: T.SingleTransaction) -> PayerContext? {
-        guard let payerContext = signleTransaction.payerContext else { return nil }
+    private static func makeTransactionPayerContext(from singleTransaction: T.SingleTransaction) -> PayerContext? {
+        guard let payerContext = singleTransaction.payerContext else { return nil }
 
         let payer = makePayer(from: payerContext.payer)
         let blikAllias = payerContext.automaticPaymentMethods?.blikAlias?.value

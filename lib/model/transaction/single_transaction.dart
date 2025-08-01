@@ -10,6 +10,8 @@ part 'single_transaction.g.dart';
 /// - [amount] - amount of money payer has to pay
 /// - [description] - description of payment shown to payer
 /// - [payerContext] - information about payer and automatic payment methods
+/// - [hiddenDescription] - description of payment shown to merchant
+/// - [notifications] - information about notifications
 @JsonSerializable(explicitToJson: true)
 class SingleTransaction extends Transaction {
   final PayerContext payerContext;
@@ -18,6 +20,7 @@ class SingleTransaction extends Transaction {
     required super.amount,
     required super.description,
     required this.payerContext,
+    super.hiddenDescription,
     super.notifications
   });
 

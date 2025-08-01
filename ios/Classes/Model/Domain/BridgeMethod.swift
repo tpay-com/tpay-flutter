@@ -10,5 +10,5 @@ enum BridgeMethod: String {
     case paymentWithPayPo = "screenlessPayPoPayment"
     case paymentWithApplePay
     case continuePayment = "screenlessAmbiguousBLIKPayment"
-    case getPaymentMethods = "availablePaymentMethods"
+    case getPaymentMethods = "getPaymentChannels"
 }

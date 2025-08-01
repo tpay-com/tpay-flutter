@@ -9,11 +9,13 @@ part 'transaction.g.dart';
 class Transaction {
   final double amount;
   final String description;
+  final String? hiddenDescription;
   final Notifications? notifications;
 
   Transaction({
     required this.amount,
     required this.description,
+    this.hiddenDescription,
     this.notifications
   });
 

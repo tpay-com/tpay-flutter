@@ -1,3 +1,10 @@
+## 1.2.4
+Updated Android SDK to version 1.2.3 to handle hiddenDescription parameter
+Added support for the hiddenDescription parameter
+Fixed getAvailablePaymentChannels method on iOS
+Standardized returned results for card token payments on iOS
+Updated the example
+
 ## 1.2.3
 Updated iOS SDK to version 1.3.2 to handle payment module close callback
 

@@ -26,17 +26,17 @@ final class CardTokenPresentation: CardTokenPaymentDelegate {
     // MARK: - CardTokenPaymentDelegate
 
     func onCardTokenPaymentCompleted(transactionId: TransactionId) {
-        cardTokenPaymentResult?(ConfigurationResult.tokenPaymentCompleted(transactionId: transactionId).toJson())
+        cardTokenPaymentResult?(ConfigurationResult.paymentCompleted(transactionId: transactionId).toJson())
         complete()
     }
 
     func onCardTokenPaymentCancelled(transactionId: TransactionId) {
-        cardTokenPaymentResult?(ConfigurationResult.tokenPaymentCancelled(transactionId: transactionId).toJson())
+        cardTokenPaymentResult?(ConfigurationResult.paymentCancelled(transactionId: transactionId).toJson())
         complete()
     }
 
     func onCardTokenErrorOccured(error: ModuleError) {
-        cardTokenPaymentResult?(ConfigurationResult.tokenPayment(error: error).toJson())
+        cardTokenPaymentResult?(ConfigurationResult.payment(error: error).toJson())
         complete()
     }
 

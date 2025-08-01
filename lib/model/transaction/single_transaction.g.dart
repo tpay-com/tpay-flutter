@@ -12,6 +12,7 @@ SingleTransaction _$SingleTransactionFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       payerContext:
           PayerContext.fromJson(json['payerContext'] as Map<String, dynamic>),
+      hiddenDescription: json['hiddenDescription'] as String?,
       notifications: json['notifications'] == null
           ? null
           : Notifications.fromJson(
@@ -22,6 +23,7 @@ Map<String, dynamic> _$SingleTransactionToJson(SingleTransaction instance) =>
     <String, dynamic>{
       'amount': instance.amount,
       'description': instance.description,
+      'hiddenDescription': instance.hiddenDescription,
       'notifications': instance.notifications?.toJson(),
       'payerContext': instance.payerContext.toJson(),
     };

@@ -9,6 +9,7 @@ part of 'token_payment.dart';
 TokenPayment _$TokenPaymentFromJson(Map<String, dynamic> json) => TokenPayment(
       amount: (json['amount'] as num).toDouble(),
       description: json['description'] as String,
+      hiddenDescription: json['hiddenDescription'] as String?,
       payer: Payer.fromJson(json['payer'] as Map<String, dynamic>),
       cardToken: json['cardToken'] as String,
       notifications: json['notifications'] == null
@@ -21,6 +22,7 @@ Map<String, dynamic> _$TokenPaymentToJson(TokenPayment instance) =>
     <String, dynamic>{
       'amount': instance.amount,
       'description': instance.description,
+      'hiddenDescription': instance.hiddenDescription,
       'notifications': instance.notifications?.toJson(),
       'payer': instance.payer.toJson(),
       'cardToken': instance.cardToken,

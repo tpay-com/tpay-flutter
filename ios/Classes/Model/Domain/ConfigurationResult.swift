@@ -12,9 +12,6 @@ struct ConfigurationResult: Encodable {
         static let paymentCancelled = "paymentCancelled"
         static let paymentError = "paymentError"
         static let paymentClosed = "moduleClosed"
-        static let tokenPaymentCompleted = "tokenPaymentCompleted"
-        static let tokenPaymentCancelled = "tokenPaymentCancelled"
-        static let tokenPaymentError = "tokenPaymentError"
         static let tokenizationCompleted = "tokenizationCompleted"
         static let tokenizationCancelled = "tokenizationCancelled"
         static let unknownHandleMethod = "unknownHandleMethod"
@@ -57,18 +54,6 @@ struct ConfigurationResult: Encodable {
     
     static func paymentClosed() -> ConfigurationResult {
         return .init(type: Constant.paymentClosed, value: nil)
-    }
-
-    static func tokenPaymentCompleted(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.tokenPaymentCompleted, value: transactionId)
-    }
-
-    static func tokenPaymentCancelled(transactionId: String) -> ConfigurationResult {
-        return .init(type: Constant.tokenPaymentCancelled, value: transactionId)
-    }
-
-    static func tokenPayment(error: Error) -> ConfigurationResult {
-        return .errorResult(type: Constant.tokenPaymentError, error: error)
     }
 
     static func tokenizationCompleted() -> ConfigurationResult {
