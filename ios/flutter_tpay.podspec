@@ -10,12 +10,12 @@ Pod::Spec.new do |s|
   Tpay Flutter iOS bridge'.
                        DESC
   s.homepage         = 'https://tpay.com/'
-  s.license          = { :type => "MIT", :file => "LICENSE" }
+  s.license          = { :type => "MIT", :file => "../LICENSE" }
   s.author           = 'Tpay'
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Tpay-SDK', '1.3.3'
+  s.dependency 'Tpay-SDK', '1.3.4'
   s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
