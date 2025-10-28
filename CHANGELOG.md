@@ -1,3 +1,6 @@
+## 1.2.6
+- Updated README.md file with improved documentation
+
 ## 1.2.5
 - Updated iOS SDK to version 1.3.4 to fix crash
 

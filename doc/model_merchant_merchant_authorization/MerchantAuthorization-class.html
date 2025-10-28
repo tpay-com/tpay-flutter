@@ -25,21 +25,24 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">flutter_tpay</a></li>
-    <li><a href="../model_merchant_merchant_authorization/">model&#47;merchant&#47;merchant_authorization.dart</a></li>
+    <li><a href="../model_merchant_merchant_authorization">model&#47;merchant&#47;merchant_authorization.dart</a></li>
     <li class="self-crumb">MerchantAuthorization class</li>
   </ol>
   <div class="self-name">MerchantAuthorization</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
-    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
-      dark_mode
-    </span>
-    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
-      light_mode
-    </span>
-  </button>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
 </header>
 <main>
 <div
@@ -83,8 +86,8 @@
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="MerchantAuthorization.new" class="callable">
-          <span class="name"><a href="../model_merchant_merchant_authorization/MerchantAuthorization/MerchantAuthorization.html">MerchantAuthorization.new</a></span><span class="signature">({<span class="parameter" id="-param-clientId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">clientId</span>, </span><span class="parameter" id="-param-clientSecret"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">clientSecret</span></span>})</span>
+        <dt id="MerchantAuthorization" class="callable">
+          <span class="name"><a href="../model_merchant_merchant_authorization/MerchantAuthorization/MerchantAuthorization.html">MerchantAuthorization</a></span><span class="signature">({<span class="parameter" id="-param-clientId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">clientId</span>, </span><span class="parameter" id="-param-clientSecret"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">clientSecret</span></span>})</span>
         </dt>
         <dd>
           
@@ -237,7 +240,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">flutter_tpay</a></li>
-    <li><a href="../model_merchant_merchant_authorization/">merchant_authorization</a></li>
+    <li><a href="../model_merchant_merchant_authorization">merchant_authorization</a></li>
     <li class="self-crumb">MerchantAuthorization class</li>
 </ol>
 
@@ -250,7 +253,7 @@
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.2.5
+      1.2.1
   </span>
   
 </footer>
