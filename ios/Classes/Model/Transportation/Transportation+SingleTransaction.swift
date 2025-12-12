@@ -8,5 +8,6 @@ extension Transportation {
         let description: String
         let hiddenDescription: String?
         let payerContext: PayerContext?
+        let notifications: Callbacks.Notifications?
     }
 }

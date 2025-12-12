@@ -16,7 +16,7 @@ class ApplePayPayment extends ScreenlessPayment {
     required super.paymentDetails,
     required super.payer,
     required this.applePayToken,
-    super.callbacks
+    required super.callbacks
   });
 
   factory ApplePayPayment.fromJson(Map<String, dynamic> json) => _$ApplePayPaymentFromJson(json);

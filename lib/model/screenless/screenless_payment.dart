@@ -11,12 +11,12 @@ part 'screenless_payment.g.dart';
 class ScreenlessPayment {
   final PaymentDetails paymentDetails;
   final Payer payer;
-  final Callbacks? callbacks;
+  final Callbacks callbacks;
 
   ScreenlessPayment({
     required this.paymentDetails,
     required this.payer,
-    this.callbacks
+    required this.callbacks
   });
 
   factory ScreenlessPayment.fromJson(Map<String, dynamic> json) => _$ScreenlessPaymentFromJson(json);

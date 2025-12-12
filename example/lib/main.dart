@@ -215,7 +215,6 @@ class TpayExample extends StatelessWidget {
     handleResult(await configure());
     final payment = TransferPayment(
       channelId: 4,
-      bankName: "bank name",
       paymentDetails: paymentDetails,
       payer: payer,
       callbacks: callbacks,
@@ -272,7 +271,7 @@ class TpayExample extends StatelessWidget {
   }
 
   void screenlessApplePayPayment() async {
-    final payment = ApplePayPayment(paymentDetails: paymentDetails, payer: payer, applePayToken: "apple pay token");
+    final payment = ApplePayPayment(paymentDetails: paymentDetails, payer: payer, applePayToken: "apple pay token", callbacks: callbacks);
 
     await tpayPlatform.screenlessApplePayPayment(payment);
   }

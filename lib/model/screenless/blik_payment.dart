@@ -19,7 +19,7 @@ class BLIKPayment extends ScreenlessPayment {
   BLIKPayment({
     required super.paymentDetails,
     required super.payer,
-    super.callbacks,
+    required super.callbacks,
     this.code,
     this.alias
   });

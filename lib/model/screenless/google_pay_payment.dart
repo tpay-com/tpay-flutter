@@ -15,7 +15,7 @@ class GooglePayPayment extends ScreenlessPayment {
     required super.paymentDetails,
     required super.payer,
     required this.token,
-    super.callbacks
+    required super.callbacks
   });
 
   final String token;

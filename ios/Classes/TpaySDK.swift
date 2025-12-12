@@ -273,14 +273,14 @@ final class TpaySDK {
     }
 
     private func invokeBankPayment(_ json: String, resolve: @escaping (String) -> Void, paymentChannels: [Headless.Models.PaymentChannel]) {
-        guard let bankPayment = TransactionConfiguration.bankPayment(bankPaymentConfiguration: json, paymentChannels: paymentChannels) else {
-            resolve(ScreenlessResult.methodCallError().toJson())
-            return
-        }
-
         do {
+            guard let bankPayment = try TransactionConfiguration.bankPayment(bankPaymentConfiguration: json, paymentChannels: paymentChannels) else {
+                resolve(ScreenlessResult.methodCallError().toJson())
+                return
+            }
+            
             try TpayModule.configure(callbacks: bankPayment.callbacks)
-            try Headless.invokePayment(for: bankPayment, using: bankPayment.paymentChannel) { result in
+            try Headless.invokePayment(for: bankPayment, using: bankPayment.paymentChannel, allowedPaymentKinds: Headless.Models.PaymentKind.allCases) { result in
                 switch result {
                 case let .success(transaction):
                     resolve(ScreenlessResult.paymentCreated(continueUrl: transaction.continueUrl, transactionId: transaction.ongoingTransaction.id).toJson())

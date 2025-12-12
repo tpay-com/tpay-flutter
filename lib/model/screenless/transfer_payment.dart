@@ -8,18 +8,15 @@ part 'transfer_payment.g.dart';
 
 /// Class responsible for storing information about transfer payment
 /// - [channelId] - id of bank in tpay system
-/// - [bankName] - name of a selected bank
 @JsonSerializable()
 class TransferPayment extends ScreenlessPayment {
   final int channelId;
-  final String bankName;
 
   TransferPayment({
     required super.paymentDetails,
     required super.payer,
     required super.callbacks,
-    required this.channelId,
-    required this.bankName
+    required this.channelId
   });
 
   factory TransferPayment.fromJson(Map<String, dynamic> json) => _$TransferPaymentFromJson(json);

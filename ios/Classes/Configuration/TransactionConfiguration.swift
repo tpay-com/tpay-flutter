@@ -18,8 +18,9 @@ final class TransactionConfiguration {
         }
 
         let payerContext = makeTransactionPayerContext(from: singleTransaction)
+        let notification = makeNotification(from: singleTransaction.notifications)
 
-        return SingleTransaction(amount: singleTransaction.amount, description: singleTransaction.description, hiddenDescription: singleTransaction.hiddenDescription, payerContext: payerContext)
+        return SingleTransaction(amount: singleTransaction.amount, description: singleTransaction.description, hiddenDescription: singleTransaction.hiddenDescription, payerContext: payerContext, notification: notification)
     }
 
     static func cardTokenTransaction(transactionConfiguration: String) -> Transaction? {
@@ -27,8 +28,11 @@ final class TransactionConfiguration {
               let tokenPayment = try? JSONDecoder().decode(T.TokenPayment.self, from: trancationData) else {
             return nil
         }
+
         let payerContext = makeTokenPayerContext(from: tokenPayment)
-        return SingleTransaction(amount: tokenPayment.amount, description: tokenPayment.description, hiddenDescription: tokenPayment.hiddenDescription, payerContext: payerContext)
+        let notification = makeNotification(from: tokenPayment.notifications)
+
+        return SingleTransaction(amount: tokenPayment.amount, description: tokenPayment.description, hiddenDescription: tokenPayment.hiddenDescription, payerContext: payerContext, notification: notification)
     }
     
     static func addCard(tokenisationConfiguration: String) -> TokenizationData? {
@@ -50,6 +54,7 @@ final class TransactionConfiguration {
         }
 
         let callbacks = makeCallbacksConfiguration(from: cardPayment.callbacks)
+        let notification = makeNotification(from: cardPayment.callbacks.notifications)
 
         let card = cardPayment.creditCard.flatMap { creditCard -> Headless.Models.Card? in
             Headless.Models.Card(number: creditCard.number, expiryDate: .init(month: creditCard.expiryDate.month, year: creditCard.expiryDate.year), securityCode: creditCard.securityCode, shouldTokenize: creditCard.config.shouldSave)
@@ -66,7 +71,9 @@ final class TransactionConfiguration {
                      paymentChannel: paymentChannel,
                      card: card,
                      cardToken: cardToken,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     notification: notification
+        )
     }
 
     static func blikPayment(blikPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> BlikPayment? {
@@ -78,6 +85,7 @@ final class TransactionConfiguration {
         }
 
         let callbacks = makeCallbacksConfiguration(from: blikPayment.callbacks)
+        let notification = makeNotification(from: blikPayment.callbacks.notifications)
 
         return .init(amount: blikPayment.paymentDetails.amount,
                      description: blikPayment.paymentDetails.description,
@@ -86,25 +94,33 @@ final class TransactionConfiguration {
                      token: blikPayment.code,
                      alias: blikPayment.alias?.value,
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     notification: notification
+        )
     }
 
-    static func bankPayment(bankPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> BankPayment? {
+    static func bankPayment(bankPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) throws -> BankPayment? {
         guard let bankPaymentData = bankPaymentConfiguration.data(using: .utf8),
               let bankPayment = try? JSONDecoder().decode(T.BankPayment.self, from: bankPaymentData),
-              let payer = makePayer(from: bankPayment.payer),
-              let paymentChannel = paymentChannels.first(where: { $0.paymentKind == .pbl }) else {
+              let payer = makePayer(from: bankPayment.payer) else {
             return nil
+        }
+        
+        guard let paymentChannel = paymentChannels.first(where: { $0.has(channelId: bankPayment.channelId) }) else {
+            throw PaymentChannelError.unknownPaymentChannel
         }
 
         let callbacks = makeCallbacksConfiguration(from: bankPayment.callbacks)
+        let notification = makeNotification(from: bankPayment.callbacks.notifications)
 
         return .init(amount: bankPayment.paymentDetails.amount,
                      description: bankPayment.paymentDetails.description,
                      hiddenDescription: bankPayment.paymentDetails.hiddenDescription,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     notification: notification
+        )
     }
 
     static func digitalWalletPayment(digitalWalletPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> DigitalWalletPayment? {
@@ -116,6 +132,7 @@ final class TransactionConfiguration {
         }
 
         let callbacks = makeCallbacksConfiguration(from: digitalWalletPayment.callbacks)
+        let notification = makeNotification(from: digitalWalletPayment.callbacks.notifications)
 
         return .init(amount: digitalWalletPayment.paymentDetails.amount,
                      description: digitalWalletPayment.paymentDetails.description,
@@ -123,7 +140,9 @@ final class TransactionConfiguration {
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
                      token: digitalWalletPayment.applePayToken,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     notification: notification
+        )
     }
     
     static func payPoPayment(payPoPaymentConfiguration: String, paymentChannels: [Headless.Models.PaymentChannel]) -> PayPoPayment? {
@@ -135,13 +154,16 @@ final class TransactionConfiguration {
         }
 
         let callbacks = makeCallbacksConfiguration(from: payPoPayment.callbacks)
+        let notification = makeNotification(from: payPoPayment.callbacks.notifications)
 
         return .init(amount: payPoPayment.paymentDetails.amount,
                      description: payPoPayment.paymentDetails.description,
                      hiddenDescription: payPoPayment.paymentDetails.hiddenDescription,
                      payerContext: .init(payer: payer),
                      paymentChannel: paymentChannel,
-                     callbacks: callbacks)
+                     callbacks: callbacks,
+                     notification: notification
+        )
     }
 
     static func continuePayment(continuePaymentConfiguration: String) -> ContinuePayment? {
@@ -218,5 +240,10 @@ final class TransactionConfiguration {
         default:
             return CardToken.Brand.other(brand)
         }
+    }
+
+    private static func makeNotification(from notifications: T.Callbacks.Notifications?) -> NotificationConfiguration? {
+        guard let notifications = notifications else { return nil }
+        return NotificationConfiguration(url: URL(string: notifications.url), email: notifications.email)
     }
 }

@@ -10,9 +10,7 @@ BLIKPayment _$BLIKPaymentFromJson(Map<String, dynamic> json) => BLIKPayment(
       paymentDetails: PaymentDetails.fromJson(
           json['paymentDetails'] as Map<String, dynamic>),
       payer: Payer.fromJson(json['payer'] as Map<String, dynamic>),
-      callbacks: json['callbacks'] == null
-          ? null
-          : Callbacks.fromJson(json['callbacks'] as Map<String, dynamic>),
+      callbacks: Callbacks.fromJson(json['callbacks'] as Map<String, dynamic>),
       code: json['code'] as String?,
       alias: json['alias'] == null
           ? null
@@ -23,7 +21,7 @@ Map<String, dynamic> _$BLIKPaymentToJson(BLIKPayment instance) =>
     <String, dynamic>{
       'paymentDetails': instance.paymentDetails.toJson(),
       'payer': instance.payer.toJson(),
-      'callbacks': instance.callbacks?.toJson(),
+      'callbacks': instance.callbacks.toJson(),
       'code': instance.code,
       'alias': instance.alias?.toJson(),
     };
