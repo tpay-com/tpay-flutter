@@ -30,67 +30,228 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
       
 <section class="desc markdown">
   <h1 id="tpay">Tpay</h1>
-<p><a href="https://shields.io/"><img src="https://img.shields.io/badge/Min%20sdk-23-informational.svg" alt="Min Android SDK"></a><a href="https://shields.io/"><img src="https://img.shields.io/badge/Target/Compile%20sdk-33-informational.svg" alt="Target Android SDK"></a></p>
+<p><img src="https://img.shields.io/badge/flutter-%3E=2.5.0-blue?logo=flutter&amp;label=Flutter" alt="Static Badge">
+<img src="https://img.shields.io/badge/dart-%3E=2.18-blue?logo=dart&amp;label=Dart" alt="Static Badge">
+<img src="https://img.shields.io/badge/min_android_sdk-23-blue?logo=android&amp;label=Min%20Android%20SDK" alt="Static Badge">
+<img src="https://img.shields.io/badge/min_ios_sdk-12.0+-blue?logo=apple&amp;label=iOS" alt="Static Badge">
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
 <h2 id="about">About</h2>
 <p>This plugin allows your app to make payments with Tpay.</p>
-<h1 id="usage">Usage</h1>
-<h2 id="get-tpay-instance">Get Tpay instance</h2>
-<pre class="language-dart"><code class="language-dart">final TpayPlatform tpay = TpayPlatform.instance;
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flutter</td>
+<td>&gt;=2.5.0</td>
+</tr>
+<tr>
+<td>Dart</td>
+<td>&gt;=2.18</td>
+</tr>
+<tr>
+<td>Minimum Android SDK</td>
+<td>23 (Android 6.0, Marshmallow)</td>
+</tr>
+<tr>
+<td>Minimum iOS version</td>
+<td>12.0</td>
+</tr>
+</tbody>
+</table>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>For this SDK to work you will need <code>client_id</code> and <code>client_secret</code> tokens. You can find in <a href="https://panel.tpay.com">merchant's panel</a>.</p>
+<p>If you are partner, you can obtain them in your merchant partner account. For detailed
+instructions how to do that or how to create such an account
+check <a href="https://docs-api.tpay.com/en/merchant-accounts/">this site</a>.</p>
+</div>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title">Tip</p>
+<p>To be able to test the SDK properly,
+use <a href="https://support.tpay.com/sprzedawca/srodowisko-testowe-sandbox">mock data</a>.</p>
+</div>
+<h2 id="install">Install</h2>
+<p>For details on adding SDK to your app check our <a href="https://pub.dev/packages/flutter_tpay">pub.dev page</a>.</p>
+<h3 id="run-sample-application">Run sample application</h3>
+<pre class="language-bash"><code class="language-bash">git clone &lt;github-link&gt; tpay
+cd tpay/example
+flutter run
 </code></pre>
-<h2 id="ui-module">UI Module</h2>
-<p>Tpay plugin contains UI module. Users can interact with it to make payments.</p>
-<h3 id="setup">Setup</h3>
-<h4 id="android">Android</h4>
-<p>Tpay UI module requires your MainActivity to extend FlutterFragmentActivity and to pass system backpress events.</p>
-<pre class="language-kotlin"><code class="language-kotlin">class MainActivity: FlutterFragmentActivity() {  
-    override fun onBackPressed() {  
-        if (TpayBackpressUtil.isModuleVisible) {  
-            TpayBackpressUtil.onBackPressed()  
-        } else {  
-            super.onBackPressed()  
-        }  
-    }  
-}
+<h2 id="configuration">Configuration</h2>
+<div class="markdown-alert markdown-alert-note">
+<p class="markdown-alert-title">Note</p>
+<p>In this section we will provide examples for each configuration to the TpayConfiguration class
+you will be able to make.</p>
+</div>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>Beneath you will find all configurations that are <strong>MANDATORY</strong>.</p>
+</div>
+<h3 id="initialization">Initialization</h3>
+<p>At first, you have to configure your app to be able to make any requests by providing SDK info about
+your merchant account.
+Info about <code>client_id</code> and <code>client_secret</code> you will find in your merchant's panel at <code>Integration -&gt; API</code>.</p>
+<pre class="language-dart"><code class="language-dart">MerchantAuthorization(
+  clientId: "YOUR_CLIENT_ID", 
+  clientSecret: "YOUR_CLIENT_SECRET"
+)
 </code></pre>
-<h4 id="ios">IOS</h4>
-<p>When integrating the Tpay payment module into your app, it’s important to ensure that the necessary permissions are correctly set up to ensure a smooth user experience.</p>
-<h5 id="privacy---camera-usage-description">Privacy - Camera Usage Description</h5>
-<p>The module allows the user to automatically fill the credit card form for secure payment processing. This feature requires you to setup the “Privacy - Camera Usage Description” in your app’s Info.plist file.</p>
-<p>Integration Steps</p>
+<h3 id="environment">Environment</h3>
+<p>Tpay SDK provides two types of environments you can use in your app:</p>
+<ul>
+<li><code>TpayEnvironment.sandbox</code> - used only for tests and in stage/dev flavor.</li>
+<li><code>TpayEnvironment.production</code> - used for production flavors.</li>
+</ul>
+<h3 id="payment-methods">Payment methods</h3>
+<p>For users to be able to use a specific payment method you have declared it in the configuration.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BLIK</td>
+<td><a href="https://docs-api.tpay.com/en/payment-methods/blik/">Web docs</a></td>
+</tr>
+<tr>
+<td>Pbl <strong>(Pay-By-Link)</strong></td>
+<td><a href="https://docs-api.tpay.com/en/payment-methods/pbl/">Web docs</a></td>
+</tr>
+<tr>
+<td>Card</td>
+<td><a href="https://docs-api.tpay.com/en/payment-methods/cards/">Web docs</a></td>
+</tr>
+<tr>
+<td>DigitalWallets</td>
+<td><a href="https://docs-api.tpay.com/en/payment-methods/google-pay/">GOOGLE_PAY</a> ; <a href="https://docs-api.tpay.com/en/payment-methods/apple-pay/">APPLE_PAY</a></td>
+</tr>
+<tr>
+<td>InstallmentPayments</td>
+<td><a href="https://docs-api.tpay.com/en/payment-methods/installments/">RATY_PEKAO</a></td>
+</tr>
+<tr>
+<td>DeferredPayments <strong>(BNPL)</strong></td>
+<td><a href="https://docs-api.tpay.com/en/payment-methods/bnpl/">PAY_PO</a></td>
+</tr>
+</tbody>
+</table>
+<pre class="language-dart"><code class="language-dart">PaymentMethods(  
+  methods: [
+    PaymentMethod.card, 
+    PaymentMethod.blik, 
+    PaymentMethod.transfer
+  ],  
+  wallets: [
+    DigitalWallet.applePay, 
+    DigitalWallet.googlePay
+  ],
+  installmentPayments: [
+    InstallmentPayment.ratyPekao,
+    InstallmentPayment.payPo
+  ]
+)
+</code></pre>
+<h4 id="card">Card</h4>
+<p>If you decide to enable the credit card payment option, you have to provide SSL certificates.</p>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title">Tip</p>
+<p>You can find SSL public key on you merchant panel at section <code>Integrations -&gt; API -&gt; Cards API</code>.</p>
+</div>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title">Tip</p>
+<p>You can find public key on you merchant panel:</p>
+<ul>
+<li>Acquirer Elavon: <code>Credit card payments -&gt; API</code></li>
+<li>Acquirer Pekao: <code>Integrations -&gt; API -&gt; Cards API</code></li>
+</ul>
+</div>
+<pre class="language-dart"><code class="language-dart">CertificatePinningConfiguration(publicKeyHash: "PUBLIC_KEY_HASH")
+</code></pre>
+<h4 id="google-pay-configuration">Google Pay configuration</h4>
+<p>In order to be able to use Google Pay method you have to provide your <code>merchant_id</code> to the SDK.</p>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title">Tip</p>
+<p>Your login name to the merchant panel is your merchant id.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">GooglePayConfiguration(merchantId: "MERCHANT_ID")
+</code></pre>
+<h4 id="apple-pay-configuration">Apple Pay configuration</h4>
+<p>In order to be able to use Apple Pay method you have to provide your <code>merchant_id</code> and <code>country_code</code> to the SDK.</p>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>To obtain the merchantIdentifier, follow these steps:</p>
 <ol>
-<li>Open your project’s Info.plist file.</li>
-<li>Add the key-value pair for the “Privacy - Camera Usage Description” permission, explaining the purpose of camera access. Clearly state that the camera is used to facilitate the automatic filling of the credit card form for secure payment processing.</li>
+<li>Log in to your Apple Developer account.</li>
+<li>Navigate to the <code>Certificates, Identifiers &amp; Profiles</code> section.</li>
+<li>Under <code>Identifiers,</code> select <code>Merchant IDs.</code></li>
+<li>Click the <code>+</code> button to create a new Merchant ID.</li>
+<li>Fill in the required information and associate it with your app's Bundle ID.</li>
+<li>Once created, the merchant identifier can be found in the list of Merchant IDs.</li>
+<li>For more details, please follow <a href="https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay">Apple Pay documentation</a>.</li>
 </ol>
-<p>Example:</p>
-<pre class="language-dart"><code>&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;
-&lt;string&gt;We need access to your camera to automatically fill the credit card form for secure payment processing.&lt;/string&gt;
+</div>
+<pre class="language-dart"><code class="language-dart">ApplePayConfiguration(merchantIdentifier: "merchant_id", countryCode: "PL")
 </code></pre>
-<h3 id="configure-tpay-module">Configure Tpay module</h3>
-<p>This configuration allows your app to use Tpay UI module and screenless payments.</p>
+<h3 id="languages">Languages</h3>
+<p>Tpay SDK lets you decide what languages will be available in the Tpay's screen and which one of them
+will be preferred/default.</p>
+<p>Right now, SDK allows you to use 2 languages:</p>
+<ul>
+<li><code>Language.pl</code> - polish</li>
+<li><code>Language.en</code> - english</li>
+</ul>
+<pre class="language-dart"><code class="language-dart">Languages(preferredLanguage: Language.pl, supportedLanguages: [Language.pl, Language.en])
+</code></pre>
+<h3 id="merchant-details">Merchant details</h3>
+<p>As a merchant, you can configure how information about you will be shown.
+You can set up your <code>display name</code>, <code>city/headquarters</code> and <code>regulations link</code>.
+You can choose to provide different copy for each language, or simply use one for all.</p>
+<pre class="language-dart"><code class="language-dart">MerchantDetails(
+  merchantDisplayName: [
+    LocalizedString(language: Language.pl, value: "polish name"),
+    LocalizedString(language: Language.en, value: "english name"),
+  ],
+  merchantHeadquarters: [
+    LocalizedString(language: Language.pl, value: "polish city name"),
+    LocalizedString(language: Language.en, value: "english city name"),
+  ],
+  regulations: [
+    LocalizedString(language: Language.pl, value: "polish regulation URL"),
+    LocalizedString(language: Language.en, value: "english regulation URL"),
+  ],
+),
+</code></pre>
+<h3 id="summary">Summary</h3>
+<p>Beneath you will find how a complete configuration should look like.</p>
 <pre class="language-dart"><code class="language-dart">final configuration = TpayConfiguration(  
   merchant: Merchant(
     authorization: MerchantAuthorization(
       clientId: "YOUR_CLIENT_ID", 
       clientSecret: "YOUR_CLIENT_SECRET"
     ),
-    environment: TpayEnvironment.production,
+    environment: TpayEnvironment.sandbox,
     certificatePinningConfiguration: CertificatePinningConfiguration(publicKeyHash: "PUBLIC_KEY_HASH"),
     blikAliasToRegister: "BLIK alias",
     walletConfiguration: WalletConfiguration(
@@ -108,8 +269,8 @@
       LocalizedString(language: Language.en, value: "english city name")
     ],
     regulations: [  
-      LocalizedString(language: Language.pl, value: "polish regulation url"),  
-      LocalizedString(language: Language.en, value: "english regulation url")  
+      LocalizedString(language: Language.pl, value: "polish regulation URL"),  
+      LocalizedString(language: Language.en, value: "english regulation URL")  
     ],  
   ),  
   languages: Languages(  
@@ -126,22 +287,128 @@
       DigitalWallet.applePay, 
       DigitalWallet.googlePay
     ],
-    installmentPayments: [InstallmentPayment.ratyPekao, InstallmentPayment.payPo]
+    installmentPayments: [
+      InstallmentPayment.ratyPekao, 
+      InstallmentPayment.payPo
+    ]
   ),
 );  
 
 tpay.configure(configuration);
 </code></pre>
-<h3 id="payment-with-tpay-ui">Payment with Tpay UI</h3>
+<h3 id="android">Android</h3>
+<p>Tpay UI module requires your MainActivity to extend FlutterFragmentActivity and to pass system backpress events.</p>
+<pre class="language-kotlin"><code class="language-kotlin">class MainActivity: FlutterFragmentActivity() {
+    override fun onBackPressed() {
+        if (TpayBackpressUtil.isModuleVisible) {
+            TpayBackpressUtil.onBackPressed()
+        } else {
+            super.onBackPressed()
+        }
+    }
+}
+</code></pre>
+<h4 id="proguardr8">Proguard/R8</h4>
+<p>If you are using Proguard/R8 in your project, you have to add the following rules to the
+<code>android/app/proguard-rules.pro</code> file, to keep Tpay SDK classes.</p>
+<pre class="language-proguard"><code class="language-proguard"># Keep all Tpay sdk classes
+-keep class com.tpay.sdk.** { *; }
+</code></pre>
+<h3 id="ios">IOS</h3>
+<p>When integrating the Tpay payment module into your app, it’s important to ensure that the necessary permissions are correctly set up to ensure a smooth user experience.
+The module allows the user to automatically fill the credit card form for secure payment processing. This feature requires you to setup the “Privacy - Camera Usage Description” in your app’s Info.plist file.</p>
+<p>Integration Steps:</p>
+<ol>
+<li>Open your project’s Info.plist file.</li>
+<li>Add the key-value pair for the “Privacy - Camera Usage Description” permission, explaining the purpose of camera access. Clearly state that the camera is used to facilitate the automatic filling of the credit card form for secure payment processing.</li>
+</ol>
+<p>Example:</p>
+<pre class="language-dart"><code>&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;
+&lt;string&gt;We need access to your camera to automatically fill the credit card form for secure payment processing.&lt;/string&gt;
+</code></pre>
+<h2 id="handling-payments">Handling payments</h2>
+<p>Tpay SDK provides two ways of handling payments:</p>
+<ul>
+<li><code>Official SDK screens</code> - you can use Tpay's official screens where you just need to provide "soft"
+information, like price, description or payer info.</li>
+<li><code>Screenless</code> - you can use screenless functionalities, where you set callbacks for payments and
+display all necessary information on your own screens.</li>
+</ul>
+<h2 id="official-sdk-screens">Official SDK screens</h2>
+<p>To make integration with the SDK faster, we created 3 types of sheets that can be used to handle
+payments:</p>
+<ul>
+<li><code>SingleTransaction</code> - the most simple screen where the user can choose any payment method and proceed with it,</li>
+<li><code>Tokenization</code> - screen that handles generating payment token from the credit card,</li>
+<li><code>TokenPayment</code> - screen that handles payment with previously created token for credit card,</li>
+</ul>
+<h3 id="singletransaction">SingleTransaction</h3>
+<p>SingleTransaction flow opens a UI module and allows the customer to pick one of teh defined payment methods.
+This method requires setting up a few things in order to fulfill payment:</p>
+<ul>
+<li><code>amount</code> - simply the price of the transaction</li>
+<li><code>description</code> - transaction description</li>
+<li><code>hiddenDescription</code> (optional) - description visible only to the merchant</li>
+<li><code>payerContext</code> - information about payer
+<ul>
+<li><code>payer</code> - information about the person who is making the payment
+<ul>
+<li><code>name</code> - payer name</li>
+<li><code>email</code> - payer email</li>
+<li><code>phone</code> - payer phone number</li>
+<li><code>address</code> - payer address
+<ul>
+<li><code>city</code> - city name</li>
+<li><code>countryCode</code> - country code in ISO 3166-1 alpha-2 format</li>
+<li><code>address</code> - street address</li>
+<li><code>postalCode</code> - postal code</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>automaticPaymentMethods</code> - configuration of automatic payments
+<ul>
+<li><code>tokenizedCards</code> - previously saved credit cards
+<ul>
+<li><code>token</code> - card token</li>
+<li><code>cardTails</code> - last 4 digits of the card</li>
+<li><code>brand</code> - card brand</li>
+</ul>
+</li>
+<li><code>blikAlias</code> - previously saved BLIK alias
+<ul>
+<li><code>value</code> - alias value</li>
+<li><code>label</code> - alias label</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>notifications</code> - info about where the merchant should be notified about new transactions
+<ul>
+<li><code>notificationEmail</code> - email address to send notification to</li>
+<li><code>notificationUrl</code> - URL to send notification to / URL to send tokens for tokenization</li>
+</ul>
+</li>
+<li><code>activity</code> - activity to associate the view with</li>
+<li><code>supportFragmentManager</code> - fragment manager to associate the view with</li>
+</ul>
 <pre class="language-dart"><code class="language-dart">final transaction = SingleTransaction(  
   amount: 19.99,  
-  description: "transaction description",  
+  description: "transaction description", 
+  hiddenDescription: "Hidden message",
   payerContext: PayerContext(  
     payer: Payer(  
       name: "John Doe",  
-      email: "example@example.com",  
-      phone: null,  
-      address: null  
+      email: "example@example.com",
+      phone: "123487123",
+      address: PayerAddress(
+        address: "Test Street 1",
+        city: "Warsaw",
+        countryCode: "PL",
+        postalCode: "00-007",
+      ),
     ),
     automaticPaymentMethods: AutomaticPaymentMethods(  
       tokenizedCards: [  
@@ -157,8 +424,9 @@ tpay.configure(configuration);
         )  
       ],
       blikAlias: BlikAlias(isRegistered: true, value: "alias value", label: "label")
-    )  
-  )  
+    )
+  ),
+  notifications: Notifications(url: "https://yourstore.com", email: "payments@yourstore.com")
 );  
 
 tpay.startPayment(
@@ -166,71 +434,233 @@ tpay.startPayment(
   onPaymentCreated: (transactionId) {
     // The onPaymentCreated optional parameter is a callback function
     // that is triggered when a payment is successfully created.
-    // It could receives the transactionId as an argument, allowing you to handle the event.
+    // It receives the transactionId as an argument, allowing you to handle the event.
   },
 );
 </code></pre>
-<h3 id="credit-card-tokenization">Credit card tokenization</h3>
-<pre class="language-dart"><code class="language-dart">final payer = Payer(  
-  name: "John Doe",  
-  email: "example@example.com",  
-  phone: null,  
-  address: null  
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>Tpay SDK also supports <code>NFC</code> and <code>camera</code> card scanning:</p>
+<ul>
+<li><code>NFC</code> - Adding card info during transaction, user can tap on the NFC button.
+Then, if NFC is enabled in device, after holding physical card near the device, SDK will scan
+the card's data and automatically fill the form with it.</li>
+<li><code>Camera</code> - Adding card info during transaction, user can tap on the camera button.
+Then, if the camera scans card data successfully, form will be filled automatically.</li>
+</ul>
+</div>
+<h4 id="automatic-payments">Automatic Payments</h4>
+<p>Using <code>SingleTransaction</code> screen you can set up automatic BLIK or card payments.
+Thanks to that, user will not have to enter BLIK/card data all over again each time making the
+payment.</p>
+<p>If user using a card as a payment method will opt-in saving card, on successful payment, on the link
+specified as <code>Notifications -&gt; url</code> Tpay backend will send information about the saved card token, tail and
+brand.
+Next, your backend has to send it to you, so you can use this info next time the same user will want
+to pay with the card.
+When you already have all required information, you can add <code>automaticPaymentMethods</code> to the <code>payerContext</code>.</p>
+<pre class="language-dart"><code class="language-dart">AutomaticPaymentMethods(  
+  tokenizedCards: [  
+    TokenizedCard(
+      token: "card_token", 
+      cardTail: "1234", 
+      brand: CreditCardBrand.mastercard
+    ), 
+    TokenizedCard(
+      token: "card_token", 
+      cardTail: "4321", 
+      brand: CreditCardBrand.visa
+    )  
+  ],
+  blikAlias: null
+)
+</code></pre>
+<h2 id="tokenization">Tokenization</h2>
+<p>Tpay SDK allows you to make credit card transactions without need of entering card's data each time.
+Instead, you can create and use a token, associated with a specific card and user.</p>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>There are 2 types of tokens you can use in transactions.</p>
+<ul>
+<li><a href="https://docs-api.tpay.com/en/tokenization/#tokenization-without-charging">Simple tokens</a> -
+tokens that go with card data upon transaction,</li>
+<li><a href="https://docs-api.tpay.com/en/tokenization/#tokenization-plus">Network tokens</a> -
+tokens that can be used without exposing the card details. Also, this token persists even if
+card expires and the user requests a new one.</li>
+</ul>
+</div>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>For recurring payments, you can simply use created token to make transaction without need of user
+interaction.</p>
+</div>
+<h3 id="creating-card-token">Creating card token</h3>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p><code>notificationUrl</code> should be the URL handled by your backend, because there will be sent token from
+the successful token creation.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">final payer = Payer(
+  name: "John Doe",
+  email: "example@example.com",
+  phone: "123487123",
+  address: PayerAddress(
+    address: "Test Street 1",
+    city: "Warsaw",
+    countryCode: "PL",
+    postalCode: "00-007",
+  ),
 );  
 
 tpay.tokenizeCard(Tokenization(payer: payer, notificationUrl: "https://yourstore.com/notifications"));
 </code></pre>
-<h3 id="credit-card-token-payment">Credit card token payment</h3>
+<h3 id="token-payment">Token payment</h3>
+<p>If you already have card token payment, you can simply proceed with an actual tokenization
+transaction.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p><code>cardToken</code> is a token sent to your backend during card tokenization process.</p>
+</div>
 <pre class="language-dart"><code class="language-dart">final tokenPayment = TokenPayment(  
-  amount: 19.99,  
+  amount: 5.21,  
   description: "transaction description",  
-  cardToken: "card token",  
-  payer: Payer(  
-    name: "John Doe",  
-    email: "example@example.com",  
-    phone: null,  
-    address: null  
+  cardToken: "card_token",  
+  payer: Payer(
+    name: "John Doe",
+    email: "example@example.com",
+    phone: "123487123",
+    address: PayerAddress(
+      address: "Test Street 1",
+      city: "Warsaw",
+      countryCode: "PL",
+      postalCode: "00-007",
+    ),
   ),  
 );  
 
 tpay.startCardTokenPayment(tokenPayment);
 </code></pre>
-<h3 id="tpay-ui-module-result-handling">Tpay UI module result handling</h3>
-<pre class="language-dart"><code class="language-dart">void handleResult(Result result){  
-  if (result is PaymentCompleted) {  
-    // payment completed successfully and Tpay module was closed  
-  }  
-  if (result is PaymentCancelled) {  
-    // payment failed and Tpay module was closed  
-  }  
-  if (result is TokenizationCompleted) {  
-    // tokenization was successful and Tpay module was closed  
-  }  
-  if (result is TokenizationFailure) {  
-    // tokenization failed and Tpay module was closed  
-  }  
-  if (result is ConfigurationSuccess) {  
-    // Tpay module configuration was successful  
-  }  
-  if (result is ValidationError) {  
-    // passed data is incorrect  
-  }  
-  if (result is ModuleClosed) {  
-    // user closed the Tpay module  
+<h3 id="common">Common</h3>
+<p>Each transaction with a predefined screen returns a result
+that you can use to either show information to the user or, e.g. log errors.</p>
+<pre class="language-dart"><code class="language-dart">void handleResult(Result result) {
+  switch (result) {
+    case PaymentCompleted():
+    // payment completed successfully and Tpay module was closed
+      break;
+    case PaymentCancelled():
+    // payment failed and Tpay module was closed
+      break;
+    case TokenizationCompleted():
+    // tokenization was successful and Tpay module was closed
+      break;
+    case TokenizationFailure():
+    // tokenization failed and Tpay module was closed
+      break;
+    case ConfigurationSuccess():
+    // Tpay module configuration was successful
+      break;
+    case ValidationError():
+    // passed data is incorrect
+      break;
+    case ModuleClosed():
+    // user closed the Tpay module
     // without making a payment or tokenization
+      break;
+    case MethodCallError():
+    // something went wrong with the plugin
+      break;
+    default:
+      break;
   }
-  if (result is MethodCallError) {  
-    // something went wrong with the plugin  
-  }  
 }
 </code></pre>
-<h2 id="screenless-payments">Screenless payments</h2>
-<p>Tpay plugin allows for creating payments without displaying the Tpay UI module.</p>
-<h3 id="screenless-blik-payment">Screenless BLIK payment</h3>
-<p>User can pay with 6 digit BLIK code or alias (returning users only).</p>
-<pre class="language-dart"><code class="language-dart">final payment = BLIKPayment(
-  code: "123456",  
-  alias: BlikAlias(isRegistered: true, value: "alias value", label: "label"),  
+<h2 id="screenless-payments">Screenless Payments</h2>
+<p>Screenless payments are a special type of payment functionality that gives you the whole power of
+payment process, but do not limit you to using predefined Tpay screens.</p>
+<h3 id="get-payment-channels">Get payment channels</h3>
+<p>To be able to use screenless functionalities you will need to know which payment methods are
+available to your merchant account. To get them, you can simply call <code>getAvailablePaymentChannels</code>
+method on the <code>TpayPlatform.instance</code> and set up result observer for them.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>Available methods needs to be filtered by the <code>amount</code> of the transaction, because some payment
+methods have specific constraints, like minimum or maximum amount.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">void _getPaymentChannels() async {
+  final result = await tpay.getAvailablePaymentChannels();
+  
+  switch (result) {
+    case PaymentChannelsSuccess():
+      for (var channel in result.channels) {
+        for (var constraint in channel.constraints.whereType&lt;AmountPaymentConstraint&gt;()) {
+          // filter payment methods by the transaction amount
+        }
+      }
+    case PaymentChannelsError():
+      // handle error
+      break;
+  }
+}
+</code></pre>
+<h3 id="configuration-2">Configuration</h3>
+<p>Before you run any screenless payment we do recommend setting up function to handle specific payment results.
+You will need this to be able to monitor each payment status, i.e. it's status in real time. To do so,
+create a function, that will accept <code>ScreenlessResult</code> as a parameter and handle each of them.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>Note that long polling mechanism will start only when it's needed:</p>
+<ul>
+<li><code>ScreenlessPaymentCreated</code>: when payment is created and you have to display payment URL.</li>
+<li><code>ScreenlessBlikAmbiguousAlias</code>: when payment is created and there are more than one BLIK alias registered,
+so you have to display them to the user and continue payment with selected one.</li>
+</ul>
+</div>
+<pre class="language-dart"><code class="language-dart">void handleScreenlessResult(ScreenlessResult result) {
+  switch (result) {
+    case ScreenlessPaid():
+    // payment completed successfully
+      break;
+    case ScreenlessPaymentCreated():
+    // payment created, use result.paymentUrl to redirect the user to the payment page
+      break;
+    case ScreenlessPaymentError():
+    // creating payment failed
+      break;
+    case ScreenlessConfiguredPaymentFailed():
+    // creating payment failed because of error with:
+    // - credit card data or credit card token
+    // - BLIK code or BLIK alias
+      break;
+    case ScreenlessBlikAmbiguousAlias():
+    // single alias has been registered multiple times, use result.aliases to let user choose desired one
+      break;
+    case ScreenlessValidationError():
+    // passed data is incorrect
+      break;
+    case ScreenlessMethodCallError():
+    // something went wrong with the plugin
+      break;
+    default:
+      break;
+  }
+}
+</code></pre>
+<h3 id="screenless-credit-card-payment">Screenless Credit Card Payment</h3>
+<p>CreditCardPayment allows you to create payments with credit card data.</p>
+<pre class="language-dart"><code class="language-dart">final payment = CreditCardPayment(  
+  creditCard: CreditCard(  
+    cardNumber: "card number",
+    expiryDate: ExpirationDate(
+      month: "12",
+      year: "24"
+    ),  
+    cvv: "123",  
+    config: CreditCardConfig(
+      shouldSave: false,  
+      domain: "yourstore.com"  
+    )  
+  ),
   paymentDetails: PaymentDetails(  
     amount: 19.99,  
     description: "transaction description",  
@@ -254,26 +684,242 @@ tpay.startCardTokenPayment(tokenPayment);
     )  
   )  
 );  
-  
-tpay.screenlessBLIKPayment(payment);
+   
+tpay.screenlessCreditCardPayment(payment);
 </code></pre>
-<h3 id="screenless-ambiguous-blik-payment">Screenless Ambiguous BLIK payment</h3>
-<p>screenlessBLIKPayment(...) method can return a ScreenlessBlikAmbiguousAlias result,
-this means that user has BLIK alias registered in more than one bank.
-You need to display ambiguous aliases provided in ScreenlessBlikAmbiguousAlias result to the user.
-After that, you need to continue the payment with ambiguous alias selected by user using screenlessAmbiguousBLIKPayment(...) method.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>If CreditCardPayment returns <code>ScreenlessPaymentCreated</code> result, you have to handle <code>paymentUrl</code>
+sent with it and redirect user to it in order to complete the payment.</p>
+</div>
+<h4 id="tokenization-2">Tokenization</h4>
+<p>You can also Opt-in to generate credit card token for future payments
+if you want to let user pay for transactions with previously used card.
+To do so, in <code>creditCard -&gt; config</code> object, set the <code>shouldSave</code> to true.</p>
+<pre class="language-dart"><code class="language-dart">creditCard: CreditCard(
+    cardNumber: "4056 2178 4359 7258",
+    expiryDate: ExpirationDate(
+        month: "12",
+        year: "67"
+    ),
+    cvv: "123",
+    config: CreditCardConfig(
+        shouldSave: true,
+        domain: "testdomain.com"
+    )
+),
+</code></pre>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>Generated card token will be sent to <code>notificationUrl</code> specified in the notifications callbacks.</p>
+</div>
+<p>If you already have a credit card token, you can then set up token payment omitting credit card
+info.
+To do so, use <code>creditCardToken</code> instead of <code>creditCard</code> field.</p>
+<pre class="language-dart"><code class="language-dart">final payment = CreditCardPayment(
+  creditCardToken: "card_token",
+  paymentDetails: PaymentDetails(  
+    amount: 19.99,  
+    description: "transaction description",  
+    hiddenDescription: "hidden description",  
+    language: Language.pl  
+  ),  
+  payer: Payer(  
+    name: "John Doe",  
+    email: "example@example.com",  
+    phone: null,  
+    address: null  
+  ),  
+  callbacks: Callbacks(  
+    redirects: Redirects(  
+      successUrl: "https://yourstore.com/success",  
+      errorUrl: "https://yourstore.com/error",  
+    ),  
+    notifications: Notifications(  
+      url: "https://yourstore.com",  
+      email: "payments@yourstore.com"  
+    )  
+  )  
+);  
+   
+tpay.screenlessCreditCardPayment(payment);
+</code></pre>
+<h4 id="recurring-payments">Recurring Payments</h4>
+<p>CreditCardPayment let's you set up the recurring payments as well, so you don't have to remember
+to charge your customer for your service periodically.</p>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>You can choose one of the specified recurring payment frequencies:
+<code>daily</code>, <code>weekly</code>, <code>monthly</code>,<code>quarterly</code> or <code>yearly</code>.</p>
+</div>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>You can choose to either charge user specified times using quantity (int) option,
+or to set it up to being charged until expiration date is being hit or user cancels subscription
+on his own with <code>quantity: null</code>.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">final payment = CreditCardPayment(
+  creditCardToken: "card_token", 
+  recursive: Recursive(
+    frequency: Frequency.monthly,
+    quantity: 19,
+    endDate: "1410-07-17"
+  ),
+  paymentDetails: PaymentDetails(  
+    amount: 19.99,  
+    description: "transaction description",  
+    hiddenDescription: "hidden description",  
+    language: Language.pl  
+  ),  
+  payer: Payer(  
+    name: "John Doe",  
+    email: "example@example.com",  
+    phone: null,  
+    address: null  
+  ),  
+  callbacks: Callbacks(  
+    redirects: Redirects(  
+      successUrl: "https://yourstore.com/success",  
+      errorUrl: "https://yourstore.com/error",  
+    ),  
+    notifications: Notifications(  
+      url: "https://yourstore.com",  
+      email: "payments@yourstore.com"  
+    )  
+  )  
+);  
+   
+tpay.screenlessCreditCardPayment(payment);
+</code></pre>
+<h3 id="screenless-blik-payment">Screenless BLIK payment</h3>
+<p>Tpay SDK let's make transactions with BLIK as well. Simply use <code>BLIKPayment</code> class.</p>
+<pre class="language-dart"><code class="language-dart">final result = BLIKPayment(
+  code: "777462",  
+  paymentDetails: PaymentDetails(
+    amount: 5.21,  
+    description: "transaction description",  
+    hiddenDescription: "hidden description",  
+    language: Language.pl  
+  ),  
+  payer: Payer(  
+    name: "John Doe",  
+    email: "john.doe@test.pl",  
+    phone: "123456789",  
+    address: PayerAddress(
+        address: "TEST",
+        city: "TEST",
+        countryCode: "PL",
+        postalCode: "60-111"
+    )
+  ),  
+  callbacks: Callbacks(  
+    redirects: Redirects(  
+      successUrl: "https://yourstore.com/success",  
+      errorUrl: "https://yourstore.com/error",  
+    ),  
+    notifications: Notifications(  
+      url: "https://yourstore.com",  
+      email: "payments@yourstore.com"  
+    )  
+  )  
+);  
+  
+tpay.screenlessBLIKPayment(result);
+</code></pre>
+<h4 id="blik-alias-payment">BLIK Alias Payment</h4>
+<p>If you have for example a returning users and you want to make their payments with BLIK even
+smoother,
+you can register BLIK Alias for them, so they will only be prompted to accept payment in their
+banking app,
+without need of entering BLIK code each time they want to make the payment.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>In order to register alias for a user/payment, you have to set <code>isRegistered</code> parameter to <code>false</code>.
+Then, a successful payment will register the alias in Tpay system
+and next time user will be able to use it.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">final result = BLIKPayment(
+  code: "777462",  
+  alias: BlikAlias(
+      isRegistered: false,
+      value: "1234",
+      label: "alias_1234"
+  ),
+  // rest of the BLIKPayment configuration
+);
+</code></pre>
+<p>If the payment were successful, you can assume an alias was created and can be used for the future
+payments.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>If you already have registered alias for a user, you can set up <code>isRegistered</code> parameter to <code>true</code>.</p>
+</div>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>To be able to pay with BLIK alias, you <strong>MUST</strong> set the code parameter to <code>null</code>.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">final result = BLIKPayment(
+  alias: BlikAlias(
+      isRegistered: true,
+      value: "1234",
+      label: "alias_1234"
+  ),
+  // rest of the BLIKPayment configuration
+);
+</code></pre>
+<h4 id="blik-ambiguous-alias-payment">BLIK Ambiguous Alias Payment</h4>
+<p>Sometimes, there is a possibility for one alias to be registered more than once. For example, if
+you register alias associated with one user for the multiple banks.
+In such a situation, you have to fetch those aliases from Tpay API and show them to the user to let him
+choose one for the payment.</p>
+<p>In BLIKPayment's call in execute method you can get <code>ScreenlessBlikAmbiguousAlias</code>
+type of result,
+that will indicate that current alias was registered more than once.
+This result hold all possible variations of the alias you used to start payment with in <code>aliases</code>
+field.
+You have to simply show them to user, let him choose, and then use chosen alias to retry the
+payment.</p>
+<pre class="language-dart"><code class="language-dart">if (result is ScreenlessBlikAmbiguousAlias) {
+  showAmbiguousAliases(result.aliases);
+}
+</code></pre>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>In such scenario, you have to use different class to make the payment than at the beginning.</p>
 <pre class="language-dart"><code class="language-dart">final payment = AmbiguousBLIKPayment(
-  transactionId: "id", // received from ScreenlessBlikAmbiguousAlias result
-  blikAlias: BlikAlias(...), // BLIK alias used to create payment with screenlessBLIKPayment(...) method
-  ambiguousAlias: AmbiguousAlias(...) // ambiguous alias selected by user
+transactionId: "transaction_id",
+blikAlias: BlikAlias(
+isRegistered: true,
+value: "1234",
+label: "alias_1234",
+),
+ambiguousAlias: AmbiguousAlias(
+name: chosenAlias.name,
+code: chosenAlias.code,
+)
 );
 
 tpay.screenlessAmbiguousBLIKPayment(payment);
 </code></pre>
-<h3 id="screenless-transfer-payment">Screenless transfer payment</h3>
-<p>Transfer payment requires a channelId of bank in Tpay system.</p>
+</div>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>Right now, Tpay SDK does NOT support recurring payments with BLIK
+In order to achieve that, check
+our <a href="https://docs-api.tpay.com/en/payment-methods/blik/#blik-recurring-payments">API support for BLIK recurring payments</a>.</p>
+</div>
+<h3 id="screenless-transfer-payment">Screenless Transfer Payment</h3>
+<p>Tpay SDK allows you to make transfer payments with bank available to your merchant account.</p>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title">Tip</p>
+<p>To get banks with their channel ids check
+the <a href="https://docs-api.tpay.com/en/first-steps/list-of-payment-methods/">Get Payment Channels</a>
+section.</p>
+</div>
+<p>After your customer chooses their bank from the list, you can use it's <code>channelId</code> to make the payment.</p>
 <pre class="language-dart"><code class="language-dart">final payment = TransferPayment(  
-  channelId: 4,  
+  channelId: 4,
+  bankName: "bank_name",
   paymentDetails: PaymentDetails(  
     amount: 19.99,  
     description: "transaction description",  
@@ -300,8 +946,13 @@ tpay.screenlessAmbiguousBLIKPayment(payment);
   
 tpay.screenlessTransferPayment(payment);
 </code></pre>
-<h3 id="screenless-raty-pekao-payment">Screenless Raty Pekao payment</h3>
-<p>Raty Pekao payment requires a channelId of Raty Pekao variant.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>If TransferPayment returns <code>ScreenlessPaymentCreated</code> result, you have to handle <code>paymentUrl</code>
+sent with it and redirect user to it in order to complete the payment.</p>
+</div>
+<h3 id="screenless-installment-payments">Screenless Installment Payments</h3>
+<p>Tpay SDK allows you to create long term installment payments.</p>
 <pre class="language-dart"><code class="language-dart">final payment = RatyPekaoPayment(
   channelId: 81,
   paymentDetails: PaymentDetails(
@@ -330,7 +981,23 @@ tpay.screenlessTransferPayment(payment);
 
 tpay.screenlessRatyPekaoPayment(payment);
 </code></pre>
-<h3 id="screenless-paypo-payment">Screenless PayPo payment</h3>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>If RatyPekaoPayment returns <code>ScreenlessPaymentCreated</code> result, you have to handle <code>paymentUrl</code>
+sent with it and redirect user to it in order to complete the payment.</p>
+</div>
+<h3 id="screenless-deferred-payments">Screenless Deferred Payments</h3>
+<p>Tpay SDK allows you to create deferred payments (BNPL) using PayPo method.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>For PayPo payment to work, amount of the payment must be at least 40PLN!
+For more information about PayPo payments
+check <a href="https://docs-api.tpay.com/en/payment-methods/bnpl/#paypo">our PayPo documentation</a>.</p>
+</div>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title">Tip</p>
+<p>For sandbox, working phone number is <code>500123456</code></p>
+</div>
 <pre class="language-dart"><code class="language-dart">final payment = PayPoPayment(
   paymentDetails: PaymentDetails(
     amount: 119.99,
@@ -358,53 +1025,15 @@ tpay.screenlessRatyPekaoPayment(payment);
 
 tpay.screenlessPayPoPayment(payment);
 </code></pre>
-<h3 id="screenless-credit-card-payment">Screenless credit card payment</h3>
-<p>User can pay with credit card or credit card token (returning users only). When paying with card number, expiration date and cvv user should have a option to save card. If selected, after a successful payment the card token will be sent to notification url if defined.</p>
-<pre class="language-dart"><code class="language-dart">final payment = CreditCardPayment(  
-  creditCard: CreditCard(  
-    cardNumber: "card number",
-    expiryDate: ExpirationDate(
-      month: "12",
-      year: "24"
-    ),  
-    cvv: "123",  
-    config: CreditCardConfig(
-      shouldSave: false,  
-      domain: "yourstore.com"  
-    )  
-  ),  
-  creditCardToken: "card token",  
-  paymentDetails: PaymentDetails(  
-    amount: 19.99,  
-    description: "transaction description",  
-    hiddenDescription: "hidden description",  
-    language: Language.pl  
-  ),  
-  payer: Payer(  
-    name: "John Doe",  
-    email: "example@example.com",  
-    phone: null,  
-    address: null  
-  ),  
-  callbacks: Callbacks(  
-    redirects: Redirects(  
-      successUrl: "https://yourstore.com/success",  
-      errorUrl: "https://yourstore.com/error",  
-    ),  
-    notifications: Notifications(  
-      url: "https://yourstore.com",  
-      email: "payments@yourstore.com"  
-    )  
-  )  
-);  
-   
-tpay.screenlessCreditCardPayment(payment);
-</code></pre>
-<h3 id="screenless-google-pay-payment">Screenless Google Pay payment</h3>
-<p>Users can pay with Google Pay, in order to start the payment you need to provide the Google Pay token.
-To make this process easier you can use Google Pay utils described later in this document.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>If PayPoPayment returns <code>ScreenlessPaymentCreated</code> result, you have to handle <code>paymentUrl</code>
+sent with it and redirect user to it in order to complete the payment.</p>
+</div>
+<h3 id="screenless-google-pay-payment">Screenless Google Pay Payment</h3>
+<p>Tpay SDK allows you to perform Google Pay transactions.</p>
 <pre class="language-dart"><code class="language-dart">final payment = GooglePayPayment(
-  token: "google pay token",
+  token: "google_pay_token",
   paymentDetails: PaymentDetails(
     amount: 19.99,
     description: "transaction description",
@@ -431,10 +1060,81 @@ To make this process easier you can use Google Pay utils described later in this
 
 tpay.screenlessGooglePayPayment(payment);
 </code></pre>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>If GooglePayPayment returns <code>Created</code> result, you have to handle <code>paymentUrl</code>
+sent with it and redirect user to it in order to complete the payment.</p>
+</div>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>Take under consideration, that choosing this option,
+you have to configure whole Google Wallet SDK and fetch Google Pay token on your own.
+For <code>ANDROID</code> system only, we provide a bit smoother way of handling Google Pay transactions with our wrappers.</p>
+</div>
+<h4 id="google-pay-utils">Google Pay Utils</h4>
+<p>If you do not want to configure whole Google Pay functionality, you can use <code>GooglePlayUtil</code> class.
+It will handle all payments, with additional info in the bottom sheet and send you all the needed info in
+callback.</p>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>To use GooglePayUtil, first, you have to configure them it.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">final configuration = GooglePayUtilsConfiguration(
+  price: 39.99,
+  merchantName: "merchant_name",
+  merchantId: "merchant_id",
+  environment: GooglePayEnvironment.test,
+);
+
+final configurationResult = tpay.configureGooglePayUtils(configuration);
+
+switch (configurationResult) {
+  case GooglePayConfigureSuccess():
+    break;
+  case GooglePayConfigureError():
+    break;
+}
+</code></pre>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>Before you use our utils, make sure Google Pay is enabled in the device. Use <code>isGooglePayAvailable</code> method.</p>
+</div>
+<pre class="language-dart"><code class="language-dart">final isAvailable = await _tpay.isGooglePayAvailable();
+
+if (isAvailable) {
+  // display Google Pay button
+}
+</code></pre>
+<p>Next, you can open Google Pay module and let user choose his credit card, so you can use it to make
+the payment.</p>
+<pre class="language-dart"><code class="language-dart">final googlePayResult = await _tpay.openGooglePay();
+
+switch (googlePayResult) {
+  case GooglePayOpenSuccess():
+    break;
+  case GooglePayOpenCancelled():
+    break;
+  case GooglePayOpenUnknownError():
+    break;
+  case GooglePayOpenNotConfigured():
+    break;
+}
+</code></pre>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>If <code>googlePayResult</code> returns <code>GooglePayOpenSuccess</code>, you <strong>HAVE TO</strong> use it's content to make an actual
+payment buy using <code>GooglePayPayment</code> and <code>screenlessGooglePayPayment</code>.</p>
+</div>
 <h3 id="screenless-apple-pay-payment">Screenless Apple Pay payment</h3>
-<p>Users can pay with Apple Pay, in order to start the payment you need to provide the Apple Pay token.</p>
+<p>Tpay SDK allows you to perform Apple Pay transactions.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>To be able to complete Apple Pay payment, you will need <code>apple_pay_token</code>. You <strong>HAVE TO</strong>
+acquire a token by yourself. To do that check
+official <a href="https://developer.apple.com/design/human-interface-guidelines/apple-pay#app-top">Apple Pay documentation</a></p>
+</div>
 <pre class="language-dart"><code class="language-dart">final payment = ApplePayPayment(
-  applePayToken: "apple pay token",
+  applePayToken: "apple_pay_token",
   paymentDetails: PaymentDetails(
     amount: 19.99,
     description: "transaction description",
@@ -461,126 +1161,8 @@ tpay.screenlessGooglePayPayment(payment);
 
 tpay.screenlessApplePayPayment(payment);
 </code></pre>
-<h3 id="screenless-payment-result-handling">Screenless payment result handling</h3>
-<pre class="language-dart"><code class="language-dart">void handleScreenlessResult(ScreenlessResult result) {  
-  if (result is ScreenlessPaid) {  
-    // payment completed successfully  
-  }  
-  if (result is ScreenlessPaymentCreated) {  
-    // payment was successfully created  
-    // if it was a BLIK payment user has to accept it in bank app    
-    // if it was a credit card or transfer payment you have to    
-    // display result.paymentUrl to finish the payment    
-    // it is advised to use long polling mechanism to observe    
-    // payment status    
-    // you can get transaction id from result.transactionId    
-  }
-  if (result is ScreenlessPaymentError) {  
-    // creating payment failed  
-  }  
-  if (result is ScreenlessConfiguredPaymentFailed) {  
-    // creating payment failed because of error with:  
-    // - credit card data or credit card token    
-    // - BLIK code or BLIK alias  
-  }
-  if (result is ScreenlessBlikAmbiguousAlias) {
-    // when using BLIK payment with alias this result indicates
-    // that user has alias registered in more than one bank
-    
-    // display result.aliases to the user and
-    // continue payment using tpay.screenlessAmbiguousBLIKPayment(...) method
-  }
-  if (result is ScreenlessValidationError) {  
-    // passed data is incorrect  
-  }  
-  if (result is ScreenlessMethodCallError) {  
-    // something went wrong with the plugin  
-  }  
-}
-</code></pre>
-<h2 id="google-pay-utils-android-only">Google Pay utils (Android only)</h2>
-<p>SDK offers few convenience methods of interacting with Google Pay.</p>
-<pre class="language-dart"><code class="language-dart">// Configure Google Pay utils before using other methods
-final configuration = GooglePayUtilsConfiguration(
-  price: 39.99, // final price
-  merchantName: "YOUR_STORE_NAME",
-  merchantId: "MERCHANT_ID",
-  environment: GooglePayEnvironment.production
-);
-
-final configurationResult = await tpay.configureGooglePayUtils(configuration);
-if (configurationResult is GooglePayConfigureSuccess) {
-  // configuration successful
-}
-
-if (configurationResult is GooglePayConfigureError) {
-  // configuration failed
-  // check error message via configurationResult.message
-}
-
-// Check if Google Pay is available
-// This method will always return false if Google Pay utils are not configured
-final isAvailable = await tpay.isGooglePayAvailable();
-if (isAvailable) {
-  // display Google Pay button
-}
-
-// If Google Pay is available, you can open it
-final googlePayResult = await tpay.openGooglePay();
-
-if (googlePayResult is GooglePayOpenSuccess) {
-  // credit card data was received successfully
-  // this result contains token, description, cardNetwork and cardTail parameters
-  // use googlePayResult.token parameter with tpay.screenlessGooglePayPayment(...) 
-  // to create a Google Pay payment
-}
-
-if (googlePayResult is GooglePayOpenCancelled) {
-  // user closed the Google Pay module without selecting a credit card
-}
-
-if (googlePayResult is GooglePayOpenUnknownError) {
-  // unknown error
-}
-
-if (googlePayResult is GooglePayOpenNotConfigured) {
-  // Google Pay utils not configured
-}
-</code></pre>
-<h2 id="fetch-payment-channels">Fetch payment channels</h2>
-<p>Fetch available payment channels for your merchant account. Filter channels based on payment constraints.</p>
-<pre class="language-dart"><code class="language-dart">final result = await tpay.getAvailablePaymentChannels();
-
-if (result is PaymentChannelsSuccess) {
-  // payment channels received
-  for (var channel in result.channels) {
-    // channel can have payment constraints
-    // that need to be satisfied, otherwise the payment creation will fail
-    for (var constraint in channel.constraints) {
-      if (constraint is AmountPaymentConstraint) {
-        // check if your payment amount is between
-        // - constraint.minimum
-        // - constraint.maximum
-        // this constraint can have:
-        // - only minimum value
-        // - only maximum value
-        // - minimum and maximum values
-      }
-    }
-    
-    // display payment channel if all payment constraints are satisfied
-  }
-}
-if (result is PaymentChannelsError) {
-  // error occurred
-  // read error message via result.message
-}
-</code></pre>
-<h2 id="run-sample-application">Run sample application</h2>
-<pre class="language-bash"><code class="language-bash">git clone &lt;github-link&gt; tpay
-cd tpay/example
-flutter run
-</code></pre>
+<h2 id="license">License</h2>
+<p>This library is released under the <a href="https://opensource.org/license/mit/">MIT License</a>.</p>
 </section>
 
 
@@ -588,448 +1170,448 @@ flutter run
           <h2>Libraries</h2>
         <dl>
           <dt id="apple_pay_configuration">
-  <span class="name"><a href="model_apple_pay_configuration">model/apple_pay_configuration</a></span> 
+  <span class="name"><a href="model_apple_pay_configuration/">model/apple_pay_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="certificate_pinning_configuration">
-  <span class="name"><a href="model_certificate_pinning_configuration">model/certificate_pinning_configuration</a></span> 
+  <span class="name"><a href="model_certificate_pinning_configuration/">model/certificate_pinning_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_configuration">
-  <span class="name"><a href="model_google_pay_configuration">model/google_pay_configuration</a></span> 
+  <span class="name"><a href="model_google_pay_configuration/">model/google_pay_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="language">
-  <span class="name"><a href="model_language_language">model/language/language</a></span> 
+  <span class="name"><a href="model_language_language/">model/language/language</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="languages">
-  <span class="name"><a href="model_language_languages">model/language/languages</a></span> 
+  <span class="name"><a href="model_language_languages/">model/language/languages</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="localized_string">
-  <span class="name"><a href="model_language_localized_string">model/language/localized_string</a></span> 
+  <span class="name"><a href="model_language_localized_string/">model/language/localized_string</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="merchant">
-  <span class="name"><a href="model_merchant_merchant">model/merchant/merchant</a></span> 
+  <span class="name"><a href="model_merchant_merchant/">model/merchant/merchant</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="merchant_authorization">
-  <span class="name"><a href="model_merchant_merchant_authorization">model/merchant/merchant_authorization</a></span> 
+  <span class="name"><a href="model_merchant_merchant_authorization/">model/merchant/merchant_authorization</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="merchant_details">
-  <span class="name"><a href="model_merchant_merchant_details">model/merchant/merchant_details</a></span> 
+  <span class="name"><a href="model_merchant_merchant_details/">model/merchant/merchant_details</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payer">
-  <span class="name"><a href="model_payer_payer">model/payer/payer</a></span> 
+  <span class="name"><a href="model_payer_payer/">model/payer/payer</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payer_address">
-  <span class="name"><a href="model_payer_payer_address">model/payer/payer_address</a></span> 
+  <span class="name"><a href="model_payer_payer_address/">model/payer/payer_address</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payer_context">
-  <span class="name"><a href="model_payer_payer_context">model/payer/payer_context</a></span> 
+  <span class="name"><a href="model_payer_payer_context/">model/payer/payer_context</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_channel">
-  <span class="name"><a href="model_paymentChannel_payment_channel">model/paymentChannel/payment_channel</a></span> 
+  <span class="name"><a href="model_paymentChannel_payment_channel/">model/paymentChannel/payment_channel</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_constraint">
-  <span class="name"><a href="model_paymentChannel_payment_constraint">model/paymentChannel/payment_constraint</a></span> 
+  <span class="name"><a href="model_paymentChannel_payment_constraint/">model/paymentChannel/payment_constraint</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_group">
-  <span class="name"><a href="model_paymentChannel_payment_group">model/paymentChannel/payment_group</a></span> 
+  <span class="name"><a href="model_paymentChannel_payment_group/">model/paymentChannel/payment_group</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="automatic_payment_methods">
-  <span class="name"><a href="model_paymentMethod_automatic_payment_methods">model/paymentMethod/automatic_payment_methods</a></span> 
+  <span class="name"><a href="model_paymentMethod_automatic_payment_methods/">model/paymentMethod/automatic_payment_methods</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="blik_alias">
-  <span class="name"><a href="model_paymentMethod_blik_alias">model/paymentMethod/blik_alias</a></span> 
+  <span class="name"><a href="model_paymentMethod_blik_alias/">model/paymentMethod/blik_alias</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card_brand">
-  <span class="name"><a href="model_paymentMethod_credit_card_brand">model/paymentMethod/credit_card_brand</a></span> 
+  <span class="name"><a href="model_paymentMethod_credit_card_brand/">model/paymentMethod/credit_card_brand</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="digital_wallet">
-  <span class="name"><a href="model_paymentMethod_digital_wallet">model/paymentMethod/digital_wallet</a></span> 
+  <span class="name"><a href="model_paymentMethod_digital_wallet/">model/paymentMethod/digital_wallet</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="installment_payment">
-  <span class="name"><a href="model_paymentMethod_installment_payment">model/paymentMethod/installment_payment</a></span> 
+  <span class="name"><a href="model_paymentMethod_installment_payment/">model/paymentMethod/installment_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_method">
-  <span class="name"><a href="model_paymentMethod_payment_method">model/paymentMethod/payment_method</a></span> 
+  <span class="name"><a href="model_paymentMethod_payment_method/">model/paymentMethod/payment_method</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_methods">
-  <span class="name"><a href="model_paymentMethod_payment_methods">model/paymentMethod/payment_methods</a></span> 
+  <span class="name"><a href="model_paymentMethod_payment_methods/">model/paymentMethod/payment_methods</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tokenized_card">
-  <span class="name"><a href="model_paymentMethod_tokenized_card">model/paymentMethod/tokenized_card</a></span> 
+  <span class="name"><a href="model_paymentMethod_tokenized_card/">model/paymentMethod/tokenized_card</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_configure_result">
-  <span class="name"><a href="model_result_google_pay_configure_result">model/result/google_pay_configure_result</a></span> 
+  <span class="name"><a href="model_result_google_pay_configure_result/">model/result/google_pay_configure_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_open_result">
-  <span class="name"><a href="model_result_google_pay_open_result">model/result/google_pay_open_result</a></span> 
+  <span class="name"><a href="model_result_google_pay_open_result/">model/result/google_pay_open_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_channels_result">
-  <span class="name"><a href="model_result_payment_channels_result">model/result/payment_channels_result</a></span> 
+  <span class="name"><a href="model_result_payment_channels_result/">model/result/payment_channels_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="result">
-  <span class="name"><a href="model_result_result">model/result/result</a></span> 
+  <span class="name"><a href="model_result_result/">model/result/result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="screenless_result">
-  <span class="name"><a href="model_result_screenless_result">model/result/screenless_result</a></span> 
+  <span class="name"><a href="model_result_screenless_result/">model/result/screenless_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="ambiguous_alias">
-  <span class="name"><a href="model_screenless_ambiguous_alias">model/screenless/ambiguous_alias</a></span> 
+  <span class="name"><a href="model_screenless_ambiguous_alias/">model/screenless/ambiguous_alias</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="ambiguous_blik_payment">
-  <span class="name"><a href="model_screenless_ambiguous_blik_payment">model/screenless/ambiguous_blik_payment</a></span> 
+  <span class="name"><a href="model_screenless_ambiguous_blik_payment/">model/screenless/ambiguous_blik_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="apple_pay_payment">
-  <span class="name"><a href="model_screenless_apple_pay_payment">model/screenless/apple_pay_payment</a></span> 
+  <span class="name"><a href="model_screenless_apple_pay_payment/">model/screenless/apple_pay_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="blik_payment">
-  <span class="name"><a href="model_screenless_blik_payment">model/screenless/blik_payment</a></span> 
+  <span class="name"><a href="model_screenless_blik_payment/">model/screenless/blik_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="callbacks">
-  <span class="name"><a href="model_screenless_callbacks">model/screenless/callbacks</a></span> 
+  <span class="name"><a href="model_screenless_callbacks/">model/screenless/callbacks</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card">
-  <span class="name"><a href="model_screenless_credit_card">model/screenless/credit_card</a></span> 
+  <span class="name"><a href="model_screenless_credit_card/">model/screenless/credit_card</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card_config">
-  <span class="name"><a href="model_screenless_credit_card_config">model/screenless/credit_card_config</a></span> 
+  <span class="name"><a href="model_screenless_credit_card_config/">model/screenless/credit_card_config</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="credit_card_payment">
-  <span class="name"><a href="model_screenless_credit_card_payment">model/screenless/credit_card_payment</a></span> 
+  <span class="name"><a href="model_screenless_credit_card_payment/">model/screenless/credit_card_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="expiration_date">
-  <span class="name"><a href="model_screenless_expiration_date">model/screenless/expiration_date</a></span> 
+  <span class="name"><a href="model_screenless_expiration_date/">model/screenless/expiration_date</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_environment">
-  <span class="name"><a href="model_screenless_google_pay_environment">model/screenless/google_pay_environment</a></span> 
+  <span class="name"><a href="model_screenless_google_pay_environment/">model/screenless/google_pay_environment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_payment">
-  <span class="name"><a href="model_screenless_google_pay_payment">model/screenless/google_pay_payment</a></span> 
+  <span class="name"><a href="model_screenless_google_pay_payment/">model/screenless/google_pay_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_utils_configuration">
-  <span class="name"><a href="model_screenless_google_pay_utils_configuration">model/screenless/google_pay_utils_configuration</a></span> 
+  <span class="name"><a href="model_screenless_google_pay_utils_configuration/">model/screenless/google_pay_utils_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="notifications">
-  <span class="name"><a href="model_screenless_notifications">model/screenless/notifications</a></span> 
+  <span class="name"><a href="model_screenless_notifications/">model/screenless/notifications</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="pay_po_payment">
-  <span class="name"><a href="model_screenless_pay_po_payment">model/screenless/pay_po_payment</a></span> 
+  <span class="name"><a href="model_screenless_pay_po_payment/">model/screenless/pay_po_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_details">
-  <span class="name"><a href="model_screenless_payment_details">model/screenless/payment_details</a></span> 
+  <span class="name"><a href="model_screenless_payment_details/">model/screenless/payment_details</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="raty_pekao_payment">
-  <span class="name"><a href="model_screenless_raty_pekao_payment">model/screenless/raty_pekao_payment</a></span> 
+  <span class="name"><a href="model_screenless_raty_pekao_payment/">model/screenless/raty_pekao_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="recursive">
-  <span class="name"><a href="model_screenless_recursive">model/screenless/recursive</a></span> 
+  <span class="name"><a href="model_screenless_recursive/">model/screenless/recursive</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="redirects">
-  <span class="name"><a href="model_screenless_redirects">model/screenless/redirects</a></span> 
+  <span class="name"><a href="model_screenless_redirects/">model/screenless/redirects</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="screenless_payment">
-  <span class="name"><a href="model_screenless_screenless_payment">model/screenless/screenless_payment</a></span> 
+  <span class="name"><a href="model_screenless_screenless_payment/">model/screenless/screenless_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="transfer_method">
-  <span class="name"><a href="model_screenless_transfer_method">model/screenless/transfer_method</a></span> 
+  <span class="name"><a href="model_screenless_transfer_method/">model/screenless/transfer_method</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="transfer_payment">
-  <span class="name"><a href="model_screenless_transfer_payment">model/screenless/transfer_payment</a></span> 
+  <span class="name"><a href="model_screenless_transfer_payment/">model/screenless/transfer_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tokenization">
-  <span class="name"><a href="model_tokenization_tokenization">model/tokenization/tokenization</a></span> 
+  <span class="name"><a href="model_tokenization_tokenization/">model/tokenization/tokenization</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_configuration">
-  <span class="name"><a href="model_tpay_configuration">model/tpay_configuration</a></span> 
+  <span class="name"><a href="model_tpay_configuration/">model/tpay_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_environment">
-  <span class="name"><a href="model_tpay_environment">model/tpay_environment</a></span> 
+  <span class="name"><a href="model_tpay_environment/">model/tpay_environment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="single_transaction">
-  <span class="name"><a href="model_transaction_single_transaction">model/transaction/single_transaction</a></span> 
+  <span class="name"><a href="model_transaction_single_transaction/">model/transaction/single_transaction</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="token_payment">
-  <span class="name"><a href="model_transaction_token_payment">model/transaction/token_payment</a></span> 
+  <span class="name"><a href="model_transaction_token_payment/">model/transaction/token_payment</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="transaction">
-  <span class="name"><a href="model_transaction_transaction">model/transaction/transaction</a></span> 
+  <span class="name"><a href="model_transaction_transaction/">model/transaction/transaction</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="wallet_configuration">
-  <span class="name"><a href="model_wallet_configuration">model/wallet_configuration</a></span> 
+  <span class="name"><a href="model_wallet_configuration/">model/wallet_configuration</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_button">
-  <span class="name"><a href="tpay_button">tpay_button</a></span> 
+  <span class="name"><a href="tpay_button/">tpay_button</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_method_channel">
-  <span class="name"><a href="tpay_method_channel">tpay_method_channel</a></span> 
+  <span class="name"><a href="tpay_method_channel/">tpay_method_channel</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="tpay_platform_interface">
-  <span class="name"><a href="tpay_platform_interface">tpay_platform_interface</a></span> 
+  <span class="name"><a href="tpay_platform_interface/">tpay_platform_interface</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_configuration_util">
-  <span class="name"><a href="util_google_pay_configuration_util">util/google_pay_configuration_util</a></span> 
+  <span class="name"><a href="util_google_pay_configuration_util/">util/google_pay_configuration_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="google_pay_util">
-  <span class="name"><a href="util_google_pay_util">util/google_pay_util</a></span> 
+  <span class="name"><a href="util_google_pay_util/">util/google_pay_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="payment_channels_util">
-  <span class="name"><a href="util_payment_channels_util">util/payment_channels_util</a></span> 
+  <span class="name"><a href="util_payment_channels_util/">util/payment_channels_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="result_util">
-  <span class="name"><a href="util_result_util">util/result_util</a></span> 
+  <span class="name"><a href="util_result_util/">util/result_util</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="screenless_result_util">
-  <span class="name"><a href="util_screenless_result_util">util/screenless_result_util</a></span> 
+  <span class="name"><a href="util_screenless_result_util/">util/screenless_result_util</a></span> 
 
 </dt>
 <dd>
@@ -1052,70 +1634,70 @@ flutter run
     <h5 class="hidden-xs"><span class="package-name">flutter_tpay</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="model_apple_pay_configuration">model/apple_pay_configuration</a></li>
-      <li><a href="model_certificate_pinning_configuration">model/certificate_pinning_configuration</a></li>
-      <li><a href="model_google_pay_configuration">model/google_pay_configuration</a></li>
-      <li><a href="model_language_language">model/language/language</a></li>
-      <li><a href="model_language_languages">model/language/languages</a></li>
-      <li><a href="model_language_localized_string">model/language/localized_string</a></li>
-      <li><a href="model_merchant_merchant">model/merchant/merchant</a></li>
-      <li><a href="model_merchant_merchant_authorization">model/merchant/merchant_authorization</a></li>
-      <li><a href="model_merchant_merchant_details">model/merchant/merchant_details</a></li>
-      <li><a href="model_payer_payer">model/payer/payer</a></li>
-      <li><a href="model_payer_payer_address">model/payer/payer_address</a></li>
-      <li><a href="model_payer_payer_context">model/payer/payer_context</a></li>
-      <li><a href="model_paymentChannel_payment_channel">model/paymentChannel/payment_channel</a></li>
-      <li><a href="model_paymentChannel_payment_constraint">model/paymentChannel/payment_constraint</a></li>
-      <li><a href="model_paymentChannel_payment_group">model/paymentChannel/payment_group</a></li>
-      <li><a href="model_paymentMethod_automatic_payment_methods">model/paymentMethod/automatic_payment_methods</a></li>
-      <li><a href="model_paymentMethod_blik_alias">model/paymentMethod/blik_alias</a></li>
-      <li><a href="model_paymentMethod_credit_card_brand">model/paymentMethod/credit_card_brand</a></li>
-      <li><a href="model_paymentMethod_digital_wallet">model/paymentMethod/digital_wallet</a></li>
-      <li><a href="model_paymentMethod_installment_payment">model/paymentMethod/installment_payment</a></li>
-      <li><a href="model_paymentMethod_payment_method">model/paymentMethod/payment_method</a></li>
-      <li><a href="model_paymentMethod_payment_methods">model/paymentMethod/payment_methods</a></li>
-      <li><a href="model_paymentMethod_tokenized_card">model/paymentMethod/tokenized_card</a></li>
-      <li><a href="model_result_google_pay_configure_result">model/result/google_pay_configure_result</a></li>
-      <li><a href="model_result_google_pay_open_result">model/result/google_pay_open_result</a></li>
-      <li><a href="model_result_payment_channels_result">model/result/payment_channels_result</a></li>
-      <li><a href="model_result_result">model/result/result</a></li>
-      <li><a href="model_result_screenless_result">model/result/screenless_result</a></li>
-      <li><a href="model_screenless_ambiguous_alias">model/screenless/ambiguous_alias</a></li>
-      <li><a href="model_screenless_ambiguous_blik_payment">model/screenless/ambiguous_blik_payment</a></li>
-      <li><a href="model_screenless_apple_pay_payment">model/screenless/apple_pay_payment</a></li>
-      <li><a href="model_screenless_blik_payment">model/screenless/blik_payment</a></li>
-      <li><a href="model_screenless_callbacks">model/screenless/callbacks</a></li>
-      <li><a href="model_screenless_credit_card">model/screenless/credit_card</a></li>
-      <li><a href="model_screenless_credit_card_config">model/screenless/credit_card_config</a></li>
-      <li><a href="model_screenless_credit_card_payment">model/screenless/credit_card_payment</a></li>
-      <li><a href="model_screenless_expiration_date">model/screenless/expiration_date</a></li>
-      <li><a href="model_screenless_google_pay_environment">model/screenless/google_pay_environment</a></li>
-      <li><a href="model_screenless_google_pay_payment">model/screenless/google_pay_payment</a></li>
-      <li><a href="model_screenless_google_pay_utils_configuration">model/screenless/google_pay_utils_configuration</a></li>
-      <li><a href="model_screenless_notifications">model/screenless/notifications</a></li>
-      <li><a href="model_screenless_pay_po_payment">model/screenless/pay_po_payment</a></li>
-      <li><a href="model_screenless_payment_details">model/screenless/payment_details</a></li>
-      <li><a href="model_screenless_raty_pekao_payment">model/screenless/raty_pekao_payment</a></li>
-      <li><a href="model_screenless_recursive">model/screenless/recursive</a></li>
-      <li><a href="model_screenless_redirects">model/screenless/redirects</a></li>
-      <li><a href="model_screenless_screenless_payment">model/screenless/screenless_payment</a></li>
-      <li><a href="model_screenless_transfer_method">model/screenless/transfer_method</a></li>
-      <li><a href="model_screenless_transfer_payment">model/screenless/transfer_payment</a></li>
-      <li><a href="model_tokenization_tokenization">model/tokenization/tokenization</a></li>
-      <li><a href="model_tpay_configuration">model/tpay_configuration</a></li>
-      <li><a href="model_tpay_environment">model/tpay_environment</a></li>
-      <li><a href="model_transaction_single_transaction">model/transaction/single_transaction</a></li>
-      <li><a href="model_transaction_token_payment">model/transaction/token_payment</a></li>
-      <li><a href="model_transaction_transaction">model/transaction/transaction</a></li>
-      <li><a href="model_wallet_configuration">model/wallet_configuration</a></li>
-      <li><a href="tpay_button">tpay_button</a></li>
-      <li><a href="tpay_method_channel">tpay_method_channel</a></li>
-      <li><a href="tpay_platform_interface">tpay_platform_interface</a></li>
-      <li><a href="util_google_pay_configuration_util">util/google_pay_configuration_util</a></li>
-      <li><a href="util_google_pay_util">util/google_pay_util</a></li>
-      <li><a href="util_payment_channels_util">util/payment_channels_util</a></li>
-      <li><a href="util_result_util">util/result_util</a></li>
-      <li><a href="util_screenless_result_util">util/screenless_result_util</a></li>
+      <li><a href="model_apple_pay_configuration/">model/apple_pay_configuration</a></li>
+      <li><a href="model_certificate_pinning_configuration/">model/certificate_pinning_configuration</a></li>
+      <li><a href="model_google_pay_configuration/">model/google_pay_configuration</a></li>
+      <li><a href="model_language_language/">model/language/language</a></li>
+      <li><a href="model_language_languages/">model/language/languages</a></li>
+      <li><a href="model_language_localized_string/">model/language/localized_string</a></li>
+      <li><a href="model_merchant_merchant/">model/merchant/merchant</a></li>
+      <li><a href="model_merchant_merchant_authorization/">model/merchant/merchant_authorization</a></li>
+      <li><a href="model_merchant_merchant_details/">model/merchant/merchant_details</a></li>
+      <li><a href="model_payer_payer/">model/payer/payer</a></li>
+      <li><a href="model_payer_payer_address/">model/payer/payer_address</a></li>
+      <li><a href="model_payer_payer_context/">model/payer/payer_context</a></li>
+      <li><a href="model_paymentChannel_payment_channel/">model/paymentChannel/payment_channel</a></li>
+      <li><a href="model_paymentChannel_payment_constraint/">model/paymentChannel/payment_constraint</a></li>
+      <li><a href="model_paymentChannel_payment_group/">model/paymentChannel/payment_group</a></li>
+      <li><a href="model_paymentMethod_automatic_payment_methods/">model/paymentMethod/automatic_payment_methods</a></li>
+      <li><a href="model_paymentMethod_blik_alias/">model/paymentMethod/blik_alias</a></li>
+      <li><a href="model_paymentMethod_credit_card_brand/">model/paymentMethod/credit_card_brand</a></li>
+      <li><a href="model_paymentMethod_digital_wallet/">model/paymentMethod/digital_wallet</a></li>
+      <li><a href="model_paymentMethod_installment_payment/">model/paymentMethod/installment_payment</a></li>
+      <li><a href="model_paymentMethod_payment_method/">model/paymentMethod/payment_method</a></li>
+      <li><a href="model_paymentMethod_payment_methods/">model/paymentMethod/payment_methods</a></li>
+      <li><a href="model_paymentMethod_tokenized_card/">model/paymentMethod/tokenized_card</a></li>
+      <li><a href="model_result_google_pay_configure_result/">model/result/google_pay_configure_result</a></li>
+      <li><a href="model_result_google_pay_open_result/">model/result/google_pay_open_result</a></li>
+      <li><a href="model_result_payment_channels_result/">model/result/payment_channels_result</a></li>
+      <li><a href="model_result_result/">model/result/result</a></li>
+      <li><a href="model_result_screenless_result/">model/result/screenless_result</a></li>
+      <li><a href="model_screenless_ambiguous_alias/">model/screenless/ambiguous_alias</a></li>
+      <li><a href="model_screenless_ambiguous_blik_payment/">model/screenless/ambiguous_blik_payment</a></li>
+      <li><a href="model_screenless_apple_pay_payment/">model/screenless/apple_pay_payment</a></li>
+      <li><a href="model_screenless_blik_payment/">model/screenless/blik_payment</a></li>
+      <li><a href="model_screenless_callbacks/">model/screenless/callbacks</a></li>
+      <li><a href="model_screenless_credit_card/">model/screenless/credit_card</a></li>
+      <li><a href="model_screenless_credit_card_config/">model/screenless/credit_card_config</a></li>
+      <li><a href="model_screenless_credit_card_payment/">model/screenless/credit_card_payment</a></li>
+      <li><a href="model_screenless_expiration_date/">model/screenless/expiration_date</a></li>
+      <li><a href="model_screenless_google_pay_environment/">model/screenless/google_pay_environment</a></li>
+      <li><a href="model_screenless_google_pay_payment/">model/screenless/google_pay_payment</a></li>
+      <li><a href="model_screenless_google_pay_utils_configuration/">model/screenless/google_pay_utils_configuration</a></li>
+      <li><a href="model_screenless_notifications/">model/screenless/notifications</a></li>
+      <li><a href="model_screenless_pay_po_payment/">model/screenless/pay_po_payment</a></li>
+      <li><a href="model_screenless_payment_details/">model/screenless/payment_details</a></li>
+      <li><a href="model_screenless_raty_pekao_payment/">model/screenless/raty_pekao_payment</a></li>
+      <li><a href="model_screenless_recursive/">model/screenless/recursive</a></li>
+      <li><a href="model_screenless_redirects/">model/screenless/redirects</a></li>
+      <li><a href="model_screenless_screenless_payment/">model/screenless/screenless_payment</a></li>
+      <li><a href="model_screenless_transfer_method/">model/screenless/transfer_method</a></li>
+      <li><a href="model_screenless_transfer_payment/">model/screenless/transfer_payment</a></li>
+      <li><a href="model_tokenization_tokenization/">model/tokenization/tokenization</a></li>
+      <li><a href="model_tpay_configuration/">model/tpay_configuration</a></li>
+      <li><a href="model_tpay_environment/">model/tpay_environment</a></li>
+      <li><a href="model_transaction_single_transaction/">model/transaction/single_transaction</a></li>
+      <li><a href="model_transaction_token_payment/">model/transaction/token_payment</a></li>
+      <li><a href="model_transaction_transaction/">model/transaction/transaction</a></li>
+      <li><a href="model_wallet_configuration/">model/wallet_configuration</a></li>
+      <li><a href="tpay_button/">tpay_button</a></li>
+      <li><a href="tpay_method_channel/">tpay_method_channel</a></li>
+      <li><a href="tpay_platform_interface/">tpay_platform_interface</a></li>
+      <li><a href="util_google_pay_configuration_util/">util/google_pay_configuration_util</a></li>
+      <li><a href="util_google_pay_util/">util/google_pay_util</a></li>
+      <li><a href="util_payment_channels_util/">util/payment_channels_util</a></li>
+      <li><a href="util_result_util/">util/result_util</a></li>
+      <li><a href="util_screenless_result_util/">util/screenless_result_util</a></li>
 </ol>
 
   </div>
@@ -1125,7 +1707,7 @@ flutter run
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.2.1
+      1.2.8
   </span>
   
 </footer>
