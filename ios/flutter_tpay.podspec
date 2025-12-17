@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_tpay'
-  s.version          = '1.2.7'
+  s.version          = '1.2.8'
   s.summary          = 'Tpay Flutter iOS bridge'
   s.description      = <<-DESC
   Tpay Flutter iOS bridge'.
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Tpay-SDK', '1.3.6'
+  s.dependency 'Tpay-SDK', '1.3.7'
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.
