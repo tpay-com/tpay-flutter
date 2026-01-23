@@ -12,5 +12,4 @@ struct BlikPayment: Transaction {
     let alias: String?
     let paymentChannel: Headless.Models.PaymentChannel
     let callbacks: CallbacksConfiguration
-    let notification: Tpay.Notification?
 }

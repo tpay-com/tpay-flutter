@@ -1,5 +1,9 @@
 ## UNRELEASED
 
+## 1.2.9
+- Change: Updated iOS SDK to 1.3.8
+- Fix: Using callbacks internally to configure notifications & redirects
+
 ## 1.2.8
 - Change: Updated iOS SDK to 1.3.7
 - Fix: Passing success & error redirect urls to the API on Screenless transaction creation on iOS

@@ -10,5 +10,4 @@ struct BankPayment: Transaction {
     let payerContext: PayerContext?
     let paymentChannel: Headless.Models.PaymentChannel
     let callbacks: CallbacksConfiguration
-    let notification: Tpay.Notification?
 }

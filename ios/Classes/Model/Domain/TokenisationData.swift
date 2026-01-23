@@ -1,10 +1,3 @@
-//
-//  TokenisationData.swift
-//  flutter_tpay
-//
-//  Created by Karol Kaluga on 26/03/2024.
-//
-
 import Foundation
 import Tpay
 

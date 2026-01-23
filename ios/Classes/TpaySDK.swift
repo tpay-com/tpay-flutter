@@ -47,7 +47,8 @@ final class TpaySDK {
         paymentPresentation.paymentIntermediateResult = { result in resolveIntermediate(result) }
 
         do {
-            try paymentPresentation.presentPayment(for: singleTransaction)
+            try TpayModule.configure(callbacks: singleTransaction.callbacks)
+            try paymentPresentation.presentPayment(for: singleTransaction.singleTransaction)
         } catch {
             resolve(ConfigurationResult.configurationFailure(error: error).toJson())
         }
@@ -62,7 +63,8 @@ final class TpaySDK {
         tokenCardPresentation.cardTokenPaymentResult = { result in resolve(result) }
 
         do {
-            try tokenCardPresentation.presentPayment(for: singleTransaction)
+            try TpayModule.configure(callbacks: singleTransaction.callbacks)
+            try tokenCardPresentation.presentPayment(for: singleTransaction.singleTransaction)
         } catch {
             resolve(ConfigurationResult.configurationFailure(error: error).toJson())
         }
