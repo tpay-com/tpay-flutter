@@ -1,5 +1,5 @@
 group 'com.tpay'
-version '1.2.9'
+version '1.2.10'
 
 buildscript {
     ext.kotlin_version = '1.6.10'

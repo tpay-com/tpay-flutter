@@ -1,5 +1,10 @@
 ## UNRELEASED
 
+## 1.2.10
+- Change: Updated iOS SDK to 1.3.9
+- Fix: Payers information reset on language change on iOS
+- Fix: Lack of redirection for token transactions on iOS
+
 ## 1.2.9
 - Change: Updated iOS SDK to 1.3.8
 - Fix: Using callbacks internally to configure notifications & redirects
