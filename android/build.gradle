@@ -1,32 +1,18 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
 group 'com.tpay'
-version '1.2.10'
-
-buildscript {
-    ext.kotlin_version = '1.6.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+version '1.2.12'
 
 android {
     namespace 'com.tpay'
-    compileSdkVersion 34
+    compileSdkVersion 35
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -43,10 +29,11 @@ android {
 
     defaultConfig {
         minSdkVersion 23
+        buildConfigField "String", "TPAY_FLUTTER_SDK_VERSION", "\"${project.version}\""
     }
 }
 
 dependencies {
-    implementation 'com.tpay:sdk:1.2.3'
+    implementation 'com.tpay:sdk:1.2.7'
     implementation 'com.android.support:support-v4:28.0.0'
 }

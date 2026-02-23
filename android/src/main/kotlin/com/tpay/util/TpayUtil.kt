@@ -1,5 +1,6 @@
 package com.tpay.util
 
+import com.tpay.BuildConfig
 import com.tpay.model.*
 import com.tpay.sdk.api.tpayModule.TpayModule
 import com.tpay.sdk.api.providers.*
@@ -32,7 +33,7 @@ object TpayUtil {
                 .configure(merchant.environment)
                 .configure(paymentMethods.methods)
                 .configure(languages.preferredLanguage, languages.supportedLanguages)
-                .configure(Compatibility.FLUTTER)
+                .configure(Compatibility.FLUTTER, BuildConfig.TPAY_FLUTTER_SDK_VERSION)
                 .configure(object : MerchantDetailsProvider {
                     override fun merchantDisplayName(language: Language): String {
                         return merchantDetails.displayNames

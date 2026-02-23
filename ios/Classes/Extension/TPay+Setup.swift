@@ -10,6 +10,11 @@ extension TpayModule {
                       supportedLanguages: [Language],
                       sslCertificatesProvider: SSLCertificatesProvider?,
                       detailsProvider: MerchantDetailsProvider) throws {
+        try TpayModule.configure(
+            compatibility: .flutter,
+            sdkVersionName: getFlutterTpayVersion()
+        )
+
         try TpayModule.configure(merchant: merchant)
             .configure(merchantDetailsProvider: detailsProvider)
 
@@ -28,5 +33,16 @@ extension TpayModule {
         if case let .invalid(error) = TpayModule.checkConfiguration() {
             throw error
         }
+    }
+}
+
+private extension TpayModule {
+
+    static func getFlutterTpayVersion() -> String? {
+        if let bundle = Bundle(identifier: "org.cocoapods.flutter-tpay") ??
+                        Bundle.allBundles.first(where: { $0.bundleURL.lastPathComponent.contains("flutter_tpay") }) {
+            return bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        }
+        return nil
     }
 }

@@ -15,10 +15,15 @@ final class PaymentPresentation: PaymentDelegate {
 
     func presentPayment(for transaction: Transaction) throws {
         currnetViewController = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController
+
         paymentSheet = Payment.Sheet(transaction: transaction, delegate: self)
 
         guard let currnetViewController = currnetViewController else {
-            return
+            throw NSError(
+                domain: "com.tpay.flutter",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Unable to get root view controller for payment presentation"]
+            )
         }
 
         try paymentSheet?.present(from: currnetViewController)

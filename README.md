@@ -160,7 +160,6 @@ Languages(preferredLanguage: Language.pl, supportedLanguages: [Language.pl, Lang
 
 As a merchant, you can configure how information about you will be shown.
 You can set up your `display name`, `city/headquarters` and `regulations link`.
-You can choose to provide different copy for each language, or simply use one for all.
 
 ```dart
 MerchantDetails(

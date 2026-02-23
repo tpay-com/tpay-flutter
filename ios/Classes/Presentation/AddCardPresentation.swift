@@ -14,10 +14,15 @@ final class AddCardPresentation: AddCardDelegate {
 
     func presentAddCard(for payer: Payer) throws {
         currnetViewController = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController
+
         addCardSheet = AddCard.Sheet(payer: payer, delegate: self)
 
         guard let currnetViewController = currnetViewController else {
-            return
+            throw NSError(
+                domain: "com.tpay.flutter",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Unable to get root view controller for add card presentation"]
+            )
         }
 
         try addCardSheet?.present(from: currnetViewController)

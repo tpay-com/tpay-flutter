@@ -402,7 +402,7 @@ class TpayExample extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: TpayItemList(actions: actions),
+          child: SafeArea(child: TpayItemList(actions: actions)),
         ),
       ),
     );

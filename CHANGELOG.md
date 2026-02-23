@@ -1,5 +1,14 @@
 ## UNRELEASED
 
+## 1.2.12
+- Change: Updated Android SDK to 1.2.7
+- Fix: Correct supported languages configuration
+
+## 1.2.11
+- Change: Updated iOS SDK to 1.3.10
+- Change: Updated Android SDK to 1.2.6
+- Fix: Presentation sheet not showing
+
 ## 1.2.10
 - Change: Updated iOS SDK to 1.3.9
 - Fix: Payers information reset on language change on iOS

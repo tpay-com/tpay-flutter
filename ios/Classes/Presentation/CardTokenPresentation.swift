@@ -14,10 +14,15 @@ final class CardTokenPresentation: CardTokenPaymentDelegate {
 
     func presentPayment(for transaction: Transaction) throws {
         currnetViewController = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController
+
         cardTokenSheet = CardTokenPayment.Sheet(transaction: transaction, delegate: self)
 
         guard let currnetViewController = currnetViewController else {
-            return
+            throw NSError(
+                domain: "com.tpay.flutter",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Unable to get root view controller for card token payment presentation"]
+            )
         }
 
         try cardTokenSheet?.present(from: currnetViewController)
