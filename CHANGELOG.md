@@ -1,5 +1,8 @@
 ## UNRELEASED
 
+## 1.2.13
+- Change: Updated iOS SDK to 1.3.11
+
 ## 1.2.12
 - Change: Updated Android SDK to 1.2.7
 - Fix: Correct supported languages configuration
