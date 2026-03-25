@@ -1,5 +1,8 @@
 ## UNRELEASED
 
+## 1.2.14
+- Change: Updated iOS SDK to 1.3.12
+
 ## 1.2.13
 - Change: Updated iOS SDK to 1.3.11
 

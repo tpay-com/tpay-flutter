@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.tpay'
-version '1.2.13'
+version '1.2.14'
 
 android {
     namespace 'com.tpay'
