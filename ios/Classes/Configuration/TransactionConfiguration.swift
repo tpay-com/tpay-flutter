@@ -179,11 +179,19 @@ final class TransactionConfiguration {
         guard let payerContext = singleTransaction.payerContext else { return nil }
 
         let payer = makePayer(from: payerContext.payer)
-        let blikAllias = payerContext.automaticPaymentMethods?.blikAlias?.value
-        let registredBlikAlias = blikAllias != nil ? RegisteredBlikAlias(value: .uid(blikAllias!)) : nil
         let tokenizedCards = payerContext.automaticPaymentMethods?.tokenizedCards?.compactMap { makeCardToken(from: $0) }
 
-        return .init(payer: payer, automaticPaymentMethods: .init(registeredBlikAlias: registredBlikAlias, tokenizedCards: tokenizedCards))
+        let blikAlias = payerContext.automaticPaymentMethods?.blikAlias
+        let registeredBlikAlias: RegisteredBlikAlias? = blikAlias.flatMap { alias in
+            guard alias.isRegistered else { return nil }
+            return RegisteredBlikAlias(value: .uid(alias.value))
+        }
+        let notRegisteredBlikAlias: NotRegisteredBlikAlias? = blikAlias.flatMap { alias in
+            guard !alias.isRegistered else { return nil }
+            return NotRegisteredBlikAlias(value: .uid(alias.value))
+        }
+
+        return .init(payer: payer, automaticPaymentMethods: .init(registeredBlikAlias: registeredBlikAlias, notRegisteredBlikAlias: notRegisteredBlikAlias, tokenizedCards: tokenizedCards))
     }
 
     private static func makeTokenPayerContext(from tokenPayment: T.TokenPayment) -> PayerContext {

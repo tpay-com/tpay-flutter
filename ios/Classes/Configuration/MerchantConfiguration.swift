@@ -104,7 +104,7 @@ final class MerchantConfiguration {
     }
 
     private func makeBlikConfiguration(from blikAliasToRegister: String?) -> Merchant.BlikConfiguration? {
-        guard let blikAliasToRegister = blikAliasToRegister else { return nil }
+        guard let blikAliasToRegister = blikAliasToRegister, !blikAliasToRegister.isEmpty else { return nil }
 
         return .init(aliasToBeRegistered: .init(value: .uid(blikAliasToRegister)))
     }

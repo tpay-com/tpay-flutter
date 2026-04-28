@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.tpay'
-version '1.2.14'
+version '1.2.15'
 
 android {
     namespace 'com.tpay'
@@ -34,6 +34,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.tpay:sdk:1.2.7'
+    implementation 'com.tpay:sdk:1.2.8'
     implementation 'com.android.support:support-v4:28.0.0'
 }

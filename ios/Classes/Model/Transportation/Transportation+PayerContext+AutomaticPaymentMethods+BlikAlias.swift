@@ -5,5 +5,7 @@ extension Transportation.PayerContext.AutomaticPaymentMethods {
         // MARK: - Properties
 
         let value: String
+        let isRegistered: Bool
+        let label: String?
     }
 }

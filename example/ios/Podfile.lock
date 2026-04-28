@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_tpay (1.2.13):
+  - flutter_tpay (1.2.15):
     - Flutter
-    - Tpay-SDK (= 1.3.11)
-  - Tpay-SDK (1.3.11)
+    - Tpay-SDK (= 1.3.16)
+  - Tpay-SDK (1.3.16)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_tpay: fb63a9c4eef75e55b96511614c5e259568ac0529
-  Tpay-SDK: a1706ec75dda8b7679bb9882e2a8f2e9a522fb9c
+  flutter_tpay: 29cb75e82fc708065f351f2ef41687563cb9b0c1
+  Tpay-SDK: a6002b588a14bee10d76238891494b2bdd7429a5
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 

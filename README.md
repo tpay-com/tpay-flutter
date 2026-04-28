@@ -5,6 +5,16 @@
 ![Static Badge](https://img.shields.io/badge/min_ios_sdk-12.0+-blue?logo=apple&label=iOS)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## Table of Contents
+- [About](#about)
+- [Install](#install)
+- [Configuration](#configuration)
+- [Handling payments](#handling-payments)
+- [Official SDK screens](#official-sdk-screens)
+- [Tokenization](#tokenization)
+- [Screenless Payments](#screenless-payments)
+- [License](#license)
+
 ## About
 This plugin allows your app to make payments with Tpay.
 
@@ -117,26 +127,35 @@ CertificatePinningConfiguration(publicKeyHash: "PUBLIC_KEY_HASH")
 
 In order to be able to use Google Pay method you have to provide your `merchant_id` to the SDK.
 
-> [!tip]
-> Your login name to the merchant panel is your merchant id.
-
 ```dart
 GooglePayConfiguration(merchantId: "MERCHANT_ID")
 ```
+
+`merchant_id` is unique identifier assigned to you during Tpay account registration.
 
 #### Apple Pay configuration
 
 In order to be able to use Apple Pay method you have to provide your `merchant_id` and `country_code` to the SDK.
 
+> [!Warning]
+> - Apple Pay is available exclusively on Apple devices (iPhone, iPad, MacBook, iMac). Payments cannot be made on non-Apple operating systems such as Android or Windows.
+> - Apple Pay supports only **Visa** and **Mastercard**.
+
 > [!important]
-> To obtain the merchantIdentifier, follow these steps:
+> Before using Apple Pay, make sure the following prerequisites are met:
+> - Card payments are enabled in your merchant account.
+> - Apple Pay payment channel is activated in your merchant panel.
+
+> [!important]
+> To set up Apple Pay, you need an Apple Developer account. Follow these steps:
 > 1. Log in to your Apple Developer account.
 > 2. Navigate to the `Certificates, Identifiers & Profiles` section.
 > 3. Under `Identifiers,` select `Merchant IDs.`
 > 4. Click the `+` button to create a new Merchant ID.
 > 5. Fill in the required information and associate it with your app's Bundle ID.
-> 6. Once created, the merchant identifier can be found in the list of Merchant IDs.
-> 7. For more details, please follow [Apple Pay documentation](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
+> 6. Set up a **Payment Processing Certificate** for the Merchant ID.
+> 7. Once created, the merchant identifier can be found in the list of Merchant IDs.
+> 8. For more details, please follow [Apple Pay documentation](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
 
 ```dart
 ApplePayConfiguration(merchantIdentifier: "merchant_id", countryCode: "PL")
@@ -408,6 +427,55 @@ AutomaticPaymentMethods(
   blikAlias: null
 )
 ```
+
+#### Google Pay on-site configuration
+
+Google Pay on-site is an integration of Google Pay payments that allows customers to pay directly from your mobile application.
+
+Google Pay on-site can be integrated in the following scenarios:
+
+- Android application (native) - Google Pay is launched directly in a native Android mobile application, where the integration is implemented using the Google Pay API for Android.
+
+> [!Warning]
+> - The Google Pay on-site method is currently available only for the Pekao acquiring agent. Check whether your card payments are processed through this acquiring agent.
+> - Google Pay supports only **Visa** and **Mastercard**.
+
+> [!important]
+> Before using Google Pay, make sure the following prerequisites are met:
+> - Card payments are enabled in your merchant account.
+> - Google Pay payment channel is activated in your merchant panel.
+
+#### Android application (native)
+
+##### Development phase
+
+In order to be able to use Google Pay method you have to:
+
+- add `DigitalWallet.googlePay` to a supported payment list
+- provide your `merchant_id` to the SDK as follows
+
+```dart
+GooglePayConfiguration(merchantId: "MERCHANT_ID")
+```
+
+`merchant_id` is unique identifier assigned to you during Tpay account registration.
+
+##### Production readiness
+
+To correctly launch Google Pay in an Android application, the application should:
+
+- be signed with the application certificate (SHA-256),
+- be submitted and configured in the Google Pay & Wallet Console,
+- have a correctly configured package name consistent with the application data registered in Google.
+
+Application requirements and environment configuration are described in Google's documentation:
+
+- [App prerequisites (minSdk, distribution via Google Play)](https://developers.google.com/pay/api/android/guides/setup)
+- [Application integration approval and publishing process](https://developers.google.com/pay/api/android/guides/test-and-deploy/publish-your-integration)
+
+Google provides a checklist of functional and branding requirements that must be met before publishing the integration:
+
+[Integration checklist](https://developers.google.com/pay/api/android/guides/test-and-deploy/integration-checklist)
 
 ## Tokenization
 
@@ -788,16 +856,12 @@ tpay.screenlessBLIKPayment(result);
 
 #### BLIK Alias Payment
 
-If you have for example a returning users and you want to make their payments with BLIK even
-smoother,
+If you have returning users and you want to make their BLIK payments even smoother,
 you can register BLIK Alias for them, so they will only be prompted to accept payment in their
-banking app,
-without need of entering BLIK code each time they want to make the payment.
+banking app, without need of entering BLIK code each time they want to make the payment.
 
 > [!warning]
 > In order to register alias for a user/payment, you have to set `isRegistered` parameter to `false`.
-> Then, a successful payment will register the alias in Tpay system
-> and next time user will be able to use it.
 
 ```dart
 final result = BLIKPayment(
@@ -811,14 +875,10 @@ final result = BLIKPayment(
 );
 ```
 
-If the payment were successful, you can assume an alias was created and can be used for the future
-payments.
+> [!important]
+> Provided alias cannot be assumed as registered until receiving webhook notification about its status. Notification should be received by dedicated backend server, for implementation details check official [documentation](https://docs-api.tpay.com/en/webhooks/) . Additionally your backend server should implement other BLIK related [notifications](https://docs-api.tpay.com/en/webhooks/#blik-one-clickblik-recurring-payments-after-expiration-update-or-delete-alias) to ensure BLIK alias is valid and usable.
 
-> [!warning]
-> If you already have registered alias for a user, you can set up `isRegistered` parameter to `true`.
-
-> [!warning]
-> To be able to pay with BLIK alias, you **MUST** set the code parameter to `null`.
+Once alias is registered for a user, you can set up `isRegistered` parameter to `true`.
 
 ```dart
 final result = BLIKPayment(
@@ -830,6 +890,12 @@ final result = BLIKPayment(
   // rest of the BLIKPayment configuration
 );
 ```
+
+> [!warning]
+> To be able to pay with BLIK alias, you **MUST** set the code parameter to `null`.
+
+> [!warning]
+> Before testing BLIK alias functionality check sandbox environment limitations listed in [documentation](https://docs-api.tpay.com/en/first-steps/environments/#blik-payments)
 
 #### BLIK Ambiguous Alias Payment
 
@@ -1108,14 +1174,22 @@ switch (googlePayResult) {
 > If `googlePayResult` returns `GooglePayOpenSuccess`, you **HAVE TO** use it's content to make an actual
 > payment buy using `GooglePayPayment` and `screenlessGooglePayPayment`.
 
+`merchant_id` is unique identifier assigned to you during Tpay account registration.
+
+> [!warning]
+> In order to launch Google Pay on production follow [these guidelines](#production-readiness)
+
 ### Screenless Apple Pay payment
 
 Tpay SDK allows you to perform Apple Pay transactions.
 
 > [!warning]
+> Apple Pay is available exclusively on Apple devices (iPhone, iPad, MacBook, iMac) and supports only **Visa** and **Mastercard**.
+
+> [!warning]
 > To be able to complete Apple Pay payment, you will need `apple_pay_token`. You **HAVE TO**
-> acquire a token by yourself. To do that check
-> official [Apple Pay documentation](https://developer.apple.com/design/human-interface-guidelines/apple-pay#app-top)
+> acquire a token by yourself using Apple's PassKit framework. To do that check
+> official [Apple Pay documentation](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay)
 
 ```dart
 final payment = ApplePayPayment(

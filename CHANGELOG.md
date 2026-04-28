@@ -1,4 +1,10 @@
-## UNRELEASED
+## 1.2.15
+- Change: Updated iOS SDK to 1.3.16
+- Change: Updated Android SDK to 1.2.8
+- Feature: Added a "back" button (chevron) on the 3DS screen during card tokenization on iOS — analogous to Android
+- Fix: Fixed isRegistered flag mapping in BlikAlias on iOS — the alias registration checkbox is now displayed correctly
+- Fix: Fixed handling of empty blikAliasToRegister — an empty string no longer creates an alias
+- Fix: Fixed payment screen presentation with FlutterSceneDelegate (iOS 13+)
 
 ## 1.2.14
 - Change: Updated iOS SDK to 1.3.12

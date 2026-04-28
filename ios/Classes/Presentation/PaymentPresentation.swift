@@ -14,8 +14,7 @@ final class PaymentPresentation: PaymentDelegate {
     // MARK: - API
 
     func presentPayment(for transaction: Transaction) throws {
-        currnetViewController = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController
-
+        currnetViewController = Self.findFlutterViewController()
         paymentSheet = Payment.Sheet(transaction: transaction, delegate: self)
 
         guard let currnetViewController = currnetViewController else {
@@ -27,6 +26,20 @@ final class PaymentPresentation: PaymentDelegate {
         }
 
         try paymentSheet?.present(from: currnetViewController)
+    }
+
+    private static func findFlutterViewController() -> FlutterViewController? {
+        if let vc = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController {
+            return vc
+        }
+        if #available(iOS 13.0, *) {
+            return UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow }?
+                .rootViewController as? FlutterViewController
+        }
+        return nil
     }
 
     // MARK: - PaymentDelegate
