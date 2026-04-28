@@ -49,6 +49,17 @@
 <img src="https://img.shields.io/badge/min_android_sdk-23-blue?logo=android&amp;label=Min%20Android%20SDK" alt="Static Badge">
 <img src="https://img.shields.io/badge/min_ios_sdk-12.0+-blue?logo=apple&amp;label=iOS" alt="Static Badge">
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#install">Install</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#handling-payments">Handling payments</a></li>
+<li><a href="#official-sdk-screens">Official SDK screens</a></li>
+<li><a href="#tokenization">Tokenization</a></li>
+<li><a href="#screenless-payments">Screenless Payments</a></li>
+<li><a href="#license">License</a></li>
+</ul>
 <h2 id="about">About</h2>
 <p>This plugin allows your app to make payments with Tpay.</p>
 <table>
@@ -191,23 +202,36 @@ Info about <code>client_id</code> and <code>client_secret</code> you will find i
 </code></pre>
 <h4 id="google-pay-configuration">Google Pay configuration</h4>
 <p>In order to be able to use Google Pay method you have to provide your <code>merchant_id</code> to the SDK.</p>
-<div class="markdown-alert markdown-alert-tip">
-<p class="markdown-alert-title">Tip</p>
-<p>Your login name to the merchant panel is your merchant id.</p>
-</div>
 <pre class="language-dart"><code class="language-dart">GooglePayConfiguration(merchantId: "MERCHANT_ID")
 </code></pre>
+<p><code>merchant_id</code> is unique identifier assigned to you during Tpay account registration.</p>
 <h4 id="apple-pay-configuration">Apple Pay configuration</h4>
 <p>In order to be able to use Apple Pay method you have to provide your <code>merchant_id</code> and <code>country_code</code> to the SDK.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<ul>
+<li>Apple Pay is available exclusively on Apple devices (iPhone, iPad, MacBook, iMac). Payments cannot be made on non-Apple operating systems such as Android or Windows.</li>
+<li>Apple Pay supports only <strong>Visa</strong> and <strong>Mastercard</strong>.</li>
+</ul>
+</div>
 <div class="markdown-alert markdown-alert-important">
 <p class="markdown-alert-title">Important</p>
-<p>To obtain the merchantIdentifier, follow these steps:</p>
+<p>Before using Apple Pay, make sure the following prerequisites are met:</p>
+<ul>
+<li>Card payments are enabled in your merchant account.</li>
+<li>Apple Pay payment channel is activated in your merchant panel.</li>
+</ul>
+</div>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>To set up Apple Pay, you need an Apple Developer account. Follow these steps:</p>
 <ol>
 <li>Log in to your Apple Developer account.</li>
 <li>Navigate to the <code>Certificates, Identifiers &amp; Profiles</code> section.</li>
 <li>Under <code>Identifiers,</code> select <code>Merchant IDs.</code></li>
 <li>Click the <code>+</code> button to create a new Merchant ID.</li>
 <li>Fill in the required information and associate it with your app's Bundle ID.</li>
+<li>Set up a <strong>Payment Processing Certificate</strong> for the Merchant ID.</li>
 <li>Once created, the merchant identifier can be found in the list of Merchant IDs.</li>
 <li>For more details, please follow <a href="https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay">Apple Pay documentation</a>.</li>
 </ol>
@@ -474,6 +498,51 @@ When you already have all required information, you can add <code>automaticPayme
   blikAlias: null
 )
 </code></pre>
+<h4 id="google-pay-on-site-configuration">Google Pay on-site configuration</h4>
+<p>Google Pay on-site is an integration of Google Pay payments that allows customers to pay directly from your mobile application.</p>
+<p>Google Pay on-site can be integrated in the following scenarios:</p>
+<ul>
+<li>Android application (native) - Google Pay is launched directly in a native Android mobile application, where the integration is implemented using the Google Pay API for Android.</li>
+</ul>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<ul>
+<li>The Google Pay on-site method is currently available only for the Pekao acquiring agent. Check whether your card payments are processed through this acquiring agent.</li>
+<li>Google Pay supports only <strong>Visa</strong> and <strong>Mastercard</strong>.</li>
+</ul>
+</div>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>Before using Google Pay, make sure the following prerequisites are met:</p>
+<ul>
+<li>Card payments are enabled in your merchant account.</li>
+<li>Google Pay payment channel is activated in your merchant panel.</li>
+</ul>
+</div>
+<h4 id="android-application-native">Android application (native)</h4>
+<h5 id="development-phase">Development phase</h5>
+<p>In order to be able to use Google Pay method you have to:</p>
+<ul>
+<li>add <code>DigitalWallet.googlePay</code> to a supported payment list</li>
+<li>provide your <code>merchant_id</code> to the SDK as follows</li>
+</ul>
+<pre class="language-dart"><code class="language-dart">GooglePayConfiguration(merchantId: "MERCHANT_ID")
+</code></pre>
+<p><code>merchant_id</code> is unique identifier assigned to you during Tpay account registration.</p>
+<h5 id="production-readiness">Production readiness</h5>
+<p>To correctly launch Google Pay in an Android application, the application should:</p>
+<ul>
+<li>be signed with the application certificate (SHA-256),</li>
+<li>be submitted and configured in the Google Pay &amp; Wallet Console,</li>
+<li>have a correctly configured package name consistent with the application data registered in Google.</li>
+</ul>
+<p>Application requirements and environment configuration are described in Google's documentation:</p>
+<ul>
+<li><a href="https://developers.google.com/pay/api/android/guides/setup">App prerequisites (minSdk, distribution via Google Play)</a></li>
+<li><a href="https://developers.google.com/pay/api/android/guides/test-and-deploy/publish-your-integration">Application integration approval and publishing process</a></li>
+</ul>
+<p>Google provides a checklist of functional and branding requirements that must be met before publishing the integration:</p>
+<p><a href="https://developers.google.com/pay/api/android/guides/test-and-deploy/integration-checklist">Integration checklist</a></p>
 <h2 id="tokenization">Tokenization</h2>
 <p>Tpay SDK allows you to make credit card transactions without need of entering card's data each time.
 Instead, you can create and use a token, associated with a specific card and user.</p>
@@ -826,16 +895,12 @@ tpay.screenlessCreditCardPayment(payment);
 tpay.screenlessBLIKPayment(result);
 </code></pre>
 <h4 id="blik-alias-payment">BLIK Alias Payment</h4>
-<p>If you have for example a returning users and you want to make their payments with BLIK even
-smoother,
+<p>If you have returning users and you want to make their BLIK payments even smoother,
 you can register BLIK Alias for them, so they will only be prompted to accept payment in their
-banking app,
-without need of entering BLIK code each time they want to make the payment.</p>
+banking app, without need of entering BLIK code each time they want to make the payment.</p>
 <div class="markdown-alert markdown-alert-warning">
 <p class="markdown-alert-title">Warning</p>
-<p>In order to register alias for a user/payment, you have to set <code>isRegistered</code> parameter to <code>false</code>.
-Then, a successful payment will register the alias in Tpay system
-and next time user will be able to use it.</p>
+<p>In order to register alias for a user/payment, you have to set <code>isRegistered</code> parameter to <code>false</code>.</p>
 </div>
 <pre class="language-dart"><code class="language-dart">final result = BLIKPayment(
   code: "777462",  
@@ -847,16 +912,11 @@ and next time user will be able to use it.</p>
   // rest of the BLIKPayment configuration
 );
 </code></pre>
-<p>If the payment were successful, you can assume an alias was created and can be used for the future
-payments.</p>
-<div class="markdown-alert markdown-alert-warning">
-<p class="markdown-alert-title">Warning</p>
-<p>If you already have registered alias for a user, you can set up <code>isRegistered</code> parameter to <code>true</code>.</p>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title">Important</p>
+<p>Provided alias cannot be assumed as registered until receiving webhook notification about its status. Notification should be received by dedicated backend server, for implementation details check official <a href="https://docs-api.tpay.com/en/webhooks/">documentation</a> . Additionally your backend server should implement other BLIK related <a href="https://docs-api.tpay.com/en/webhooks/#blik-one-clickblik-recurring-payments-after-expiration-update-or-delete-alias">notifications</a> to ensure BLIK alias is valid and usable.</p>
 </div>
-<div class="markdown-alert markdown-alert-warning">
-<p class="markdown-alert-title">Warning</p>
-<p>To be able to pay with BLIK alias, you <strong>MUST</strong> set the code parameter to <code>null</code>.</p>
-</div>
+<p>Once alias is registered for a user, you can set up <code>isRegistered</code> parameter to <code>true</code>.</p>
 <pre class="language-dart"><code class="language-dart">final result = BLIKPayment(
   alias: BlikAlias(
       isRegistered: true,
@@ -866,6 +926,14 @@ payments.</p>
   // rest of the BLIKPayment configuration
 );
 </code></pre>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>To be able to pay with BLIK alias, you <strong>MUST</strong> set the code parameter to <code>null</code>.</p>
+</div>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>Before testing BLIK alias functionality check sandbox environment limitations listed in <a href="https://docs-api.tpay.com/en/first-steps/environments/#blik-payments">documentation</a></p>
+</div>
 <h4 id="blik-ambiguous-alias-payment">BLIK Ambiguous Alias Payment</h4>
 <p>Sometimes, there is a possibility for one alias to be registered more than once. For example, if
 you register alias associated with one user for the multiple banks.
@@ -1124,13 +1192,22 @@ switch (googlePayResult) {
 <p>If <code>googlePayResult</code> returns <code>GooglePayOpenSuccess</code>, you <strong>HAVE TO</strong> use it's content to make an actual
 payment buy using <code>GooglePayPayment</code> and <code>screenlessGooglePayPayment</code>.</p>
 </div>
+<p><code>merchant_id</code> is unique identifier assigned to you during Tpay account registration.</p>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
+<p>In order to launch Google Pay on production follow <a href="#production-readiness">these guidelines</a></p>
+</div>
 <h3 id="screenless-apple-pay-payment">Screenless Apple Pay payment</h3>
 <p>Tpay SDK allows you to perform Apple Pay transactions.</p>
 <div class="markdown-alert markdown-alert-warning">
 <p class="markdown-alert-title">Warning</p>
+<p>Apple Pay is available exclusively on Apple devices (iPhone, iPad, MacBook, iMac) and supports only <strong>Visa</strong> and <strong>Mastercard</strong>.</p>
+</div>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title">Warning</p>
 <p>To be able to complete Apple Pay payment, you will need <code>apple_pay_token</code>. You <strong>HAVE TO</strong>
-acquire a token by yourself. To do that check
-official <a href="https://developer.apple.com/design/human-interface-guidelines/apple-pay#app-top">Apple Pay documentation</a></p>
+acquire a token by yourself using Apple's PassKit framework. To do that check
+official <a href="https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay">Apple Pay documentation</a></p>
 </div>
 <pre class="language-dart"><code class="language-dart">final payment = ApplePayPayment(
   applePayToken: "apple_pay_token",
@@ -1706,7 +1783,7 @@ tpay.screenlessApplePayPayment(payment);
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.2.14
+      1.2.15
   </span>
   
 </footer>
