@@ -1,3 +1,8 @@
+## 1.3.0
+- Change: Updated iOS SDK to 1.4.0
+- Change: Updated Android SDK to 1.2.9
+- Feature: Add option to enable single transaction mode for SDK's official screens
+
 ## 1.2.15
 - Change: Updated iOS SDK to 1.3.16
 - Change: Updated Android SDK to 1.2.8

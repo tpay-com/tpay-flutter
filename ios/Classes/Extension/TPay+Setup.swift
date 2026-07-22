@@ -9,7 +9,8 @@ extension TpayModule {
                       preferredLanguage: Language?,
                       supportedLanguages: [Language],
                       sslCertificatesProvider: SSLCertificatesProvider?,
-                      detailsProvider: MerchantDetailsProvider) throws {
+                      detailsProvider: MerchantDetailsProvider,
+                      singleTransaction: Bool) throws {
         try TpayModule.configure(
             compatibility: .flutter,
             sdkVersionName: getFlutterTpayVersion()
@@ -29,6 +30,8 @@ extension TpayModule {
         if let sslCertificatesProvider = sslCertificatesProvider {
             TpayModule.configure(sslCertificatesProvider: sslCertificatesProvider)
         }
+
+        TpayModule.configure(singleTransaction: singleTransaction)
 
         if case let .invalid(error) = TpayModule.checkConfiguration() {
             throw error

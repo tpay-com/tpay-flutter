@@ -8,5 +8,6 @@ extension Transportation {
         let languages: Languages?
         let merchantDetails: MerchantDetails
         let paymentMethods: PaymentMethods?
+        let singleTransaction: Bool?
     }
 }

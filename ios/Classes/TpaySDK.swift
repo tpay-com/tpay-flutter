@@ -30,7 +30,8 @@ final class TpaySDK {
                                  preferredLanguage: preferredLanguage,
                                  supportedLanguages: supportedLanguages,
                                  sslCertificatesProvider: sslCertificatesProvider,
-                                 detailsProvider: detailsProvider)
+                                 detailsProvider: detailsProvider,
+                                 singleTransaction: configuration.singleTransaction())
             return ConfigurationResult.configurationValid().toJson()
         } catch {
             return ConfigurationResult.configurationFailure(error: error).toJson()

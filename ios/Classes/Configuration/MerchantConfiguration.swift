@@ -86,6 +86,10 @@ final class MerchantConfiguration {
         return .init(merchantDisplayName: merchantDisplayName, merchantHeadquarters: merchantHeadquarters, regulationsLink: regulationsLink)
     }
 
+    func singleTransaction() -> Bool {
+        configuration.singleTransaction ?? false
+    }
+
     func sslCertificatesProvider() -> DefaultSSLCertificatesProvider? {
         guard let publicKeyHash = configuration.merchant.certificatePinningConfiguration?.publicKeyHash else { return nil }
         return .init(apiConfiguration: .init(publicKeyHashes: [publicKeyHash]))

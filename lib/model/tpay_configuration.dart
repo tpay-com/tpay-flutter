@@ -11,18 +11,21 @@ part 'tpay_configuration.g.dart';
 /// - [merchantDetails] - information about merchant in different languages
 /// - [languages] - languages that user will be able to use in Tpay UI module
 /// - [paymentMethods] - payment methods that user will be able to use in Tpay UI module
+/// - [singleTransaction] - enables single transaction mode in the Tpay UI module. Defaults to `false`.
 @JsonSerializable(explicitToJson: true)
 class TpayConfiguration {
   final Merchant merchant;
   final MerchantDetails merchantDetails;
   final Languages languages;
   final PaymentMethods paymentMethods;
+  final bool singleTransaction;
 
   TpayConfiguration({
     required this.merchant,
     required this.merchantDetails,
     required this.languages,
     required this.paymentMethods,
+    this.singleTransaction = false,
   });
 
   factory TpayConfiguration.fromJson(Map<String, dynamic> json) => _$TpayConfigurationFromJson(json);

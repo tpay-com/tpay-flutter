@@ -14,6 +14,7 @@ TpayConfiguration _$TpayConfigurationFromJson(Map<String, dynamic> json) =>
       languages: Languages.fromJson(json['languages'] as Map<String, dynamic>),
       paymentMethods: PaymentMethods.fromJson(
           json['paymentMethods'] as Map<String, dynamic>),
+      singleTransaction: json['singleTransaction'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$TpayConfigurationToJson(TpayConfiguration instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$TpayConfigurationToJson(TpayConfiguration instance) =>
       'merchantDetails': instance.merchantDetails.toJson(),
       'languages': instance.languages.toJson(),
       'paymentMethods': instance.paymentMethods.toJson(),
+      'singleTransaction': instance.singleTransaction,
     };

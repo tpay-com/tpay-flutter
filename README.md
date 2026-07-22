@@ -197,6 +197,14 @@ MerchantDetails(
 ),
 ```
 
+### Single transaction mode
+
+When enabled, the Tpay UI module is restricted to completing a single transaction. Defaults to `false` (multiple transactions allowed) when omitted.
+
+```dart
+final singleTransaction = true;
+```
+
 ### Summary
 Beneath you will find how a complete configuration should look like.
 
@@ -248,6 +256,7 @@ final configuration = TpayConfiguration(
       InstallmentPayment.payPo
     ]
   ),
+  singleTransaction: true,
 );  
 
 tpay.configure(configuration);
