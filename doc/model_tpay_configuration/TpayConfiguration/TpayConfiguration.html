@@ -54,10 +54,11 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">TpayConfiguration</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-merchant"><span>required</span> <span class="type-annotation"><a href="../../model_merchant_merchant/Merchant-class.html">Merchant</a></span> <span class="parameter-name">merchant</span>, </span></li>
-<li><span class="parameter" id="-param-merchantDetails"><span>required</span> <span class="type-annotation"><a href="../../model_merchant_merchant_details/MerchantDetails-class.html">MerchantDetails</a></span> <span class="parameter-name">merchantDetails</span>, </span></li>
-<li><span class="parameter" id="-param-languages"><span>required</span> <span class="type-annotation"><a href="../../model_language_languages/Languages-class.html">Languages</a></span> <span class="parameter-name">languages</span>, </span></li>
-<li><span class="parameter" id="-param-paymentMethods"><span>required</span> <span class="type-annotation"><a href="../../model_paymentMethod_payment_methods/PaymentMethods-class.html">PaymentMethods</a></span> <span class="parameter-name">paymentMethods</span>, </span></li>
+      <span class="name ">TpayConfiguration</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="param-merchant"><span>required</span> <span class="type-annotation"><a href="../../model_merchant_merchant/Merchant-class.html">Merchant</a></span> <span class="parameter-name">merchant</span>, </span></li>
+<li><span class="parameter" id="param-merchantDetails"><span>required</span> <span class="type-annotation"><a href="../../model_merchant_merchant_details/MerchantDetails-class.html">MerchantDetails</a></span> <span class="parameter-name">merchantDetails</span>, </span></li>
+<li><span class="parameter" id="param-languages"><span>required</span> <span class="type-annotation"><a href="../../model_language_languages/Languages-class.html">Languages</a></span> <span class="parameter-name">languages</span>, </span></li>
+<li><span class="parameter" id="param-paymentMethods"><span>required</span> <span class="type-annotation"><a href="../../model_paymentMethod_payment_methods/PaymentMethods-class.html">PaymentMethods</a></span> <span class="parameter-name">paymentMethods</span>, </span></li>
+<li><span class="parameter" id="param-singleTransaction"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">singleTransaction</span> = <span class="default-value">false</span>, </span></li>
 </ol>})
     </section>
     
@@ -71,6 +72,7 @@
   required this.merchantDetails,
   required this.languages,
   required this.paymentMethods,
+  this.singleTransaction = false,
 });</code></pre>
 </section>
 
@@ -99,7 +101,7 @@
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.2.15
+      1.3.0
   </span>
   
 </footer>
