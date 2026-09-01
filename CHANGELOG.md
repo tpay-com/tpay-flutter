@@ -1,8 +1,18 @@
+## 1.3.3
+
+- Change: Updated Android SDK to 1.2.10
+- Fix: Adjust payment method selection in single transaction mode
+
+## 1.3.2
+
+- Change: Updated iOS SDK to 1.4.2
+- Fix: Back button on the bank transfer webview returns to the payment method selection with the previously chosen method and bank preserved, instead of the payer details screen
+- Fix: Back button on the card tokenization webview no longer clears the add card form
+
 ## 1.3.1
 - Change: Updated iOS SDK to 1.4.1
 - Fix: Prevent duplicate Apple Pay transactions caused by a race condition between payment authorization and sheet dismissal
 - Fix: Prevent transaction finalization (e.g. Apple Pay) from hanging when the transaction service was deallocated before the network request completed
-
 
 ## 1.3.0
 - Change: Updated iOS SDK to 1.4.0
