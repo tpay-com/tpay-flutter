@@ -2,7 +2,7 @@
 ![Static Badge](https://img.shields.io/badge/flutter->=2.5.0-blue?logo=flutter&label=Flutter)
 ![Static Badge](https://img.shields.io/badge/dart->=2.18-blue?logo=dart&label=Dart)
 ![Static Badge](https://img.shields.io/badge/min_android_sdk-23-blue?logo=android&label=Min%20Android%20SDK)
-![Static Badge](https://img.shields.io/badge/min_ios_sdk-12.0+-blue?logo=apple&label=iOS)
+![Static Badge](https://img.shields.io/badge/min_ios_sdk-13.0+-blue?logo=apple&label=iOS)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
@@ -23,7 +23,7 @@ This plugin allows your app to make payments with Tpay.
 | Flutter | >=2.5.0 |
 | Dart | >=2.18 |
 | Minimum Android SDK | 23 (Android 6.0, Marshmallow) |
-| Minimum iOS version | 12.0 |
+| Minimum iOS version | 13.0 |
 
 > [!warning]
 > For this SDK to work you will need `client_id` and `client_secret` tokens. You can find in [merchant's panel](https://panel.tpay.com).
@@ -40,10 +40,17 @@ This plugin allows your app to make payments with Tpay.
 
 For details on adding SDK to your app check our [pub.dev page](https://pub.dev/packages/flutter_tpay).
 
+### iOS integration
+
+The plugin supports both iOS dependency managers. Flutter uses the one your app is configured for:
+
+* **CocoaPods** — integrated through `ios/flutter_tpay.podspec`, pulls the native `Tpay-SDK` pod.
+* **Swift Package Manager** — integrated through `ios/flutter_tpay/Package.swift`
+
 ### Run sample application
 ```bash
-git clone <github-link> tpay
-cd tpay/example
+git clone <github-link> flutter_tpay
+cd flutter_tpay/example
 flutter run
 ```
 

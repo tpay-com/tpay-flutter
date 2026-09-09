@@ -1,3 +1,11 @@
+## 1.4.0
+
+- Feature: Swift Package Manager support on iOS
+- Change: Updated iOS SDK to 1.4.3
+- Improvement: [iOS] The authorization token is reused until it expires, so payments start faster and make fewer network requests
+- Fix: A second Apple Pay attempt made after the first one was cancelled or failed no longer leaves the button stuck in the loading state or closes immediately with an error
+- Fix: Corrected the minimum iOS version in the README to 13.0
+
 ## 1.3.3
 
 - Change: Updated Android SDK to 1.2.10
