@@ -47,7 +47,7 @@
 <p><img src="https://img.shields.io/badge/flutter-%3E=2.5.0-blue?logo=flutter&amp;label=Flutter" alt="Static Badge">
 <img src="https://img.shields.io/badge/dart-%3E=2.18-blue?logo=dart&amp;label=Dart" alt="Static Badge">
 <img src="https://img.shields.io/badge/min_android_sdk-23-blue?logo=android&amp;label=Min%20Android%20SDK" alt="Static Badge">
-<img src="https://img.shields.io/badge/min_ios_sdk-12.0+-blue?logo=apple&amp;label=iOS" alt="Static Badge">
+<img src="https://img.shields.io/badge/min_ios_sdk-13.0+-blue?logo=apple&amp;label=iOS" alt="Static Badge">
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
@@ -84,7 +84,7 @@
 </tr>
 <tr>
 <td>Minimum iOS version</td>
-<td>12.0</td>
+<td>13.0</td>
 </tr>
 </tbody>
 </table>
@@ -102,9 +102,15 @@ use <a href="https://support.tpay.com/sprzedawca/srodowisko-testowe-sandbox">moc
 </div>
 <h2 id="install">Install</h2>
 <p>For details on adding SDK to your app check our <a href="https://pub.dev/packages/flutter_tpay">pub.dev page</a>.</p>
+<h3 id="ios-integration">iOS integration</h3>
+<p>The plugin supports both iOS dependency managers. Flutter uses the one your app is configured for:</p>
+<ul>
+<li><strong>CocoaPods</strong> — integrated through <code>ios/flutter_tpay.podspec</code>, pulls the native <code>Tpay-SDK</code> pod.</li>
+<li><strong>Swift Package Manager</strong> — integrated through <code>ios/flutter_tpay/Package.swift</code></li>
+</ul>
 <h3 id="run-sample-application">Run sample application</h3>
-<pre class="language-bash"><code class="language-bash">git clone &lt;github-link&gt; tpay
-cd tpay/example
+<pre class="language-bash"><code class="language-bash">git clone &lt;github-link&gt; flutter_tpay
+cd flutter_tpay/example
 flutter run
 </code></pre>
 <h2 id="configuration">Configuration</h2>
@@ -1788,7 +1794,7 @@ tpay.screenlessApplePayPayment(payment);
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.3.3
+      1.4.0
   </span>
   
 </footer>
