@@ -1,3 +1,7 @@
+## 1.5.0
+
+- Change: [iOS] CocoaPods integration uses the native Tpay SDK bundled in the package instead of the `Tpay-SDK` pod from CocoaPods trunk
+
 ## 1.4.0
 
 - Feature: Swift Package Manager support on iOS

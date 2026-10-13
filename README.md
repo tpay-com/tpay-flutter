@@ -44,13 +44,15 @@ For details on adding SDK to your app check our [pub.dev page](https://pub.dev/p
 
 The plugin supports both iOS dependency managers. Flutter uses the one your app is configured for:
 
-* **CocoaPods** — integrated through `ios/flutter_tpay.podspec`, pulls the native `Tpay-SDK` pod.
+* **CocoaPods** — integrated through `ios/flutter_tpay.podspec`, uses the native Tpay SDK bundled in the package (`ios/Frameworks/Tpay.xcframework`).
 * **Swift Package Manager** — integrated through `ios/flutter_tpay/Package.swift`
 
 ### Run sample application
 ```bash
 git clone <github-link> flutter_tpay
-cd flutter_tpay/example
+cd flutter_tpay
+bash scripts/download_ios_sdk.sh
+cd example
 flutter run
 ```
 

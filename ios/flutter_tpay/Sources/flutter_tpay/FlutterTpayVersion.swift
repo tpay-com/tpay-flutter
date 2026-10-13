@@ -3,5 +3,5 @@
 /// Keep in sync with `pubspec.yaml`, `ios/flutter_tpay.podspec` and `android/build.gradle`.
 enum FlutterTpayVersion {
 
-    static let current = "1.4.0"
+    static let current = "1.5.0"
 }

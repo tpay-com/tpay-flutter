@@ -31,3 +31,6 @@ build/
 
 # FVM Version Cache
 .fvm/
+
+# Tpay iOS SDK binary, downloaded by scripts/download_ios_sdk.sh
+/ios/Frameworks/

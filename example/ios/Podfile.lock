@@ -1,17 +1,11 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_tpay (1.4.0):
+  - flutter_tpay (1.5.0):
     - Flutter
-    - Tpay-SDK (= 1.4.3)
-  - Tpay-SDK (1.4.3)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_tpay (from `.symlinks/plugins/flutter_tpay/ios`)
-
-SPEC REPOS:
-  trunk:
-    - Tpay-SDK
 
 EXTERNAL SOURCES:
   Flutter:
@@ -21,8 +15,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_tpay: 3ac21cdd8e1130035bec25f8b7890dfda1933e76
-  Tpay-SDK: d42e06bf94da48458dae6ddeb77f5abfe1980884
+  flutter_tpay: af17cccd876a0df0ccbd4001011b43591953b2f5
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 

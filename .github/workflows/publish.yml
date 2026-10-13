@@ -31,6 +31,9 @@ jobs:
           git config user.name "Tpay Auto Commit"
           git config user.email devs@tpay.com
 
+      - name: Download iOS SDK
+        run: bash scripts/download_ios_sdk.sh
+
       - name: Publish dry run
         run: flutter pub publish --dry-run
 
