@@ -105,12 +105,14 @@ use <a href="https://support.tpay.com/sprzedawca/srodowisko-testowe-sandbox">moc
 <h3 id="ios-integration">iOS integration</h3>
 <p>The plugin supports both iOS dependency managers. Flutter uses the one your app is configured for:</p>
 <ul>
-<li><strong>CocoaPods</strong> — integrated through <code>ios/flutter_tpay.podspec</code>, pulls the native <code>Tpay-SDK</code> pod.</li>
+<li><strong>CocoaPods</strong> — integrated through <code>ios/flutter_tpay.podspec</code>, uses the native Tpay SDK bundled in the package (<code>ios/Frameworks/Tpay.xcframework</code>).</li>
 <li><strong>Swift Package Manager</strong> — integrated through <code>ios/flutter_tpay/Package.swift</code></li>
 </ul>
 <h3 id="run-sample-application">Run sample application</h3>
 <pre class="language-bash"><code class="language-bash">git clone &lt;github-link&gt; flutter_tpay
-cd flutter_tpay/example
+cd flutter_tpay
+bash scripts/download_ios_sdk.sh
+cd example
 flutter run
 </code></pre>
 <h2 id="configuration">Configuration</h2>
@@ -1794,7 +1796,7 @@ tpay.screenlessApplePayPayment(payment);
 <footer>
   <span class="no-break">
     flutter_tpay
-      1.4.0
+      1.5.0
   </span>
   
 </footer>
