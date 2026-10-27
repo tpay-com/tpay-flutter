@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_tpay'
-  s.version          = '1.5.0'
+  s.version          = '1.6.0'
   s.summary          = 'Tpay Flutter iOS bridge'
   s.description      = <<-DESC
   Tpay Flutter iOS bridge'.

@@ -6,15 +6,16 @@ struct ConfigurationResult: Encodable {
 
     private enum Constant {
         static let configurationSuccess = "configurationSuccess"
-        static let configurationFailure = "configurationFailure"
+        static let configurationFailure = "methodCallError"
         static let paymentCreated = "paymentCreated"
         static let paymentCompleted = "paymentCompleted"
         static let paymentCancelled = "paymentCancelled"
-        static let paymentError = "paymentError"
+        static let paymentError = "methodCallError"
         static let paymentClosed = "moduleClosed"
         static let tokenizationCompleted = "tokenizationCompleted"
-        static let tokenizationCancelled = "tokenizationCancelled"
-        static let unknownHandleMethod = "unknownHandleMethod"
+        static let unknownHandleMethod = "methodCallError"
+        static let configurationFailureMessage = "Unable to parse sent data."
+        static let unknownHandleMethodMessage = "Unknown method or invalid arguments."
     }
 
     // MARK: - Properties
@@ -29,7 +30,7 @@ struct ConfigurationResult: Encodable {
     }
 
     static func configurationFailure() -> ConfigurationResult {
-        return .init(type: Constant.configurationFailure, value: nil)
+        return .init(type: Constant.configurationFailure, value: Constant.configurationFailureMessage)
     }
 
     static func configurationFailure(error: Error) -> ConfigurationResult {
@@ -60,12 +61,8 @@ struct ConfigurationResult: Encodable {
         return .init(type: Constant.tokenizationCompleted, value: nil)
     }
 
-    static func tokenizationCancelled() -> ConfigurationResult {
-        return .init(type: Constant.tokenizationCancelled, value: nil)
-    }
-
     static func unknownHandleMethod() -> ConfigurationResult {
-        return .init(type: Constant.unknownHandleMethod, value: nil)
+        return .init(type: Constant.unknownHandleMethod, value: Constant.unknownHandleMethodMessage)
     }
 
     // MARK: - Private

@@ -1,6 +1,6 @@
 # Tpay
-![Static Badge](https://img.shields.io/badge/flutter->=2.5.0-blue?logo=flutter&label=Flutter)
-![Static Badge](https://img.shields.io/badge/dart->=2.18-blue?logo=dart&label=Dart)
+![Static Badge](https://img.shields.io/badge/flutter->=3.10.0-blue?logo=flutter&label=Flutter)
+![Static Badge](https://img.shields.io/badge/dart->=2.19-blue?logo=dart&label=Dart)
 ![Static Badge](https://img.shields.io/badge/min_android_sdk-23-blue?logo=android&label=Min%20Android%20SDK)
 ![Static Badge](https://img.shields.io/badge/min_ios_sdk-13.0+-blue?logo=apple&label=iOS)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -20,8 +20,11 @@ This plugin allows your app to make payments with Tpay.
 
 | Library | Version |
 | ------- | ------- |
-| Flutter | >=2.5.0 |
-| Dart | >=2.18 |
+| Flutter | >=3.10.0 |
+| Dart | >=2.19 |
+| Android Gradle Plugin | >=8.1.1 |
+| Kotlin Gradle Plugin (Android) | >=2.2 |
+| Android compileSdk | 35 |
 | Minimum Android SDK | 23 (Android 6.0, Marshmallow) |
 | Minimum iOS version | 13.0 |
 

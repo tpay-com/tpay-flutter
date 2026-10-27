@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_tpay (1.5.0):
+  - flutter_tpay (1.6.0):
     - Flutter
 
 DEPENDENCIES:
@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_tpay/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_tpay: af17cccd876a0df0ccbd4001011b43591953b2f5
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
+  flutter_tpay: 48845e90d846165e98645946a0d9b51eb2396e96
 
-PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
+PODFILE CHECKSUM: 57c8aed26fba39d3ec9424816221f294a07c58eb
 
 COCOAPODS: 1.17.0

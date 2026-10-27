@@ -4,11 +4,19 @@ final class TpaySDK {
 
     // MARK: - Properties
 
-    private let paymentPresentation = PaymentPresentation()
-    private let tokenCardPresentation = CardTokenPresentation()
-    private let addCardPresentation = AddCardPresentation()
+    private let paymentPresentation: PaymentPresentation
+    private let tokenCardPresentation: CardTokenPresentation
+    private let addCardPresentation: AddCardPresentation
 
     private var blikPayments: [Headless.Models.BlikPaymentResultWithAmbiguousAliases] = []
+
+    // MARK: - Initializers
+
+    init(viewControllerProvider: PresentingViewControllerProvider) {
+        paymentPresentation = PaymentPresentation(viewControllerProvider: viewControllerProvider)
+        tokenCardPresentation = CardTokenPresentation(viewControllerProvider: viewControllerProvider)
+        addCardPresentation = AddCardPresentation(viewControllerProvider: viewControllerProvider)
+    }
 
     // MARK: - API
 

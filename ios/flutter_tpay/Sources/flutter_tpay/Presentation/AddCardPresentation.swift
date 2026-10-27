@@ -8,16 +8,20 @@ final class AddCardPresentation: AddCardDelegate {
     var addCardResult: ((String) -> Void)?
 
     private var addCardSheet: AddCard.Sheet?
-    private var currnetViewController: FlutterViewController?
+    private let viewControllerProvider: PresentingViewControllerProvider
+
+    // MARK: - Initializers
+
+    init(viewControllerProvider: PresentingViewControllerProvider) {
+        self.viewControllerProvider = viewControllerProvider
+    }
 
     // MARK: - API
 
     func presentAddCard(for payer: Payer) throws {
-        currnetViewController = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController
-
         addCardSheet = AddCard.Sheet(payer: payer, delegate: self)
 
-        guard let currnetViewController = currnetViewController else {
+        guard let viewController = viewControllerProvider.viewController() else {
             throw NSError(
                 domain: "com.tpay.flutter",
                 code: -1,
@@ -25,7 +29,7 @@ final class AddCardPresentation: AddCardDelegate {
             )
         }
 
-        try addCardSheet?.present(from: currnetViewController)
+        try addCardSheet?.present(from: viewController)
     }
 
     // MARK: - AddCardDelegate
@@ -36,7 +40,7 @@ final class AddCardPresentation: AddCardDelegate {
     }
 
     func onTokenizationCancelled() {
-        addCardResult?(ConfigurationResult.tokenizationCancelled().toJson())
+        addCardResult?(ConfigurationResult.paymentClosed().toJson())
         complete()
     }
 

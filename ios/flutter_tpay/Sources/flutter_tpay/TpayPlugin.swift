@@ -5,14 +5,20 @@ public class TpayPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
 
     // MARK: - Properties
 
-    private let tpay = TpaySDK()
+    private let tpay: TpaySDK
     private var eventSink: FlutterEventSink?
+
+    // MARK: - Initializers
+
+    init(registrar: FlutterPluginRegistrar) {
+        tpay = TpaySDK(viewControllerProvider: PresentingViewControllerProvider(registrar: registrar))
+    }
 
     // MARK: - API
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "tpay", binaryMessenger: registrar.messenger())
-        let instance = TpayPlugin()
+        let instance = TpayPlugin(registrar: registrar)
         registrar.addMethodCallDelegate(instance, channel: channel)
         
         let eventChannel = FlutterEventChannel(name: "tpay.event", binaryMessenger: registrar.messenger())

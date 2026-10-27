@@ -1,3 +1,13 @@
+## 1.6.0
+
+- Change: Minimum supported Flutter version set to 3.10 and Dart to 2.19. Older versions could not build the plugin: `json_annotation` requires Dart 2.19 and the native Tpay Android SDK requires Android Gradle Plugin 8.1.1, which is not supported by Flutter versions older than 3.10
+- Fix: [Android] The plugin builds with Android Gradle Plugin 9+ and built-in Kotlin (`android.builtInKotlin=true`). The Kotlin Gradle Plugin is applied by the plugin only for AGP < 9 or when built-in Kotlin is disabled
+- Change: [Android] Apps using the plugin require Kotlin Gradle Plugin 2.2 or newer, Android Gradle Plugin 8.1.1 or newer and compileSdk 35. The native Tpay Android SDK 1.2.10 is compiled with Kotlin 2.3, so older Kotlin Gradle Plugin versions fail to read it
+- Change: Example app updated to AGP 9.1.0, Gradle 9.3.1 and built-in Kotlin
+- Fix: [iOS] Card tokenization and card token payment screens open in apps using the UIScene lifecycle, which Flutter enables automatically since 3.44. The payment, card tokenization and card token payment screens now take the presenting view controller from the plugin registrar on Flutter 3.38+, with the application window and the key window of the connected scenes as fallbacks
+- Fix: [iOS] Configuration errors, payment errors and unknown method calls return `MethodCallError` and closing the card tokenization screen returns `ModuleClosed` instead of throwing `Unknown result type`. Apps that catch the `Unknown result type` exception should handle `MethodCallError` and `ModuleClosed` results instead. iOS does not report `ValidationError`, invalid data is returned as `MethodCallError`
+- Change: Example app migrated to the UIScene lifecycle and iOS 15.0
+
 ## 1.5.0
 
 - Change: [iOS] CocoaPods integration uses the native Tpay SDK bundled in the package instead of the `Tpay-SDK` pod from CocoaPods trunk

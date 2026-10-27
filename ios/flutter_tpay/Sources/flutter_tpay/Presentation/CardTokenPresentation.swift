@@ -8,16 +8,20 @@ final class CardTokenPresentation: CardTokenPaymentDelegate {
     var cardTokenPaymentResult: ((String) -> Void)?
 
     private var cardTokenSheet: CardTokenPayment.Sheet?
-    private var currnetViewController: FlutterViewController?
+    private let viewControllerProvider: PresentingViewControllerProvider
+
+    // MARK: - Initializers
+
+    init(viewControllerProvider: PresentingViewControllerProvider) {
+        self.viewControllerProvider = viewControllerProvider
+    }
 
     // MARK: - API
 
     func presentPayment(for transaction: Transaction) throws {
-        currnetViewController = UIApplication.shared.delegate?.window??.rootViewController as? FlutterViewController
-
         cardTokenSheet = CardTokenPayment.Sheet(transaction: transaction, delegate: self)
 
-        guard let currnetViewController = currnetViewController else {
+        guard let viewController = viewControllerProvider.viewController() else {
             throw NSError(
                 domain: "com.tpay.flutter",
                 code: -1,
@@ -25,7 +29,7 @@ final class CardTokenPresentation: CardTokenPaymentDelegate {
             )
         }
 
-        try cardTokenSheet?.present(from: currnetViewController)
+        try cardTokenSheet?.present(from: viewController)
     }
 
     // MARK: - CardTokenPaymentDelegate
